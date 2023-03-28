@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { testFunction } from "../services/test.service";
-import { httpErrorHandler } from "../utils/httpError.handler";
+import { httpErrorHandler } from "../utils/httpErrorHandler";
 
 const testController = {
 
