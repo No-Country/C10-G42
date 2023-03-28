@@ -1,8 +1,9 @@
 import { Router } from "express";
-import shiftController from "../controllers/test.controller";
+import testController from "../controllers/test.controller";
+import { testMiddleware } from "../middlewares/test";
 
 const router = Router();
 
-router.get("/", shiftController.test);
+router.get("/", testMiddleware, testController.test1);
 
 export { router };
