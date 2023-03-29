@@ -11,7 +11,7 @@ const validatorRegister = [
     .exists()
     .notEmpty()
     .isString()
-    .isLength({min: 8, max: 100}),
+    .isLength({min: 5, max: 100}),
   check("firstname")
     .exists()
     .notEmpty()
@@ -58,7 +58,7 @@ const validatorLogin = [
     .exists()
     .notEmpty()
     .isString()
-    .isLength({min: 8, max: 100}),
+    .isLength({min: 4, max: 100}),
 
     (req: Request, res: Response, next: NextFunction) => {
       return validateResults(req, res, next);
