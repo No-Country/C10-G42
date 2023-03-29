@@ -2,9 +2,10 @@ import { Request, Response } from "express";
 import { login, register } from "../services/auth.service";
 import { httpErrorHandler } from "../utils/httpErrorHandler";
 
-const loginCtrl = async (req: Request, res: Response) => {
+const loginCtrl = async ({ body }: Request, res: Response) => {
   try {
-    const user = await login(req);
+    const { email, password } = body;
+    const user = await login({ email, password });
     res.send(user);
   } catch (error) {
     httpErrorHandler(res, error, 500);
@@ -12,9 +13,21 @@ const loginCtrl = async (req: Request, res: Response) => {
 };
 
 
-const registerCtrl = async (req: Request, res:Response) => {
+const registerCtrl = async ({ body }: Request, res: Response) => {
   try {
-    const response = await register(req);
+    const { email, password, firstname, lastname, birthdate, phone, gender, dni } = body;
+    const user = {
+      email,
+      password,
+      firstname,
+      lastname,
+      role: "patient",
+      birthdate,
+      phone,
+      gender,
+      dni
+    }
+    const response = await register(user);
     res.send(response);
   } catch (error) {
     httpErrorHandler(res, error, 500);
