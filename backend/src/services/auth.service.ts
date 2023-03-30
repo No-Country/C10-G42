@@ -5,14 +5,13 @@ import { tokenSign } from "../utils/handleJwt";
 import { encrypt, verifyHash } from "../utils/handlePassword";
 
 const login = async ({ email, password }: Auth) => {
-
   const user = await PatientModel.findOne({ email }).select("password email"); // <- traemos solo la password del user (oculta como undefined)
-  if (!user) throw new Error("Error! No se ha encontrado el usuario");
+  if (!user) throw new Error("No se ha encontrado el usuario");
 
   const hashPass = user.get("password"); // <- obtenemos la password encriptada
   const check = await verifyHash(password, hashPass);
 
-  if (!check) throw new Error("Error! Email o password incorrecta");
+  if (!check) throw new Error("Email o password incorrecta");
 
   user.set("password", undefined, { strict: false }) // <- volvemos a "ocultar" la password
 
@@ -27,7 +26,7 @@ const login = async ({ email, password }: Auth) => {
 
 const register = async (data: Patient) => {
   const checkIs = await PatientModel.findOne({ email: data.email });
-  if (checkIs) throw new Error("Error! El email ya se encuentra registrado");
+  if (checkIs) throw new Error("El email ya se encuentra registrado");
 
   const hashPassword = await encrypt(data.password);
   const dataUser = { ...data, password: hashPassword };
@@ -37,10 +36,25 @@ const register = async (data: Patient) => {
   const response = {
     message: "Registrado correctamente",
     token: await tokenSign(user.id, user.firstname),
-    user: {
-      firstname: user.firstname,
-      lastname: user.lastname,
-    }
+    user
+  }
+
+  return response;
+}
+
+const registerDoctor = async (data: Patient) => { // TODO: Implementar modelo de Doctor
+  const checkIs = await PatientModel.findOne({ email: data.email });
+  if (checkIs) throw new Error("El email ya se encuentra registrado");
+
+  const hashPassword = await encrypt(data.password);
+  const dataUser = { ...data, password: hashPassword };
+
+  const user = await PatientModel.create(dataUser);
+
+  const response = {
+    message: "Registrado correctamente",
+    token: await tokenSign(user.id, user.firstname),
+    user
   }
 
   return response;
@@ -48,5 +62,6 @@ const register = async (data: Patient) => {
 
 export {
   register,
+  registerDoctor,
   login
 }

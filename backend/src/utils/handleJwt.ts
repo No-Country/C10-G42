@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import { ObjectId } from "mongoose";
 import { SECRET } from "../config/config";
 
 // Firmar el token
@@ -8,7 +7,7 @@ const tokenSign = (userId: string, username: string): String => {
   
   const sign = jwt.sign(
     {
-      id: userId,
+      _id: userId,
       username: username,
     },
     SECRET,

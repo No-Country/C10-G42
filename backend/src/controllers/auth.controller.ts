@@ -27,12 +27,34 @@ const registerCtrl = async ({ body }: Request, res: Response) => {
       gender,
       dni
     }
+
     const response = await register(user);
     res.send(response);
   } catch (error) {
+    console.log(error);
     httpErrorHandler(res, error, 500);
   }
 }
+
+// const registerCtrlDoctor = async ({ body }: Request, res: Response) => {
+//   try {
+//     const { email, password, firstname, lastname, speciality } = body;
+//     const user = {
+//       email,
+//       password,
+//       firstname,
+//       lastname,
+//       role: "doctor",
+//       speciality
+//     }
+
+//     const response = await registerDoctor(user);
+//     res.send(response);
+//   } catch (error) {
+//     console.log(error);
+//     httpErrorHandler(res, error, 500);
+//   }
+// }
 
 export {
   loginCtrl,

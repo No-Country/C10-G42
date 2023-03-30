@@ -6,8 +6,8 @@ const testController = {
 
   test1: async (req: Request, res: Response) => {
     try {
-      const testResponse = await testFunction();
-      res.send(testResponse); 
+      const firstname = req.user?.firstname;
+      res.send(firstname); 
     } catch (error) {
       httpErrorHandler(res, error, 500);
     }
