@@ -1,12 +1,9 @@
-import { Router } from "express";
-import testController from "../controllers/test.controller";
-import { checkRol } from "../middlewares/role";
-import { authMiddleware } from "../middlewares/session";
-import { testMiddleware } from "../middlewares/test";
+import { Router } from 'express'
+import { checkRol } from '../middlewares/role'
+import { authMiddleware } from '../middlewares/session'
 
-const router = Router();
+const router = Router()
 
-router.get("/", authMiddleware, checkRol(["patient"]), testController.test1);
+router.get('/', authMiddleware, checkRol(['patient']))
 
-
-export { router };
+export { router }

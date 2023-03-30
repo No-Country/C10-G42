@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import { User } from "../interfaces/User";
+import mongoose from 'mongoose'
+import { type User } from '../interfaces/User'
 
 const UserSchema = new mongoose.Schema<User>(
   {
@@ -22,16 +22,16 @@ const UserSchema = new mongoose.Schema<User>(
     },
     role: {
       type: String,
-      enum: ["patient", "doctor", "admin"],
+      enum: ['patient', 'doctor', 'admin'],
       required: true
     }
   },
   {
     timestamps: true,
-    versionKey: false,
+    versionKey: false
   }
 )
 
-const UserModel = mongoose.model("Users", UserSchema);
+const UserModel = mongoose.model('Users', UserSchema)
 
-export default UserModel;
+export default UserModel

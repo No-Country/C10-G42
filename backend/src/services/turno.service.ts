@@ -1,16 +1,16 @@
-const createA = () => {
+const createA = (): void => {
 
 }
 
-const getA = () => {
+const getA = (): void => {
 
 }
 
-const updateA = () => {
+const updateA = (): void => {
 
 }
 
-const deleteA = () => {
+const deleteA = (): void => {
 
 }
 

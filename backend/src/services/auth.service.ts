@@ -1,63 +1,63 @@
-import { Auth } from "../interfaces/Auth";
-import { Patient } from "../interfaces/Patient";
-import PatientModel from "../models/Patient";
-import { tokenSign } from "../utils/handleJwt";
-import { encrypt, verifyHash } from "../utils/handlePassword";
+import { type Auth } from '../interfaces/Auth'
+import { type Patient } from '../interfaces/Patient'
+import PatientModel from '../models/Patient'
+import { tokenSign } from '../utils/handleJwt'
+import { encrypt, verifyHash } from '../utils/handlePassword'
 
-const login = async ({ email, password }: Auth) => {
-  const user = await PatientModel.findOne({ email }).select("password email"); // <- traemos solo la password del user (oculta como undefined)
-  if (!user) throw new Error("No se ha encontrado el usuario");
+const login = async ({ email, password }: Auth): Promise<any> => {
+  const user = await PatientModel.findOne({ email }).select('password email') // <- traemos solo la password del user (oculta como undefined)
+  if (user == null) throw new Error('No se ha encontrado el usuario')
 
-  const hashPass = user.get("password"); // <- obtenemos la password encriptada
-  const check = await verifyHash(password, hashPass);
+  const hashPass = user.get('password') // <- obtenemos la password encriptada
+  const check = await verifyHash(password, hashPass)
 
-  if (!check) throw new Error("Email o password incorrecta");
+  if (!check) throw new Error('Email o password incorrecta')
 
-  user.set("password", undefined, { strict: false }) // <- volvemos a "ocultar" la password
+  user.set('password', undefined, { strict: false }) // <- volvemos a "ocultar" la password
 
   const response = {
-    message: "Logueado",
+    message: 'Logueado',
     token: tokenSign(user.id, user.firstname),
     user
   }
 
-  return response;
+  return response
 }
 
-const register = async (data: Patient) => {
-  const checkIs = await PatientModel.findOne({ email: data.email });
-  if (checkIs) throw new Error("El email ya se encuentra registrado");
+const register = async (data: Patient): Promise<any> => {
+  const checkIs = await PatientModel.findOne({ email: data.email })
+  if (checkIs != null) throw new Error('El email ya se encuentra registrado')
 
-  const hashPassword = await encrypt(data.password);
-  const dataUser = { ...data, password: hashPassword };
+  const hashPassword = await encrypt(data.password)
+  const dataUser = { ...data, password: hashPassword }
 
-  const user = await PatientModel.create(dataUser);
+  const user = await PatientModel.create(dataUser)
 
   const response = {
-    message: "Registrado correctamente",
-    token: await tokenSign(user.id, user.firstname),
+    message: 'Registrado correctamente',
+    token: tokenSign(user.id, user.firstname),
     user
   }
 
-  return response;
+  return response
 }
 
-const registerDoctor = async (data: Patient) => { // TODO: Implementar modelo de Doctor
-  const checkIs = await PatientModel.findOne({ email: data.email });
-  if (checkIs) throw new Error("El email ya se encuentra registrado");
+const registerDoctor = async (data: Patient): Promise<any> => { // TODO: Implementar modelo de Doctor
+  const checkIs = await PatientModel.findOne({ email: data.email })
+  if (checkIs != null) throw new Error('El email ya se encuentra registrado')
 
-  const hashPassword = await encrypt(data.password);
-  const dataUser = { ...data, password: hashPassword };
+  const hashPassword = await encrypt(data.password)
+  const dataUser = { ...data, password: hashPassword }
 
-  const user = await PatientModel.create(dataUser);
+  const user = await PatientModel.create(dataUser)
 
   const response = {
-    message: "Registrado correctamente",
-    token: await tokenSign(user.id, user.firstname),
+    message: 'Registrado correctamente',
+    token: tokenSign(user.id, user.firstname),
     user
   }
 
-  return response;
+  return response
 }
 
 export {
