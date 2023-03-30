@@ -11,7 +11,7 @@ interface JwtPayload {
 declare global {
   namespace Express {
     interface Request {
-      user?: Patient;
+      user?: Patient; // TODO: Agregar modelo de Doctor -> user?: Patient | Doctor
     }
   }
 }
@@ -30,8 +30,16 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
       return;
     }
     
-    const patient = await PatientModel.findById(dataToken._id);
-    req.user = patient as Patient;
+    const user = await PatientModel.findById(dataToken._id);
+    if(!user){
+      //user = await DoctorModel.findById(dataToken._id); // TODO: Agregar modelo de Doctor
+      if(!user){
+        httpErrorHandler(res, {message: "USER_LOGED_NOT_FOUND"}, 401);
+        return;
+      }
+    }
+
+    req.user = user;
     
     next();
   } catch (error) {
