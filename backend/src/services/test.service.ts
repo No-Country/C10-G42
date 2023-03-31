@@ -1,7 +1,5 @@
 export const testFunction = async () => {
-  
-  await setTimeout(() => {
-    
+  setTimeout(() => {
   }, 500);
 
   const obj = {
@@ -11,4 +9,11 @@ export const testFunction = async () => {
   }
   
   return obj;
+}
+
+export const testFunction2 = async (nombre: string) => { 
+  const frutas = ["manzana", "naranja"]
+  setInterval(() => {}, 3000);
+  frutas.push(nombre)
+  return frutas
 }
