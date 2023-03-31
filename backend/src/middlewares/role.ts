@@ -1,14 +1,5 @@
-import { type NextFunction, type Request, type Response } from 'express'
-import { type Patient } from '../interfaces/Patient'
+import type { NextFunction, Request, Response } from 'express'
 import { httpErrorHandler } from '../utils/httpErrorHandler'
-
-declare global {
-  namespace Express {
-    export interface Request {
-      user?: Patient // TODO: Agregar modelo de Doctor -> user?: Patient | Doctor
-    }
-  }
-}
 
 const checkRol = (roles: string[]) => (req: Request, res: Response, next: NextFunction): void => {
   try {

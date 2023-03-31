@@ -1,7 +1,7 @@
 import mongoose, { type ConnectOptions } from 'mongoose'
 import { DB_URL } from './config'
 
-const dbConnect = async (): Promise<void> => {
+const dbConnect = async (): Promise<any> => {
   mongoose.set('strictQuery', false)
 
   mongoose.connect(DB_URL, {
