@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import { Patient } from "../interfaces/Patient";
+import mongoose from 'mongoose'
+import { type Patient } from '../interfaces/Patient'
 
 const PatientSchema = new mongoose.Schema<Patient>(
   {
@@ -22,12 +22,12 @@ const PatientSchema = new mongoose.Schema<Patient>(
     },
     role: {
       type: String,
-      enum: ["patient", "doctor", "admin"],
+      enum: ['patient', 'doctor', 'admin'],
       required: true
     },
     birthdate: {
       type: Date,
-      required: true,
+      required: true
     },
     phone: {
       type: String,
@@ -35,7 +35,7 @@ const PatientSchema = new mongoose.Schema<Patient>(
     },
     gender: {
       type: String,
-      enum: ["male", "female", "other"],
+      enum: ['male', 'female', 'other'],
       required: true
     },
     dni: {
@@ -45,10 +45,10 @@ const PatientSchema = new mongoose.Schema<Patient>(
   },
   {
     timestamps: true,
-    versionKey: false,
+    versionKey: false
   }
 )
 
-const PatientModel = mongoose.model("Patient", PatientSchema);
+const PatientModel = mongoose.model('Pacientes', PatientSchema)
 
-export default PatientModel;
+export default PatientModel

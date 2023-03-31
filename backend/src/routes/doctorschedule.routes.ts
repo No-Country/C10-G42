@@ -1,15 +1,14 @@
-import { Router } from "express";
-import { doctorScheduleController } from '../controllers/doctor.schedule.controller';
+import { Router } from 'express'
+import { doctorScheduleController } from '../controllers/doctor.schedule.controller'
 
+const router = Router()
 
-const router = Router();
+router.route('/')
+  .get(doctorScheduleController.getAll)
+  .post(doctorScheduleController.create)
+router.route('/:id')
+  .get(doctorScheduleController.get)
+  .put(doctorScheduleController.update)
+  .delete(doctorScheduleController.delete)
 
-router.route("/")
-.get(doctorScheduleController.getAll)
-.post(doctorScheduleController.create)
-router.route("/:id")
-.get(doctorScheduleController.get)
-.put(doctorScheduleController.update)
-.delete(doctorScheduleController.delete)
-
-export { router };
+export { router }

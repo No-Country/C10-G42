@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import { Doctor } from './../interfaces/Doctor';
+import mongoose from 'mongoose'
+import { type Doctor } from './../interfaces/Doctor'
 
 const DoctorSchema = new mongoose.Schema<Doctor>(
   {
@@ -14,10 +14,10 @@ const DoctorSchema = new mongoose.Schema<Doctor>(
   },
   {
     timestamps: true,
-    versionKey: false,
+    versionKey: false
   }
 )
 
-const DoctorModel = mongoose.model("Doctor", DoctorSchema);
+const DoctorModel = mongoose.model('Doctor', DoctorSchema)
 
-export default DoctorModel;
+export default DoctorModel
