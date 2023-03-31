@@ -26,12 +26,12 @@ const AppointmentSchema = new mongoose.Schema<Appointment>(
         },
         paciente: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Paciente',
+            ref: 'Patient',
             required: true
         },
         medico: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: 'Paciente',
+          ref: 'Doctor',
           required: true
       }
     },
