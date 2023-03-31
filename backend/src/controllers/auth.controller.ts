@@ -1,19 +1,20 @@
 import { type Request, type Response } from 'express'
 import { type Patient } from '../interfaces/Patient'
-import { login, register } from '../services/auth.service'
+import { login, loginDoctor, register, registerDoctor } from '../services/auth.service'
 import { httpErrorHandler } from '../utils/httpErrorHandler'
+import { type Doctor } from '../interfaces/Doctor'
 
-const loginCtrl = ({ body }: Request, res: Response): void => {
+const loginCtrl = async ({ body }: Request, res: Response): Promise<void> => {
   try {
     const { email, password } = body
-    const user = login({ email, password })
+    const user = await login({ email, password })
     res.send(user)
   } catch (error) {
     httpErrorHandler(res, error, 500)
   }
 }
 
-const registerCtrl = ({ body }: Request, res: Response): void => {
+const registerCtrl = async ({ body }: Request, res: Response): Promise<void> => {
   try {
     const { email, password, firstname, lastname, birthdate, phone, gender, dni } = body
     const user: Patient = {
@@ -28,35 +29,45 @@ const registerCtrl = ({ body }: Request, res: Response): void => {
       dni
     }
 
-    const response = register(user)
+    const response = await register(user)
     res.send(response)
   } catch (error) {
-    console.log(error)
     httpErrorHandler(res, error, 500)
   }
 }
 
-// const registerCtrlDoctor = async ({ body }: Request, res: Response) => {
-//   try {
-//     const { email, password, firstname, lastname, speciality } = body;
-//     const user = {
-//       email,
-//       password,
-//       firstname,
-//       lastname,
-//       role: "doctor",
-//       speciality
-//     }
+const loginDoctorCtrl = async ({ body }: Request, res: Response): Promise<void> => {
+  try {
+    const { email, password } = body
+    const user = await loginDoctor({ email, password })
+    res.send(user)
+  } catch (error) {
+    httpErrorHandler(res, error, 500)
+  }
+}
 
-//     const response = await registerDoctor(user);
-//     res.send(response);
-//   } catch (error) {
-//     console.log(error);
-//     httpErrorHandler(res, error, 500);
-//   }
-// }
+const registerDoctorCtrl = async ({ body }: Request, res: Response): Promise<void> => {
+  try {
+    const { email, password, firstname, lastname, speciality } = body
+    const user: Doctor = {
+      email,
+      password,
+      firstname,
+      lastname,
+      role: 'doctor',
+      speciality
+    }
+
+    const response = await registerDoctor(user)
+    res.send(response)
+  } catch (error) {
+    httpErrorHandler(res, error, 500)
+  }
+}
 
 export {
   loginCtrl,
-  registerCtrl
+  registerCtrl,
+  loginDoctorCtrl,
+  registerDoctorCtrl
 }
