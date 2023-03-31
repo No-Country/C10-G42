@@ -1,5 +1,6 @@
-export const testFunction = async () => {
+export const testFunction = async (): Promise<object> => {
   setTimeout(() => {
+
   }, 500)
 
   const obj = {
@@ -11,7 +12,7 @@ export const testFunction = async () => {
   return obj
 }
 
-export const testFunction2 = async (nombre: string) => {
+export const testFunction2 = async (nombre: string): Promise<string[]> => {
   const frutas = ['manzana', 'naranja']
   setInterval(() => {}, 3000)
   frutas.push(nombre)

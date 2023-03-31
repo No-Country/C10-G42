@@ -3,14 +3,32 @@ import { type Doctor } from './../interfaces/Doctor'
 
 const DoctorSchema = new mongoose.Schema<Doctor>(
   {
-    fullname: {
+    email: {
+      type: String,
+      required: true,
+      unique: true
+    },
+    password: {
       type: String,
       required: true
     },
-    especialty: {
+    firstname: {
       type: String,
       required: true
-	  }
+    },
+    lastname: {
+      type: String,
+      required: true
+    },
+    role: {
+      type: String,
+      enum: ['patient', 'doctor', 'admin'],
+      required: true
+    },
+    speciality: {
+      type: String,
+      required: true
+    }
   },
   {
     timestamps: true,

@@ -1,13 +1,13 @@
 import { Router } from 'express'
-import { loginCtrl, registerCtrl } from '../controllers/auth.controller'
-// import { validatorLogin, validatorRegister, validatorRegisterDoctor } from '../middlewares/validators/auth.valid'
+import { loginCtrl, registerCtrl, registerDoctorCtrl } from '../controllers/auth.controller'
+import { validatorLogin, validatorRegister, validatorRegisterDoctor } from '../middlewares/validators/auth.valid'
 
 const router = Router()
 
-router.post('/login', loginCtrl)
-router.post('/register', registerCtrl)
+router.post('/login', validatorLogin, loginCtrl)
+router.post('/register', validatorRegister, registerCtrl)
 
-router.post('/login-doctor', loginCtrl)
-router.post('/register-doctor', registerCtrl)
+router.post('/register/doctor', validatorRegisterDoctor, registerDoctorCtrl)
+router.post('/login/doctor', validatorRegisterDoctor, registerDoctorCtrl)
 
 export { router }
