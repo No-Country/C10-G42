@@ -8,8 +8,8 @@ const router = Router()
 router.get('/', getDoctors)
 router.post('/', authMiddleware, checkRol(['admin']), createDoctor)
 
-router.get('/', getDoctor)
-router.put('/', authMiddleware, checkRol(['admin']), updateDoctor)
-router.delete('/', authMiddleware, checkRol(['admin']), deleteDoctor)
+router.get('/:id', getDoctor)
+router.put('/:id', authMiddleware, checkRol(['admin']), updateDoctor)
+router.delete('/:id', authMiddleware, checkRol(['admin']), deleteDoctor)
 
 export { router }
