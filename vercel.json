@@ -1,5 +1,7 @@
 {
+  "name": "vercel-typescript-express-api",
   "version": 2,
+  "public": false,
   "builds": [
     {
       "src": "backend/src/app.ts",
@@ -7,9 +9,9 @@
     }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "/backend/dist/app.js" }
-  ],
-  "env": {
-    "NODE_ENV": "production"
-  }
+    {
+      "src": "/(.*)",
+      "dest": "backend/src/app.ts"
+    }
+  ]
 }
