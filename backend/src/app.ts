@@ -1,21 +1,25 @@
-import express from "express";
-import cors from "cors";
+import cors from 'cors'
+import express from 'express'
 
-import mainRouter from "./routes/index";
-import { PORT } from "./config/config";
-import db from "./config/database";
+import './@types/index'
+import { PORT } from './config/config'
+import dbConnect from './config/database'
+import mainRouter from './routes/index'
 
-const app = express();
+const app = express()
 
-
-app.use(cors());
-app.use(express.json());
+app.use(cors())
+app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-app.use("/", mainRouter);
+app.use('/api', mainRouter)
 
-db.connect();
+dbConnect().catch(error => {
+  console.log(error)
+})
 
 app.listen(PORT, () => {
-  console.log(`La API de gestión de turnos está escuchando en el puerto ${PORT}`);
-});
+  console.log(
+    `La API de gestión de turnos está escuchando en el puerto ${PORT}`
+  )
+})

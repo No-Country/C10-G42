@@ -1,20 +1,28 @@
-import mongoose, { ConnectOptions } from "mongoose";
-import { DB_URL } from "./config";
+import mongoose, { type ConnectOptions } from 'mongoose'
 
-const db = {
-  connect: async () => {
-    mongoose.set('strictQuery', false);
-    mongoose.connect(DB_URL, 
-      {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        //useFindAndModify: false,
-        //useCreateIndex: true,
-      } as ConnectOptions
-    )
-    .then(() => console.log('Database connected'))
-    .catch(err => console.error('Database connection error: ', err));
-  }
+import { DB_URL } from './config'
+
+interface Opt extends ConnectOptions {
+  useNewUrlParser: boolean
+  useUnifiedTopology: boolean
 }
 
-export default db;
+const dbConnect = async (): Promise<void> => {
+  mongoose.set('strictQuery', false)
+
+  const options: Opt = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  }
+
+  mongoose
+    .connect(DB_URL, options)
+    .then(() => {
+      console.log('Database connected')
+    })
+    .catch(err => {
+      console.error('Database connection error: ', err)
+    })
+}
+
+export default dbConnect

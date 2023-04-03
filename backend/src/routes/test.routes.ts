@@ -1,9 +1,12 @@
-import { Router } from "express";
-import testController from "../controllers/test.controller";
-import { testMiddleware } from "../middlewares/test";
+import { Router } from 'express'
 
-const router = Router();
+import { checkRol } from '../middlewares/role'
+import { authMiddleware } from '../middlewares/session'
 
-router.get("/", testMiddleware, testController.test1);
+const router = Router()
 
-export { router };
+router.get('/', authMiddleware, checkRol(['patient', 'doctor']), (req, res) => {
+  res.send('ok')
+})
+
+export { router }
