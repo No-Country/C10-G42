@@ -1,29 +1,29 @@
 import type { NextFunction, Request, Response } from 'express'
 
 import { httpErrorHandler } from '../utils/httpErrorHandler'
+import PatientModel from '../models/Patient'
+import DoctorModel from '../models/Doctors'
 
-const checkRol =
-  (roles: string[]) =>
-  (req: Request, res: Response, next: NextFunction): void => {
-    try {
-      const userRole = req.user?.role
-      if (userRole == null) {
-        httpErrorHandler(res, { message: 'ERROR_ROLE' }, 403)
-        return
+const checkRol = (roles: string[]) => (req: Request, res: Response, next: NextFunction): void => {
+  const id = req.userId
+  let userRole: string
+  PatientModel.findById(id)
+    .then((patient) => {
+      if (patient != null) userRole = patient.role
+      else {
+        DoctorModel.findById(id)
+          .then((doctor) => {
+            if (doctor != null) userRole = doctor.role
+            else { httpErrorHandler(res, { message: 'ERROR_NOT_FOUND' }, 404) }
+          })
+          .catch((error) => { httpErrorHandler(res, error, 500) })
       }
-
-      const checkRoleValue = roles.some(allowedRole =>
-        userRole.includes(allowedRole)
-      )
-      if (!checkRoleValue) {
-        httpErrorHandler(res, { message: 'USER_NOT_PERMISSIONS' }, 403)
-        return
-      }
-
+    })
+    .then(() => {
+      if (!roles.includes(userRole)) { httpErrorHandler(res, { message: 'ERROR_NOT_AUTHORIZED' }, 401); return }
       next()
-    } catch (error) {
-      httpErrorHandler(res, { message: 'ERROR_PERMISSION' }, 403)
-    }
-  }
+    })
+    .catch((error) => { httpErrorHandler(res, error, 500) })
+}
 
 export { checkRol }

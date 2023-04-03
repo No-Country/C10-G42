@@ -8,7 +8,8 @@ const doctorService = {
   },
   get: async (id: string) => {
     const doctor = await DoctorModel.findById(id)
-    if (doctor != null) return doctor
+    if (doctor === null) throw new Error('Doctor no encontrado')
+    return doctor
   },
   getAll: async (): Promise<any> => {
     const doctors = await DoctorModel.find()
@@ -16,18 +17,18 @@ const doctorService = {
   },
   update: async (id: string, doctorData: Doctor) => {
     const doctor = await DoctorModel.findById(id)
-    if (doctor != null) {
-      doctor.firstname = doctorData.firstname
-      doctor.lastname = doctorData.lastname
-      doctor.phone = doctorData.phone
-      doctor.email = doctorData.email
-      doctor.password = doctorData.password
-      doctor.especialty = doctorData.especialty
-      return await doctor.save()
-    }
+    if (doctor === null) throw new Error('Doctor no encontrado')
+    doctor.firstname = doctorData.firstname
+    doctor.lastname = doctorData.lastname
+    doctor.phone = doctorData.phone
+    doctor.email = doctorData.email
+    doctor.password = doctorData.password
+    doctor.especialty = doctorData.especialty
+    return await doctor.save()
   },
   delete: async (id: string) => {
     const doctor = await DoctorModel.findById(id)
+    if (doctor === null) throw new Error('Doctor no encontrado')
     return await doctor?.deleteOne()
   }
 }

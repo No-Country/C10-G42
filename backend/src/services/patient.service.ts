@@ -10,25 +10,27 @@ const patientService = {
     return await PatientModel.find()
   },
   get: async (id: string) => {
-    return await PatientModel.findById(id)
+    const patient = await PatientModel.findById(id)
+    if (patient === null) throw new Error('Paciente no encontrado')
+    return patient
   },
   update: async (patientData: Patient, id: string) => {
     const patient = await PatientModel.findById(id)
-    if (patient != null) {
-      patient.email = patientData.email
-      patient.password = patientData.password
-      patient.dni = patientData.dni
-      patient.firstname = patientData.firstname
-      patient.lastname = patientData.lastname
-      patient.birthdate = patientData.birthdate
-      patient.phone = patientData.phone
-      patient.gender = patientData.gender
-      return await patient.save()
-    }
+    if (patient === null) throw new Error('Paciente no encontrado')
+    patient.email = patientData.email
+    patient.password = patientData.password
+    patient.dni = patientData.dni
+    patient.firstname = patientData.firstname
+    patient.lastname = patientData.lastname
+    patient.birthdate = patientData.birthdate
+    patient.phone = patientData.phone
+    patient.gender = patientData.gender
+    return await patient.save()
   },
   delete: async (id: string) => {
     const patient = await PatientModel.findById(id)
-    return await patient?.deleteOne()
+    if (patient === null) throw new Error('Paciente no encontrado')
+    return await patient.deleteOne()
   }
 }
 
