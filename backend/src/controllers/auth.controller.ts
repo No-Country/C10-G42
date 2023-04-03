@@ -6,7 +6,7 @@ import { httpErrorHandler } from '../utils/httpErrorHandler'
 const loginCtrl = ({ body }: Request, res: Response): void => {
   const { email, password } = body
   login({ email, password })
-    .then(response => res.json(response))
+    .then(response => res.status(202).json(response))
     .catch(error => {
       httpErrorHandler(res, error, 500)
     })
@@ -39,7 +39,7 @@ const registerCtrl = ({ body }: Request, res: Response): void => {
   }
 
   register(user, dataPatient)
-    .then(response => res.json(response))
+    .then(response => res.status(201).json(response))
     .catch(error => {
       httpErrorHandler(res, error, 500)
     })
@@ -72,7 +72,7 @@ const registerDoctorCtrl = ({ body }: Request, res: Response): void => {
   }
 
   registerDoctor(user, dataDoctor)
-    .then(response => res.json(response))
+    .then(response => res.status(201).json(response))
     .catch(error => {
       httpErrorHandler(res, error, 500)
     })
