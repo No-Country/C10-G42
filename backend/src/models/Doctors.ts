@@ -1,8 +1,13 @@
 import mongoose from 'mongoose'
+
 import { type Doctor } from './../interfaces/Doctor'
 
 const DoctorSchema = new mongoose.Schema<Doctor>(
   {
+    especialty: {
+      type: String,
+      required: true
+    },
     email: {
       type: String,
       required: true,
@@ -22,10 +27,9 @@ const DoctorSchema = new mongoose.Schema<Doctor>(
     },
     role: {
       type: String,
-      enum: ['patient', 'doctor', 'admin'],
-      required: true
+      default: 'doctor'
     },
-    speciality: {
+    phone: {
       type: String,
       required: true
     }
@@ -37,5 +41,4 @@ const DoctorSchema = new mongoose.Schema<Doctor>(
 )
 
 const DoctorModel = mongoose.model('Doctor', DoctorSchema)
-
 export default DoctorModel

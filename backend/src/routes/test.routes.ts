@@ -1,6 +1,13 @@
 import { Router } from 'express'
+<<<<<<< HEAD
+
+import testController from '../controllers/test.controller'
+import { checkRol } from '../middlewares/role'
+import { authMiddleware } from '../middlewares/session'
+=======
 import { authMiddleware } from '../middlewares/session'
 import { checkRol } from '../middlewares/role'
+>>>>>>> f4843ea4d6092826ac4aed44ab822d554b120281
 
 const router = Router()
 

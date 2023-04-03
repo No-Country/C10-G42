@@ -1,15 +1,18 @@
 import { Router } from 'express'
-import { createSchedule, deleteSchedule, getAllSchedules, getSchedule, updateSchedule } from '../controllers/doctor.schedule.controller'
-import { authMiddleware } from '../middlewares/session'
+
+import { doctorScheduleCtrl } from '../controllers/doctor.schedule.controller'
 import { checkRol } from '../middlewares/role'
 
 const router = Router()
 
-router.get('/', getAllSchedules)
-router.post('/', authMiddleware, checkRol(['doctor']), createSchedule)
-
-router.get('/:id', getSchedule)
-router.put('/:id', authMiddleware, checkRol(['doctor']), updateSchedule)
-router.delete('/:id', authMiddleware, checkRol(['doctor']), deleteSchedule)
+router
+  .route('/')
+  .get(doctorScheduleCtrl.getAll)
+  .post(checkRol(['doctor']), doctorScheduleCtrl.create)
+router
+  .route('/:id')
+  .get(doctorScheduleCtrl.get)
+  .put(checkRol(['doctor']), doctorScheduleCtrl.update)
+  .delete(checkRol(['doctor']), doctorScheduleCtrl.delete)
 
 export { router }
