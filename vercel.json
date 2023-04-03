@@ -1,17 +1,15 @@
 {
+  "version": 2,
   "builds": [
     {
-      "src": "src/app.ts",
+      "src": "backend/src/app.ts",
       "use": "@vercel/node"
     }
   ],
   "routes": [
-    { "src": "/backend/.*", "dest": "src/app.ts" },
-    {
-      "handle": "filesystem",
-      "src": "/(.*)",
-      "destination": "/$1"
-    }
+    { "src": "/(.*)", "dest": "/backend/dist/app.js" }
   ],
-  "public": "dist"
+  "env": {
+    "NODE_ENV": "production"
+  }
 }
