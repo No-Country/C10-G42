@@ -1,24 +1,16 @@
 {
-  "name": "vercel-typescript-express-api",
   "version": 2,
-  "public": true,
   "builds": [
-    {
-      "command": "npm run build",
-      "output": "dist",
-      "src": "/src/app.ts",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": [
-          "backend/dist/**"
-        ]
+      {
+          "src": "dist/app.js",
+          "use": "@vercel/node",
+          "config": { "includeFiles": ["dist/**"] }
       }
-    }
   ],
   "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/src/app.ts"
-    }
+      {
+          "src": "/(.*)",
+          "dest": "dist/app.js"
+      }
   ]
 }
