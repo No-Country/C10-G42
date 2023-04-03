@@ -1,4 +1,5 @@
 import { type Request, type Response } from 'express'
+
 import { httpErrorHandler } from '../utils/httpErrorHandler'
 
 const createAppointment = (req: Request, res: Response): void => {
@@ -10,7 +11,4 @@ const createAppointment = (req: Request, res: Response): void => {
   }
 }
 
-export {
-  createAppointment
-
-}
+export { createAppointment }

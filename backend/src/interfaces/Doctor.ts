@@ -1,5 +1,6 @@
-export interface Doctor {
-  _id?: string
-  fullname: string
+import { type User } from './User'
+
+export interface Doctor extends User {
   especialty: string
+  phone: string
 }

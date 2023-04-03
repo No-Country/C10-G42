@@ -1,4 +1,5 @@
 import { type ObjectId } from 'mongoose'
+
 export interface DoctorSchedule {
   day: string
   starttime: string

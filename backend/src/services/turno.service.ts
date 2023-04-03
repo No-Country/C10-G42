@@ -1,22 +1,9 @@
-const createA = (): void => {
+const createA = (): void => {}
 
-}
+const getA = (): void => {}
 
-const getA = (): void => {
+const updateA = (): void => {}
 
-}
+const deleteA = (): void => {}
 
-const updateA = (): void => {
-
-}
-
-const deleteA = (): void => {
-
-}
-
-export {
-  createA,
-  getA,
-  updateA,
-  deleteA
-}
+export { createA, getA, updateA, deleteA }

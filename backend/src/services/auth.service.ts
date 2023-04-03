@@ -42,7 +42,8 @@ const register = async (data: Patient): Promise<any> => {
   return response
 }
 
-const registerDoctor = async (data: Patient): Promise<any> => { // TODO: Implementar modelo de Doctor
+const registerDoctor = async (data: Patient): Promise<any> => {
+  // TODO: Implementar modelo de Doctor
   const checkIs = await PatientModel.findOne({ email: data.email })
   if (checkIs != null) throw new Error('El email ya se encuentra registrado')
 
@@ -60,8 +61,4 @@ const registerDoctor = async (data: Patient): Promise<any> => { // TODO: Impleme
   return response
 }
 
-export {
-  register,
-  registerDoctor,
-  login
-}
+export { register, registerDoctor, login }

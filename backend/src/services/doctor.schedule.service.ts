@@ -1,5 +1,5 @@
-import { type DoctorSchedule } from './../interfaces/DoctorSchedule'
 import DoctorScheduleModel from '../models/DoctorSchedule'
+import { type DoctorSchedule } from './../interfaces/DoctorSchedule'
 
 interface ScheduleTimeType {
   starttime: string
@@ -8,35 +8,32 @@ interface ScheduleTimeType {
 
 const doctorScheduleService = {
   create: async (doctorScheduleData: DoctorSchedule) => {
-    const doctorScheduleCreated = await DoctorScheduleModel.create(doctorScheduleData)
+    const doctorScheduleCreated = await DoctorScheduleModel.create(
+      doctorScheduleData
+    )
     return doctorScheduleCreated
   },
   get: async (id: string) => {
-    const foundSchedule = await DoctorScheduleModel.find({ doctor: id })
+    const schedule = await DoctorScheduleModel.find({ doctor: id })
 
-    if (foundSchedule) return foundSchedule
+    if (schedule != null) return schedule
   },
   getAll: async () => {
     const allSchedules = await DoctorScheduleModel.find()
-    if (allSchedules) return allSchedules
+    if (allSchedules != null) return allSchedules
   },
   update: async (id: string, scheduleData: ScheduleTimeType) => {
-    const foundSchedule = await DoctorScheduleModel.findById(id)
-    if (foundSchedule != null) {
-      foundSchedule.starttime = scheduleData.starttime
-      foundSchedule.endtime = scheduleData.endtime
-      const saveSchedule = await foundSchedule.save()
-      return saveSchedule
+    const schedule = await DoctorScheduleModel.findById(id)
+    if (schedule != null) {
+      schedule.starttime = scheduleData.starttime
+      schedule.endtime = scheduleData.endtime
+      return await schedule.save()
     }
   },
   delete: async (id: string) => {
-    const foundSchedule = await DoctorScheduleModel.findById(id)
-    if (foundSchedule != null) {
-      await foundSchedule.deleteOne()
-    }
+    const schedule = await DoctorScheduleModel.findById(id)
+    return await schedule?.deleteOne()
   }
 }
 
-export {
-  doctorScheduleService
-}
+export { doctorScheduleService }

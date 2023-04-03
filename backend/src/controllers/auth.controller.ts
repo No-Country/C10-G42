@@ -1,4 +1,5 @@
 import { type Request, type Response } from 'express'
+
 import { type Patient } from '../interfaces/Patient'
 import { login, register } from '../services/auth.service'
 import { httpErrorHandler } from '../utils/httpErrorHandler'
@@ -15,7 +16,16 @@ const loginCtrl = ({ body }: Request, res: Response): void => {
 
 const registerCtrl = ({ body }: Request, res: Response): void => {
   try {
-    const { email, password, firstname, lastname, birthdate, phone, gender, dni } = body
+    const {
+      email,
+      password,
+      firstname,
+      lastname,
+      birthdate,
+      phone,
+      gender,
+      dni
+    } = body
     const user: Patient = {
       email,
       password,
@@ -56,7 +66,4 @@ const registerCtrl = ({ body }: Request, res: Response): void => {
 //   }
 // }
 
-export {
-  loginCtrl,
-  registerCtrl
-}
+export { loginCtrl, registerCtrl }

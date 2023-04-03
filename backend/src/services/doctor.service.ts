@@ -1,44 +1,35 @@
 import { type Doctor } from '../interfaces/Doctor'
 import DoctorModel from '../models/Doctors'
 
-// interface DoctorType {
-//   _id: string
-//   fullname: string
-//   especialty: string
-//   createdAt: string
-//   updatedAt: string
-// }
-
 const doctorService = {
   create: async (doctorData: Doctor) => {
     const doctor = await DoctorModel.create(doctorData)
     return doctor
   },
   get: async (id: string) => {
-    const foundDoctor = await DoctorModel.findById(id)
-    if (foundDoctor != null) return foundDoctor
+    const doctor = await DoctorModel.findById(id)
+    if (doctor != null) return doctor
   },
-  getAll: async () => {
-    const foundDoctors = await DoctorModel.find()
-    if (foundDoctors) return foundDoctors
+  getAll: async (): Promise<any> => {
+    const doctors = await DoctorModel.find()
+    if (doctors != null) return doctors
   },
   update: async (id: string, doctorData: Doctor) => {
-    const foundDoctor = await DoctorModel.findById(id)
-    if (foundDoctor != null) {
-      foundDoctor.fullname = doctorData.fullname,
-      foundDoctor.especialty = doctorData.especialty
-      const saveDoctor = await foundDoctor.save()
-      return saveDoctor
+    const doctor = await DoctorModel.findById(id)
+    if (doctor != null) {
+      doctor.firstname = doctorData.firstname
+      doctor.lastname = doctorData.lastname
+      doctor.phone = doctorData.phone
+      doctor.email = doctorData.email
+      doctor.password = doctorData.password
+      doctor.especialty = doctorData.especialty
+      return await doctor.save()
     }
   },
   delete: async (id: string) => {
-    const foundDoctor = await DoctorModel.findById(id)
-    if (foundDoctor != null) {
-      await foundDoctor.deleteOne()
-    }
+    const doctor = await DoctorModel.findById(id)
+    return await doctor?.deleteOne()
   }
 }
 
-export {
-  doctorService
-}
+export { doctorService }

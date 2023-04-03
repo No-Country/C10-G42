@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken'
+
 import { SECRET } from '../config/config'
 
 // Firmar el token
@@ -28,7 +29,4 @@ const verifyToken = async (tokenJwt: string): Promise<any> => {
   }
 }
 
-export {
-  tokenSign,
-  verifyToken
-}
+export { tokenSign, verifyToken }

@@ -1,5 +1,7 @@
 import { Router } from 'express'
+
 import { loginCtrl, registerCtrl } from '../controllers/auth.controller'
+
 // import { validatorLogin, validatorRegister, validatorRegisterDoctor } from '../middlewares/validators/auth.valid'
 
 const router = Router()

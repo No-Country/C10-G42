@@ -1,14 +1,14 @@
 import { Router } from 'express'
-import { doctorController } from '../controllers/doctor.controller'
+
+import { doctorCtrl } from '../controllers/doctor.controller'
 
 const router = Router()
 
-router.route('/')
-  .get(doctorController.getDoctors)
-  .post(doctorController.createDoctor)
-router.route('/:id')
-  .get(doctorController.getDoctor)
-  .put(doctorController.updateDoctor)
-  .delete(doctorController.deleteDoctor)
+router.route('/').get(doctorCtrl.getAll).post(doctorCtrl.create)
+router
+  .route('/:id')
+  .get(doctorCtrl.get)
+  .put(doctorCtrl.update)
+  .delete(doctorCtrl.delete)
 
 export { router }
