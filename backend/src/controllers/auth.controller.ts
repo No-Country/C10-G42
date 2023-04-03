@@ -12,7 +12,7 @@ const loginCtrl = ({ body }: Request, res: Response): void => {
     })
 }
 
-const registerCtrl = ({ body }: Request, res: Response): void => {
+const registerCtrl = ({ body }: Request, res: Response) => {
   const {
     email,
     password,
@@ -23,6 +23,7 @@ const registerCtrl = ({ body }: Request, res: Response): void => {
     gender,
     dni
   } = body
+
 
   const user = {
     email,

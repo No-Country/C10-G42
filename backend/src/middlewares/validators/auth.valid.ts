@@ -192,7 +192,7 @@ const validatorRegisterDoctor = [
     .notEmpty()
     .withMessage('PhotoUrl requerida')
     .bail()
-    .isString()
+    .isURL()
     .withMessage('Tipo de dato no valido'),
 
   body('phone')

@@ -9,17 +9,12 @@ const validateResults = (
   next: NextFunction
 ): void => {
   const errors = validationResult(req)
-
   if (errors.isEmpty()) {
     next()
     return
   }
 
-  const extractedErrors = errors.array().map(error => {
-    return { [error.param]: error.msg }
-  })
-
-  httpErrorHandler(res, extractedErrors, 422)
+  return httpErrorHandler(res, { message: errors.array() }, 422)
 }
 
 export { validateResults }
