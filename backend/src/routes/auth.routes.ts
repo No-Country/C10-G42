@@ -10,7 +10,6 @@ import {
   validatorRegister,
   validatorRegisterDoctor
 } from '../middlewares/validators/auth.valid'
-import { validateJSON } from '../middlewares/validators/json.valid'
 
 const router = Router()
 

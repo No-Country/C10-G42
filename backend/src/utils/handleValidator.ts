@@ -14,7 +14,7 @@ const validateResults = (
     return
   }
 
-  return httpErrorHandler(res, { message: errors.array() }, 422)
+  httpErrorHandler(res, { message: errors.array() }, 422)
 }
 
 export { validateResults }
