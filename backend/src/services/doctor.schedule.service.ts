@@ -6,36 +6,61 @@ interface ScheduleTimeType {
   endtime: string
 }
 
-const doctorScheduleService = {
-  create: async (doctorScheduleData: DoctorSchedule) => {
+const create = async (
+  doctorScheduleData: DoctorSchedule
+): Promise<DoctorSchedule> => {
+  try {
     const doctorScheduleCreated = await DoctorScheduleModel.create(
       doctorScheduleData
     )
     return doctorScheduleCreated
-  },
-  get: async (id: string) => {
-    const schedule = await DoctorScheduleModel.find({ doctor: id })
-    if (schedule === null) throw new Error('Horario del doctor no encontrado')
-    return schedule
-  },
-  getAll: async () => {
-    const allSchedules = await DoctorScheduleModel.find()
-    return allSchedules
-  },
-  update: async (id: string, scheduleData: ScheduleTimeType) => {
-    const schedule = await DoctorScheduleModel.findById(id)
-    if (schedule === null) throw new Error('Horario del doctor no encontrado')
-    if (schedule != null) {
-      schedule.starttime = scheduleData.starttime
-      schedule.endtime = scheduleData.endtime
-      return await schedule.save()
-    }
-  },
-  delete: async (id: string) => {
-    const schedule = await DoctorScheduleModel.findById(id)
-    if (schedule === null) throw new Error('Horario del doctor no encontrado')
-    return await schedule?.deleteOne()
+  } catch (error) {
+    throw new Error('Error al crear horario del doctor')
   }
 }
 
-export { doctorScheduleService }
+const get = async (id: string): Promise<DoctorSchedule> => {
+  try {
+    const schedule = await DoctorScheduleModel.findById(id)
+    if (schedule === null) throw new Error('Horario del doctor no encontrado')
+    return schedule
+  } catch (error) {
+    throw new Error('Error al obtener horario del doctor')
+  }
+}
+
+const getAll = async (): Promise<DoctorSchedule[]> => {
+  try {
+    const allSchedules = await DoctorScheduleModel.find()
+    return allSchedules
+  } catch (error) {
+    throw new Error('Error al obtener horarios de los doctores')
+  }
+}
+
+const update = async (
+  id: string,
+  scheduleData: ScheduleTimeType
+): Promise<DoctorSchedule> => {
+  try {
+    const schedule = await DoctorScheduleModel.findById(id)
+    if (schedule === null) throw new Error('Horario del doctor no encontrado')
+    schedule.starttime = scheduleData.starttime
+    schedule.endtime = scheduleData.endtime
+    return await schedule.save()
+  } catch (error) {
+    throw new Error('Error al actualizar horario del doctor')
+  }
+}
+
+const deleteOne = async (id: string): Promise<DoctorSchedule> => {
+  try {
+    const schedule = await DoctorScheduleModel.findById(id)
+    if (schedule === null) throw new Error('Horario del doctor no encontrado')
+    return await schedule?.deleteOne()
+  } catch (error) {
+    throw new Error('Error al eliminar horario del doctor')
+  }
+}
+
+export { create, getAll, get, update, deleteOne }

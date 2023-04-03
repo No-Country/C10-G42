@@ -1,6 +1,8 @@
-import { type User } from './User'
+import { type ObjectId } from 'mongoose'
 
-export interface Doctor extends User {
-  especialty: string
+export interface Doctor {
+  user: ObjectId
+  speciality: string
   phone: string
+  photoUrl: string
 }

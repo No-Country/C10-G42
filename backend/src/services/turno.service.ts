@@ -1,9 +1,17 @@
-const createA = (): void => {}
+const createA = (): void => {
+  console.log('ok')
+}
 
-const getA = (): void => {}
+const getA = (): void => {
+  console.log('ok')
+}
 
-const updateA = (): void => {}
+const updateA = (): void => {
+  console.log('ok')
+}
 
-const deleteA = (): void => {}
+const deleteA = (): void => {
+  console.log('ok')
+}
 
 export { createA, getA, updateA, deleteA }

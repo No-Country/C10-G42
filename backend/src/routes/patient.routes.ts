@@ -1,29 +1,26 @@
 import { Router } from 'express'
-<<<<<<< HEAD
 
-import { patientCtrl } from '../controllers/patient.controller'
+import {
+  createPatient,
+  deletePatient,
+  getAllPatients,
+  getPatient,
+  updatePatient
+} from '../controllers/patient.controller'
+import { checkRol } from '../middlewares/role'
+import { authMiddleware } from '../middlewares/session'
 
 const router = Router()
 
-router.route('/').get(patientCtrl.getAll).post(patientCtrl.create)
+router
+  .route('/')
+  .get(authMiddleware, checkRol(['doctor']), getAllPatients)
+  .post(createPatient)
 
 router
   .route('/:id')
-  .get(patientCtrl.get)
-  .put(patientCtrl.update)
-  .delete(patientCtrl.delete)
-=======
-import { createPatient, deletePatient, getAllPatients, getPatient, updatePatient } from '../controllers/patient.controller'
-
-const router = Router()
-
-router.get('/', getAllPatients)
-router.post('/', createPatient)
-
-router.get('/:id', getPatient)
-router.post('/:id', createPatient)
-router.put('/:id', updatePatient)
-router.delete('/:id', deletePatient)
->>>>>>> f4843ea4d6092826ac4aed44ab822d554b120281
+  .get(authMiddleware, checkRol(['doctor', 'patient']), getPatient)
+  .put(authMiddleware, checkRol(['patient']), updatePatient)
+  .delete(authMiddleware, checkRol(['patient']), deletePatient)
 
 export { router }

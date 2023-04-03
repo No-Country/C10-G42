@@ -135,10 +135,9 @@ const validatorRegisterDoctor = [
         'password',
         'firstname',
         'lastname',
-        'birthdate',
+        'speciality',
         'phone',
-        'gender',
-        'dni'
+        'photoUrl'
       ]
       const receivedFields = Object.keys(req.body)
       return receivedFields.every(field => allowedFields.includes(field))
@@ -185,6 +184,20 @@ const validatorRegisterDoctor = [
   body('speciality')
     .notEmpty()
     .withMessage('Especialidad requerida')
+    .bail()
+    .isString()
+    .withMessage('Tipo de dato no valido'),
+
+  body('photoUrl')
+    .notEmpty()
+    .withMessage('PhotoUrl requerida')
+    .bail()
+    .isString()
+    .withMessage('Tipo de dato no valido'),
+
+  body('phone')
+    .notEmpty()
+    .withMessage('Telefono requerida')
     .bail()
     .isString()
     .withMessage('Tipo de dato no valido'),

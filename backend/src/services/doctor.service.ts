@@ -1,39 +1,55 @@
 import { type Doctor } from '../interfaces/Doctor'
 import DoctorModel from '../models/Doctors'
 
-const doctorService = {
-  create: async (doctorData: Doctor) => {
+const create = async (doctorData: Doctor): Promise<Doctor> => {
+  try {
     const doctor = await DoctorModel.create(doctorData)
     return doctor
-  },
-  get: async (id: string) => {
-    const doctor = await DoctorModel.findById(id)
-    if (doctor === null) throw new Error('Doctor no encontrado')
-    return doctor
-  },
-  getAll: async (): Promise<any> => {
-    const doctors = await DoctorModel.find()
-    if (doctors != null) return doctors
-  },
-  update: async (id: string, doctorData: Doctor) => {
-    const doctor = await DoctorModel.findById(id)
-    if (doctor === null) throw new Error('Doctor no encontrado')
-    doctor.firstname = doctorData.firstname
-    doctor.lastname = doctorData.lastname
-    doctor.phone = doctorData.phone
-    doctor.email = doctorData.email
-    doctor.password = doctorData.password
-    doctor.especialty = doctorData.especialty
-    return await doctor.save()
-  },
-  delete: async (id: string) => {
-    const doctor = await DoctorModel.findById(id)
-    if (doctor === null) throw new Error('Doctor no encontrado')
-    return await doctor?.deleteOne()
+  } catch (error) {
+    throw new Error('Error al crear doctor')
   }
 }
 
-export {
-  doctorService,
-  createDoctor
+const get = async (id: string): Promise<Doctor> => {
+  try {
+    const doctor = await DoctorModel.findById(id)
+    if (doctor === null) throw new Error('Doctor no encontrado')
+    return doctor
+  } catch (error) {
+    throw new Error('Error al obtener doctor')
+  }
 }
+
+const getAll = async (): Promise<Doctor[]> => {
+  try {
+    const doctors = await DoctorModel.find()
+    return doctors
+  } catch (error) {
+    throw new Error('Error al obtener doctores')
+  }
+}
+
+const update = async (id: string, doctorData: Doctor): Promise<Doctor> => {
+  try {
+    const doctor = await DoctorModel.findById(id)
+    if (doctor === null) throw new Error('Doctor no encontrado')
+    doctor.photoUrl = doctorData.photoUrl
+    doctor.phone = doctorData.phone
+    doctor.speciality = doctorData.speciality
+    return await doctor.save()
+  } catch (error) {
+    throw new Error('Error al actualizar doctor')
+  }
+}
+
+const deleteOne = async (id: string): Promise<Doctor> => {
+  try {
+    const doctor = await DoctorModel.findById(id)
+    if (doctor === null) throw new Error('Doctor no encontrado')
+    return await doctor?.deleteOne()
+  } catch (error) {
+    throw new Error('Error al eliminar doctor')
+  }
+}
+
+export { create, getAll, get, update, deleteOne }

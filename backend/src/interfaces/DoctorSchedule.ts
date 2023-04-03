@@ -4,5 +4,5 @@ export interface DoctorSchedule {
   day: string
   starttime: string
   endtime: string
-  doctor?: ObjectId
+  doctor: ObjectId
 }

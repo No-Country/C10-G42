@@ -1,14 +1,14 @@
 import { type Auth } from '../interfaces/Auth'
-import { type Doctor } from '../interfaces/Doctor'
-import { type Patient } from '../interfaces/Patient'
+import { type User } from '../interfaces/User'
 import DoctorModel from '../models/Doctors'
 import PatientModel from '../models/Patient'
+import UserModel from '../models/User'
 import { tokenSign } from '../utils/handleJwt'
 import { encrypt, verifyHash } from '../utils/handlePassword'
 
 const login = async ({ email, password }: Auth): Promise<object> => {
   try {
-    const user = await PatientModel.findOne({ email }).select('password email') // <- traemos solo la password del user (oculta como undefined)
+    const user = await UserModel.findOne({ email }).select('password email') // <- traemos solo la password del user (oculta como undefined)
     if (user == null) throw new Error('No se ha encontrado el usuario')
 
     const hashPass = user.get('password') // <- obtenemos la password encriptada
@@ -30,20 +30,22 @@ const login = async ({ email, password }: Auth): Promise<object> => {
   }
 }
 
-const register = async (data: Patient): Promise<object> => {
+const register = async (user: User, data: any): Promise<object> => {
   try {
-    const checkIs = await PatientModel.findOne({ email: data.email })
+    const checkIs = await UserModel.findOne({ email: user.email })
     if (checkIs != null) throw new Error('El email ya se encuentra registrado')
 
-    const hashPassword = await encrypt(data.password)
-    const dataUser = { ...data, password: hashPassword }
+    const hashPassword = await encrypt(user.password)
+    const dataUser = { ...user, password: hashPassword }
 
-    const user = await PatientModel.create(dataUser)
-
+    const newUser = await UserModel.create(dataUser)
+    if (newUser == null) throw new Error('Error al registrar usuario')
+    const newPatient = await PatientModel.create({ ...data, user: newUser._id })
+    if (newPatient == null) throw new Error('Error al registrar paciente')
     const response = {
       message: 'Registrado correctamente',
-      token: tokenSign(user.id, user.firstname),
-      user
+      token: tokenSign(newUser.id, user.firstname),
+      newPatient
     }
 
     return response
@@ -52,45 +54,46 @@ const register = async (data: Patient): Promise<object> => {
   }
 }
 
-const loginDoctor = async ({ email, password }: Auth): Promise<object> => {
+// const loginDoctor = async ({ email, password }: Auth): Promise<object> => {
+//   try {
+//     const user = await UserModel.findOne({ email }).select('password email') // <- traemos solo la password del user (oculta como undefined)
+//     if (user == null) throw new Error('No se ha encontrado el usuario')
+
+//     const hashPass = user.get('password') // <- obtenemos la password encriptada
+//     const check = await verifyHash(password, hashPass)
+
+//     if (!check) throw new Error('Email o password incorrecta')
+
+//     user.set('password', undefined, { strict: false }) // <- volvemos a "ocultar" la password
+
+//     const response = {
+//       message: 'Logueado',
+//       token: tokenSign(user.id, user.firstname),
+//       user
+//     }
+
+//     return response
+//   } catch (error) {
+//     throw new Error('Error al loguear')
+//   }
+// }
+
+const registerDoctor = async (user: User, data: any): Promise<object> => {
   try {
-    const user = await DoctorModel.findOne({ email }).select('password email') // <- traemos solo la password del user (oculta como undefined)
-    if (user == null) throw new Error('No se ha encontrado el usuario')
-
-    const hashPass = user.get('password') // <- obtenemos la password encriptada
-    const check = await verifyHash(password, hashPass)
-
-    if (!check) throw new Error('Email o password incorrecta')
-
-    user.set('password', undefined, { strict: false }) // <- volvemos a "ocultar" la password
-
-    const response = {
-      message: 'Logueado',
-      token: tokenSign(user.id, user.firstname),
-      user
-    }
-
-    return response
-  } catch (error) {
-    throw new Error('Error al loguear')
-  }
-}
-
-const registerDoctor = async (data: Doctor): Promise<object> => {
-  // TODO: Implementar modelo de Doctor
-  try {
-    const checkIs = await DoctorModel.findOne({ email: data.email })
+    const checkIs = await UserModel.findOne({ email: user.email })
     if (checkIs != null) throw new Error('El email ya se encuentra registrado')
 
-    const hashPassword = await encrypt(data.password)
+    const hashPassword = await encrypt(user.password)
     const dataUser = { ...data, password: hashPassword }
 
-    const user = await PatientModel.create(dataUser)
+    const newUser = await UserModel.create(dataUser)
+    if (newUser == null) throw new Error('Error al registrar usuario')
+    const newDoctor = await DoctorModel.create({ ...data, user: newUser._id })
 
     const response = {
       message: 'Registrado correctamente',
-      token: tokenSign(user.id, user.firstname),
-      user
+      token: tokenSign(newUser.id, user.firstname),
+      newDoctor
     }
 
     return response
@@ -99,4 +102,4 @@ const registerDoctor = async (data: Doctor): Promise<object> => {
   }
 }
 
-export { login, loginDoctor, register, registerDoctor }
+export { login, register, registerDoctor }

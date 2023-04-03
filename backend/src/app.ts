@@ -12,7 +12,7 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-app.use('/', mainRouter)
+app.use('/api', mainRouter)
 
 dbConnect().catch(error => {
   console.log(error)

@@ -1,13 +1,6 @@
 import { type Request, type Response } from 'express'
 
-import { type Doctor } from '../interfaces/Doctor'
-import { type Patient } from '../interfaces/Patient'
-import {
-  login,
-  loginDoctor,
-  register,
-  registerDoctor
-} from '../services/auth.service'
+import { login, register, registerDoctor } from '../services/auth.service'
 import { httpErrorHandler } from '../utils/httpErrorHandler'
 
 const loginCtrl = ({ body }: Request, res: Response): void => {
@@ -30,50 +23,59 @@ const registerCtrl = ({ body }: Request, res: Response): void => {
     gender,
     dni
   } = body
-  const user: Patient = {
+
+  const user = {
     email,
     password,
     firstname,
     lastname,
-    role: 'patient',
+    role: 'patient'
+  }
+  const dataPatient = {
     birthdate,
     phone,
     gender,
     dni
   }
 
-  register(user)
+  register(user, dataPatient)
     .then(response => res.json(response))
     .catch(error => {
       httpErrorHandler(res, error, 500)
     })
 }
 
-const loginDoctorCtrl = ({ body }: Request, res: Response): void => {
-  const { email, password } = body
-  loginDoctor({ email, password })
-    .then(response => res.json(response))
-    .catch(error => {
-      httpErrorHandler(res, error, 500)
-    })
-}
+// const loginDoctorCtrl = ({ body }: Request, res: Response): void => {
+//   const { email, password } = body
+//   loginDoctor({ email, password })
+//     .then(response => res.json(response))
+//     .catch(error => {
+//       httpErrorHandler(res, error, 500)
+//     })
+// }
 
 const registerDoctorCtrl = ({ body }: Request, res: Response): void => {
-  const { email, password, firstname, lastname, speciality } = body
-  const user: Doctor = {
+  const { email, password, firstname, lastname, speciality, phone, photoUrl } =
+    body
+  const user = {
     email,
     password,
     firstname,
     lastname,
-    role: 'doctor',
-    speciality
+    role: 'doctor'
   }
 
-  registerDoctor(user)
+  const dataDoctor = {
+    phone,
+    speciality,
+    photoUrl
+  }
+
+  registerDoctor(user, dataDoctor)
     .then(response => res.json(response))
     .catch(error => {
       httpErrorHandler(res, error, 500)
     })
 }
 
-export { loginCtrl, registerCtrl, loginDoctorCtrl, registerDoctorCtrl }
+export { loginCtrl, registerCtrl, registerDoctorCtrl }

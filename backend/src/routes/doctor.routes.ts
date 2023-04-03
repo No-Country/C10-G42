@@ -1,18 +1,24 @@
 import { Router } from 'express'
 
-import { doctorCtrl } from '../controllers/doctor.controller'
+import {
+  createDoctor,
+  deleteDoctor,
+  getAllDoctors,
+  getDoctor,
+  updateDoctor
+} from '../controllers/doctor.controller'
 import { checkRol } from '../middlewares/role'
 
 const router = Router()
 
 router
   .route('/')
-  .get(doctorCtrl.getAll)
-  .post(checkRol(['admin']), doctorCtrl.create)
+  .get(getAllDoctors)
+  .post(checkRol(['admin']), createDoctor)
 router
   .route('/:id')
-  .get(doctorCtrl.get)
-  .put(checkRol(['admin']), doctorCtrl.update)
-  .delete(checkRol(['admin']), doctorCtrl.delete)
+  .get(getDoctor)
+  .put(checkRol(['doctor', 'admin']), updateDoctor)
+  .delete(checkRol(['admin']), deleteDoctor)
 
 export { router }

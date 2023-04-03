@@ -4,26 +4,10 @@ import { type Patient } from '../interfaces/Patient'
 
 const PatientSchema = new mongoose.Schema<Patient>(
   {
-    email: {
-      type: String,
-      required: true,
-      unique: true
-    },
-    password: {
-      type: String,
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
       required: true
-    },
-    firstname: {
-      type: String,
-      required: true
-    },
-    lastname: {
-      type: String,
-      required: true
-    },
-    role: {
-      type: String,
-      default: 'patient'
     },
     birthdate: {
       type: Date,

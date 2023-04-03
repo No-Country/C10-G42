@@ -1,5 +1,6 @@
 import type { NextFunction, Request, Response } from 'express'
 
+import UserModel from '../models/User'
 import { verifyToken } from '../utils/handleJwt'
 import { httpErrorHandler } from '../utils/httpErrorHandler'
 
@@ -25,8 +26,17 @@ const authMiddleware = (
         httpErrorHandler(res, { message: 'ERROR_NOT_TOKEN_FOUND' }, 404)
         return
       }
-      req.userId = dataToken._id
-      next()
+
+      UserModel.findById(dataToken._id)
+        .then(user => {
+          if (user != null) {
+            req.user = user
+            next()
+          }
+        })
+        .catch(error => {
+          httpErrorHandler(res, error, 500)
+        })
     })
     .catch(error => {
       httpErrorHandler(res, error, 401)
