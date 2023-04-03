@@ -6,7 +6,7 @@
     }
   ],
   "routes": [
-    { "src": "/api/.*", "dest": "src/app.ts" },
+    { "src": "/backend/.*", "dest": "src/app.ts" },
     {
       "handle": "filesystem",
       "src": "/(.*)",
