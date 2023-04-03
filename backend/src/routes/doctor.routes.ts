@@ -5,7 +5,9 @@ import { checkRol } from '../middlewares/role'
 
 const router = Router()
 
-router.route('/').get(doctorCtrl.getAll)
+router
+  .route('/')
+  .get(doctorCtrl.getAll)
   .post(checkRol(['admin']), doctorCtrl.create)
 router
   .route('/:id')

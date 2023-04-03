@@ -33,4 +33,7 @@ const doctorService = {
   }
 }
 
-export { doctorService }
+export {
+  doctorService,
+  createDoctor
+}

@@ -76,7 +76,8 @@ const loginDoctor = async ({ email, password }: Auth): Promise<object> => {
   }
 }
 
-const registerDoctor = async (data: Doctor): Promise<object> => { // TODO: Implementar modelo de Doctor
+const registerDoctor = async (data: Doctor): Promise<object> => {
+  // TODO: Implementar modelo de Doctor
   try {
     const checkIs = await DoctorModel.findOne({ email: data.email })
     if (checkIs != null) throw new Error('El email ya se encuentra registrado')
@@ -98,9 +99,4 @@ const registerDoctor = async (data: Doctor): Promise<object> => { // TODO: Imple
   }
 }
 
-export {
-  login,
-  loginDoctor,
-  register,
-  registerDoctor
-}
+export { login, loginDoctor, register, registerDoctor }

@@ -1,6 +1,16 @@
 import { Router } from 'express'
-import { loginCtrl, loginDoctorCtrl, registerCtrl, registerDoctorCtrl } from '../controllers/auth.controller'
-import { validatorLogin, validatorRegister, validatorRegisterDoctor } from '../middlewares/validators/auth.valid'
+
+import {
+  loginCtrl,
+  loginDoctorCtrl,
+  registerCtrl,
+  registerDoctorCtrl
+} from '../controllers/auth.controller'
+import {
+  validatorLogin,
+  validatorRegister,
+  validatorRegisterDoctor
+} from '../middlewares/validators/auth.valid'
 
 const router = Router()
 

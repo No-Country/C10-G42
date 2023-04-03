@@ -1,9 +1,10 @@
-import express from 'express'
 import cors from 'cors'
+import express from 'express'
+
 import './@types/index'
-import mainRouter from './routes/index'
 import { PORT } from './config/config'
 import dbConnect from './config/database'
+import mainRouter from './routes/index'
 
 const app = express()
 
