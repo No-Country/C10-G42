@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+
 import { type Appointment } from '../interfaces/Turno'
 
 const AppointmentSchema = new mongoose.Schema<Appointment>(
@@ -43,6 +44,6 @@ const AppointmentSchema = new mongoose.Schema<Appointment>(
 
 AppointmentSchema.index({ fecha: 1, hora: 1, medico: 1 }, { unique: true })
 
-const AppointmentModel = mongoose.model('Turnos', AppointmentSchema)
+const AppointmentModel = mongoose.model('Appointment', AppointmentSchema)
 
 export default AppointmentModel

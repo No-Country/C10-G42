@@ -1,50 +1,68 @@
-import { type Response, type Request } from 'express'
+import { type Request, type Response } from 'express'
 
-import { create, get, getAll, update, deleteOne } from '../services/doctor.service'
+import {
+  create,
+  deleteOne,
+  get,
+  getAll,
+  update
+} from '../services/doctor.service'
 import { httpErrorHandler } from '../utils/httpErrorHandler'
 import { type Doctor } from './../interfaces/Doctor'
 
-const createDoctor = ({ body }: Request, res: Response): void => {
-  const drData: Doctor = body
-  const doctorData = { ...drData, role: 'doctor' }
+const createDoctor = (req: Request, res: Response): void => {
+  const doctorData: Doctor = req.body
   create(doctorData)
-    .then((doctor) => res.status(201).json({ msg: 'Usuario Doctor creado correctamente', doctor }))
-    .catch((error) => { httpErrorHandler(res, error, 500) })
+    .then(doctor => {
+      res
+        .status(201)
+        .json({ msg: 'Usuario: Doctor creado correctamente', doctor })
+    })
+    .catch(error => {
+      httpErrorHandler(res, error, 500)
+    })
 }
 
-const getDoctor = (req: Request, res: Response): void => {
-  const { id } = req.params
+const getDoctor = ({ params }: Request, res: Response): void => {
+  const { id } = params
   get(id)
-    .then((doctor) => res.json(doctor))
-    .catch((error) => { httpErrorHandler(res, error, 500) })
+    .then(doctor => {
+      res.json(doctor)
+    })
+    .catch(error => {
+      httpErrorHandler(res, error, 500)
+    })
 }
 
-const getDoctors = (req: Request, res: Response): void => {
+const getAllDoctors = (req: Request, res: Response): void => {
   getAll()
-    .then((doctors) => res.json(doctors))
-    .catch((error) => { httpErrorHandler(res, error, 500) })
+    .then(doctors => res.json(doctors))
+    .catch(error => {
+      httpErrorHandler(res, error, 500)
+    })
 }
 
 const updateDoctor = ({ params, body }: Request, res: Response): void => {
   const { id } = params
-  const { firstname, lastname, speciality }: Doctor = body
-  const doctorData = { firstname, lastname, speciality }
+  const doctorData: Doctor = body
   update(id, doctorData)
-    .then((doctor) => res.json({ msg: 'Doctor actualizado correctamente', doctor }))
-    .catch((error) => { httpErrorHandler(res, error, 500) })
+    .then(() => {
+      res.json({ msg: 'tarea actualizada' })
+    })
+    .catch(error => {
+      httpErrorHandler(res, error, 500)
+    })
 }
 
 const deleteDoctor = ({ params }: Request, res: Response): void => {
   const { id } = params
   deleteOne(id)
-    .then(() => res.json({ msg: `Doctor: ${id}, removido` }))
-    .catch((error) => { httpErrorHandler(res, error, 500) })
+    .then(() => {
+      res.json({ msg: `Doctor: ${id}, removido` })
+    })
+    .catch(error => {
+      httpErrorHandler(res, error, 500)
+    })
 }
 
-export {
-  createDoctor,
-  getDoctor,
-  getDoctors,
-  updateDoctor,
-  deleteDoctor
-}
+export { createDoctor, getDoctor, getAllDoctors, updateDoctor, deleteDoctor }

@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+
 import { type Doctor } from './../interfaces/Doctor'
 
 const DoctorSchema = new mongoose.Schema<Doctor>(
@@ -11,7 +12,7 @@ const DoctorSchema = new mongoose.Schema<Doctor>(
     speciality: {
       type: String,
       required: true
-    },  
+    },
     phone: {
       type: String,
       required: true
@@ -28,5 +29,4 @@ const DoctorSchema = new mongoose.Schema<Doctor>(
 )
 
 const DoctorModel = mongoose.model('Doctor', DoctorSchema)
-
 export default DoctorModel

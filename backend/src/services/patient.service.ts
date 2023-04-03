@@ -1,23 +1,12 @@
 import { type Patient } from '../interfaces/Patient'
 import PatientModel from '../models/Patient'
 
-const create = async (patient: Patient): Promise<Patient> => {
+const create = async (patientData: Patient): Promise<Patient> => {
   try {
-    const newPatient = PatientModel.create(patient)
-    if (newPatient == null) throw new Error('Error al crear el paciente')
-    return await newPatient
-  } catch (error) {
-    throw new Error('Error al crear el paciente')
-  }
-}
-
-const get = async (id: string): Promise<Patient> => {
-  try {
-    const patient = await PatientModel.findById(id)
-    if (patient == null) throw new Error('Paciente no encontrado')
+    const patient = await PatientModel.create(patientData)
     return patient
   } catch (error) {
-    throw new Error('Error al obtener el paciente')
+    throw new Error('Error al crear paciente')
   }
 }
 
@@ -26,34 +15,42 @@ const getAll = async (): Promise<Patient[]> => {
     const patients = await PatientModel.find()
     return patients
   } catch (error) {
-    throw new Error('Error al obtener los pacientes')
+    throw new Error('Error al obtener pacientes')
   }
 }
 
-const update = async (id: string, patient: Patient): Promise<Patient> => {
+const get = async (id: string): Promise<Patient> => {
   try {
-    const foundPatient = await PatientModel.findOneAndUpdate({ _id: id }, patient)
-    if (foundPatient == null) throw new Error('Paciente no encontrado')
-    return foundPatient
+    const patient = await PatientModel.findById(id)
+    if (patient === null) throw new Error('Paciente no encontrado')
+    return patient
   } catch (error) {
-    throw new Error('Error al actualizar el paciente')
+    throw new Error('Error al obtener paciente')
+  }
+}
+
+const update = async (id: string, patientData: Patient): Promise<Patient> => {
+  try {
+    const patient = await PatientModel.findById(id)
+    if (patient === null) throw new Error('Paciente no encontrado')
+    patient.birthdate = patientData.birthdate
+    patient.phone = patientData.phone
+    patient.gender = patientData.gender
+    patient.dni = patientData.dni
+    return await patient.save()
+  } catch (error) {
+    throw new Error('Error al actualizar paciente')
   }
 }
 
 const deleteOne = async (id: string): Promise<Patient> => {
   try {
-    const patient = await PatientModel.findByIdAndDelete(id)
-    if (patient == null) throw new Error('Paciente no encontrado')
-    return patient
+    const patient = await PatientModel.findById(id)
+    if (patient === null) throw new Error('Paciente no encontrado')
+    return await patient.deleteOne()
   } catch (error) {
-    throw new Error('Error al eliminar el paciente')
+    throw new Error('Error al eliminar paciente')
   }
 }
 
-export {
-  create,
-  getAll,
-  get,
-  update,
-  deleteOne
-}
+export { create, getAll, get, update, deleteOne }

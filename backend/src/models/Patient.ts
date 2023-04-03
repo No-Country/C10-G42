@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+
 import { type Patient } from '../interfaces/Patient'
 
 const PatientSchema = new mongoose.Schema<Patient>(
@@ -32,6 +33,6 @@ const PatientSchema = new mongoose.Schema<Patient>(
   }
 )
 
-const PatientModel = mongoose.model('Pacientes', PatientSchema)
+const PatientModel = mongoose.model('Patients', PatientSchema)
 
 export default PatientModel

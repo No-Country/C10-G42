@@ -11,18 +11,18 @@ const removeExtension = (filename: string): string => {
 
 // Import de todos los routers del directorio /routes
 readdirSync(PATH_ROUTES)
-  .filter((file) => {
+  .filter(file => {
     const cleanName = removeExtension(file)
     return cleanName !== 'index'
   })
-  .forEach((file) => {
+  .forEach(file => {
     const cleanName = removeExtension(file)
     import(`./${cleanName}.routes`)
-      .then((moduleRouter) => {
+      .then(moduleRouter => {
         console.log(`Cargando ruta: ${cleanName} ...`)
         mainRouter.use(`/${cleanName}`, moduleRouter.router)
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(`No se pudo cargar ruta ${cleanName}`, err)
       })
   })

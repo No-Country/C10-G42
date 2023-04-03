@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+
 import { type DoctorSchedule } from '../interfaces/DoctorSchedule'
 
 const DoctorScheduleSchema = new mongoose.Schema<DoctorSchedule>(
@@ -30,6 +31,9 @@ const DoctorScheduleSchema = new mongoose.Schema<DoctorSchedule>(
 
 DoctorScheduleSchema.index({ day: 1, doctor: 1 }, { unique: true })
 
-const DoctorScheduleModel = mongoose.model('DoctorSchedule', DoctorScheduleSchema)
+const DoctorScheduleModel = mongoose.model(
+  'DoctorSchedule',
+  DoctorScheduleSchema
+)
 
 export default DoctorScheduleModel

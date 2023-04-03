@@ -1,11 +1,9 @@
-import { type Doctor } from '../interfaces/Doctor'
-import { type Patient } from '../interfaces/Patient'
+import { type User } from '../interfaces/User'
 
 declare global {
   namespace Express {
     export interface Request {
-      user?: Patient | Doctor
-      userId?: string
+      user?: User
     }
   }
 }
