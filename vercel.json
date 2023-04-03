@@ -4,6 +4,8 @@
   "public": true,
   "builds": [
     {
+      "command": "npm run build",
+      "output": "dist",
       "src": "/src/app.ts",
       "use": "@vercel/node",
       "config": {
