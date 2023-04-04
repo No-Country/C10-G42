@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-import { type Appointment } from '../interfaces/Turno'
+import { type Appointment } from '../interfaces/Appointment'
 
 const AppointmentSchema = new mongoose.Schema<Appointment>(
   {
@@ -22,7 +22,6 @@ const AppointmentSchema = new mongoose.Schema<Appointment>(
     },
     duracion: {
       type: Number,
-      required: true,
       default: 60
     },
     paciente: {
