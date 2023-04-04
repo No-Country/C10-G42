@@ -27,7 +27,7 @@ const getPatient = ({ params }: Request, res: Response): void => {
     })
 }
 
-const getAllPatients = (req: Request, res: Response): void => {
+const getAllPatients = (_req: Request, res: Response): void => {
   getAll()
     .then(response => res.json(response))
     .catch(error => {
