@@ -1,22 +1,7 @@
 import { type Request, type Response } from 'express'
 
-import {
-  create,
-  deleteOne,
-  get,
-  getAll,
-  update
-} from '../services/patient.service'
+import { deleteOne, get, getAll, update } from '../services/patient.service'
 import { httpErrorHandler } from '../utils/httpErrorHandler'
-
-const createPatient = ({ body }: Request, res: Response): void => {
-  const { patient } = body
-  create(patient)
-    .then(response => res.json(response))
-    .catch(error => {
-      httpErrorHandler(res, error)
-    })
-}
 
 const getPatient = ({ params }: Request, res: Response): void => {
   const { id } = params
@@ -37,7 +22,13 @@ const getAllPatients = (_req: Request, res: Response): void => {
 
 const updatePatient = ({ params, body }: Request, res: Response): void => {
   const { id } = params
-  const { patient } = body
+  const { birthdate, phone, gender, dni } = body
+  const patient = {
+    birthdate,
+    phone,
+    gender,
+    dni
+  }
 
   update(id, patient)
     .then(response => res.json(response))
@@ -55,10 +46,4 @@ const deletePatient = ({ params }: Request, res: Response): void => {
     })
 }
 
-export {
-  createPatient,
-  getPatient,
-  getAllPatients,
-  updatePatient,
-  deletePatient
-}
+export { getPatient, getAllPatients, updatePatient, deletePatient }
