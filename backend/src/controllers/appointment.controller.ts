@@ -26,7 +26,7 @@ const createAppointment = (req: Request, res: Response): void => {
 const getAppointment = ({ params }: Request, res: Response): void => {
   const { id } = params
   get(id)
-    .then((appointment: Appointment) => {
+    .then(appointment => {
       res.json(appointment)
     })
     .catch((error: any) => {
@@ -46,8 +46,8 @@ const updateAppointment = ({ params, body }: Request, res: Response): void => {
   const { id } = params
   const appointmentData: Appointment = body
   update(id, appointmentData)
-    .then(() => {
-      res.json({ msg: 'turno actualizado' })
+    .then(appointment => {
+      res.json({ msg: 'Turno actualizado', appointment })
     })
     .catch((error: any) => {
       httpErrorHandler(res, error, 500)
@@ -57,8 +57,8 @@ const updateAppointment = ({ params, body }: Request, res: Response): void => {
 const deleteAppointment = ({ params }: Request, res: Response): void => {
   const { id } = params
   deleteOne(id)
-    .then(() => {
-      res.json({ msg: `Doctor: ${id}, removido` })
+    .then(appointment => {
+      res.json({ msg: `Turno: ${id}, removido`, appointment })
     })
     .catch(error => {
       httpErrorHandler(res, error, 500)

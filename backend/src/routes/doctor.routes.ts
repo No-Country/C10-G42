@@ -1,7 +1,6 @@
 import { Router } from 'express'
 
 import {
-  createDoctor,
   deleteDoctor,
   getAllDoctors,
   getDoctor,
@@ -13,10 +12,8 @@ import { validatorUpdate } from '../middlewares/validators/doctor.valid'
 
 const router = Router()
 
-router
-  .route('/')
-  .get(getAllDoctors)
-  .post(authMiddleware, checkRol(['admin']), createDoctor)
+router.get('/', getAllDoctors)
+
 router
   .route('/:id')
   .get(getDoctor)

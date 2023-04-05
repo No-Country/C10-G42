@@ -12,7 +12,7 @@ const validatorCreate = [
         'minutoInicio',
         'duracion',
         'paciente',
-        'doctor'
+        'medico'
       ]
       const receivedFields = Object.keys(req.body)
       return receivedFields.every(field => allowedFields.includes(field))
@@ -59,7 +59,7 @@ const validatorCreate = [
     .isString()
     .withMessage('Id Paciente no válido'),
 
-  body('doctor')
+  body('medico')
     .trim()
     .notEmpty()
     .withMessage('Fecha requerida')

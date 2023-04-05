@@ -18,13 +18,13 @@ const router = Router()
 
 router
   .route('/')
-  .get(
+  .get(authMiddleware, checkRol(['doctor']), getAllAppointments)
+  .post(
     authMiddleware,
-    checkRol(['doctor']),
+    checkRol(['doctor', 'patient']),
     validatorCreate,
-    getAllAppointments
+    createAppointment
   )
-  .post(authMiddleware, checkRol(['doctor', 'patient']), createAppointment)
 
 router
   .route('/:id')

@@ -1,20 +1,12 @@
 import { type Doctor } from '../interfaces/Doctor'
 import DoctorModel from '../models/Doctors'
-
-const create = async (doctorData: Doctor): Promise<Doctor> => {
-  try {
-    const doctor = await DoctorModel.create(doctorData)
-    if (doctor === null) throw new Error('Error al crear el doctor')
-    return doctor
-  } catch (e) {
-    const error: string = e as string
-    throw new Error(error)
-  }
-}
+import UserModel from '../models/User'
 
 const get = async (id: string): Promise<Doctor> => {
   try {
-    const doctor = await DoctorModel.findById(id)
+    const user = await UserModel.findById(id)
+    if (user === null) throw new Error('Usuario no encontrado')
+    const doctor = await DoctorModel.findOne({ user: user._id })
     if (doctor === null) throw new Error('Doctor no encontrado')
     return doctor
   } catch (e) {
@@ -35,7 +27,9 @@ const getAll = async (): Promise<Doctor[]> => {
 
 const update = async (id: string, doctorData: Doctor): Promise<Doctor> => {
   try {
-    const doctor = await DoctorModel.findById(id)
+    const user = await UserModel.findById(id)
+    if (user === null) throw new Error('Usuario no encontrado')
+    const doctor = await DoctorModel.findOne({ user: user._id })
     if (doctor === null) throw new Error('Doctor no encontrado')
     doctor.photoUrl = doctorData.photoUrl
     doctor.phone = doctorData.phone
@@ -49,13 +43,16 @@ const update = async (id: string, doctorData: Doctor): Promise<Doctor> => {
 
 const deleteOne = async (id: string): Promise<Doctor> => {
   try {
-    const doctor = await DoctorModel.findById(id)
+    const user = await DoctorModel.findById(id)
+    if (user === null) throw new Error('Usuario no encontrado')
+    const doctor = await DoctorModel.findOne({ user: user._id })
     if (doctor === null) throw new Error('Doctor no encontrado')
-    return await doctor?.deleteOne()
+    await user.deleteOne()
+    return await doctor.deleteOne()
   } catch (e) {
     const error: string = e as string
     throw new Error(error)
   }
 }
 
-export { create, getAll, get, update, deleteOne }
+export { getAll, get, update, deleteOne }
