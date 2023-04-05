@@ -32,6 +32,7 @@ const registerCtrl = ({ body }: Request, res: Response): void => {
     role: 'patient'
   }
   const dataPatient = {
+    username: `${firstname as string} ${lastname as string}`,
     birthdate,
     phone,
     gender,
@@ -45,15 +46,6 @@ const registerCtrl = ({ body }: Request, res: Response): void => {
     })
 }
 
-// const loginDoctorCtrl = ({ body }: Request, res: Response): void => {
-//   const { email, password } = body
-//   loginDoctor({ email, password })
-//     .then(response => res.json(response))
-//     .catch(error => {
-//       httpErrorHandler(res, error, 500)
-//     })
-// }
-
 const registerDoctorCtrl = ({ body }: Request, res: Response): void => {
   const { email, password, firstname, lastname, speciality, phone, photoUrl } =
     body
@@ -66,6 +58,7 @@ const registerDoctorCtrl = ({ body }: Request, res: Response): void => {
   }
 
   const dataDoctor = {
+    name: `${firstname as string} ${lastname as string}`,
     phone,
     speciality,
     photoUrl

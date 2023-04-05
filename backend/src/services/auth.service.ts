@@ -19,7 +19,6 @@ const login = async ({ email, password }: Auth): Promise<object> => {
     user.set('password', undefined, { strict: false }) // <- volvemos a "ocultar" la password
 
     const response = {
-      message: 'Logueado',
       token: tokenSign(user.id, user.firstname),
       user
     }
@@ -45,7 +44,6 @@ const register = async (user: User, data: any): Promise<object> => {
     if (newPatient == null) throw new Error('Error al registrar el paciente')
 
     const response = {
-      message: 'Registrado correctamente',
       token: tokenSign(newUser.id, user.firstname),
       newPatient
     }
@@ -61,8 +59,6 @@ const registerDoctor = async (user: User, data: any): Promise<object> => {
   try {
     const checkIs = await UserModel.findOne({ email: user.email })
     if (checkIs != null) throw new Error('El email ya se encuentra registrado')
-    console.log(user)
-    console.log(data)
     const hashPassword = await encrypt(user.password)
     const dataUser = { ...user, password: hashPassword }
 
@@ -72,7 +68,6 @@ const registerDoctor = async (user: User, data: any): Promise<object> => {
     console.log(newUser)
 
     const response = {
-      message: 'Registrado correctamente',
       token: tokenSign(newUser.id, user.firstname),
       newDoctor
     }
