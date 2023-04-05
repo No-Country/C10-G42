@@ -6,63 +6,40 @@ import { validateResults } from '../../utils/handleValidator'
 const validatorCreate = [
   body()
     .custom((value, { req }) => {
-      const allowedFields = [
-        'fecha',
-        'horaInicio',
-        'minutoInicio',
-        'duracion',
-        'paciente',
-        'doctor'
-      ]
+      const allowedFields = ['day', 'starttime', 'endtime', 'doctor']
       const receivedFields = Object.keys(req.body)
       return receivedFields.every(field => allowedFields.includes(field))
     })
     .withMessage('El formulario contiene campos invalidos'),
 
-  body('fecha')
+  body('day')
     .trim()
     .notEmpty()
-    .withMessage('Fecha requerida')
+    .withMessage('Dia requerido')
     .bail()
-    .isDate()
-    .withMessage('Fecha no válida'),
+    .isString()
+    .withMessage('Dia no válido'),
 
-  body('horaInicio')
+  body('starttime')
     .trim()
     .notEmpty()
     .withMessage('Hora inicio requerida')
     .bail()
-    .isNumeric()
+    .isString()
     .withMessage('Hora inicio no válida'),
 
-  body('minutoInicio')
+  body('endtime')
     .trim()
     .notEmpty()
     .withMessage('Minuto Inicio requerido')
     .bail()
-    .isNumeric()
-    .withMessage('Minuto Inicio no válido'),
-
-  body('duracion')
-    .trim()
-    .notEmpty()
-    .withMessage('Duracion requerida')
-    .bail()
-    .isNumeric()
-    .withMessage('Duracion no válida'),
-
-  body('paciente')
-    .trim()
-    .notEmpty()
-    .withMessage('Fecha requerida')
-    .bail()
     .isString()
-    .withMessage('Id Paciente no válido'),
+    .withMessage('Minuto Inicio no válido'),
 
   body('doctor')
     .trim()
     .notEmpty()
-    .withMessage('Fecha requerida')
+    .withMessage('Doctor requerido')
     .bail()
     .isString()
     .withMessage('Id Doctor no válido'),
@@ -75,43 +52,35 @@ const validatorCreate = [
 const validatorUpdate = [
   body()
     .custom((value, { req }) => {
-      const allowedFields = ['fecha', 'horaInicio', 'minutoInicio', 'duracion']
+      const allowedFields = ['day', 'starttime', 'endtime']
       const receivedFields = Object.keys(req.body)
       return receivedFields.every(field => allowedFields.includes(field))
     })
     .withMessage('El formulario contiene campos invalidos'),
 
-  body('fecha')
+  body('day')
     .trim()
     .notEmpty()
-    .withMessage('Fecha requerida')
+    .withMessage('Dia requerido')
     .bail()
-    .isDate()
-    .withMessage('Fecha no válida'),
+    .isString()
+    .withMessage('Dia no válido'),
 
-  body('horaInicio')
+  body('starttime')
     .trim()
     .notEmpty()
     .withMessage('Hora inicio requerida')
     .bail()
-    .isNumeric()
+    .isString()
     .withMessage('Hora inicio no válida'),
 
-  body('minutoInicio')
+  body('endtime')
     .trim()
     .notEmpty()
-    .withMessage('Minuto Inicio requerido')
+    .withMessage('Hora fin requerida')
     .bail()
-    .isNumeric()
-    .withMessage('Minuto Inicio no válido'),
-
-  body('duracion')
-    .trim()
-    .notEmpty()
-    .withMessage('Duracion requerida')
-    .bail()
-    .isNumeric()
-    .withMessage('Duracion no válida'),
+    .isString()
+    .withMessage('Hora fin no válida'),
 
   (req: Request, res: Response, next: NextFunction) => {
     validateResults(req, res, next)

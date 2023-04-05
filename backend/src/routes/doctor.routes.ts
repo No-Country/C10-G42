@@ -8,17 +8,24 @@ import {
   updateDoctor
 } from '../controllers/doctor.controller'
 import { checkRol } from '../middlewares/role'
+import { authMiddleware } from '../middlewares/session'
+import { validatorUpdate } from '../middlewares/validators/doctor.valid'
 
 const router = Router()
 
 router
   .route('/')
   .get(getAllDoctors)
-  .post(checkRol(['admin']), createDoctor)
+  .post(authMiddleware, checkRol(['admin']), createDoctor)
 router
   .route('/:id')
   .get(getDoctor)
-  .put(checkRol(['doctor', 'admin']), updateDoctor)
-  .delete(checkRol(['admin']), deleteDoctor)
+  .put(
+    authMiddleware,
+    checkRol(['doctor', 'admin']),
+    validatorUpdate,
+    updateDoctor
+  )
+  .delete(authMiddleware, checkRol(['admin']), deleteDoctor)
 
 export { router }

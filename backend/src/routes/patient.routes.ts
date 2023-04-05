@@ -9,6 +9,7 @@ import {
 } from '../controllers/patient.controller'
 import { checkRol } from '../middlewares/role'
 import { authMiddleware } from '../middlewares/session'
+import { validatorUpdate } from '../middlewares/validators/appointment.valid'
 
 const router = Router()
 
@@ -20,7 +21,7 @@ router
 router
   .route('/:id')
   .get(authMiddleware, checkRol(['doctor', 'patient']), getPatient)
-  .put(authMiddleware, checkRol(['patient']), updatePatient)
+  .put(authMiddleware, checkRol(['patient']), validatorUpdate, updatePatient)
   .delete(authMiddleware, checkRol(['patient']), deletePatient)
 
 export { router }

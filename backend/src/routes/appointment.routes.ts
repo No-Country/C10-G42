@@ -7,16 +7,29 @@ import {
   getAppointment,
   updateAppointment
 } from '../controllers/appointment.controller'
-
-// import { checkRol } from '../middlewares/role'
+import { checkRol } from '../middlewares/role'
+import { authMiddleware } from '../middlewares/session'
+import {
+  validatorCreate,
+  validatorUpdate
+} from '../middlewares/validators/appointment.valid'
 
 const router = Router()
 
-router.route('/').get(getAllAppointments).post(createAppointment)
+router
+  .route('/')
+  .get(
+    authMiddleware,
+    checkRol(['doctor']),
+    validatorCreate,
+    getAllAppointments
+  )
+  .post(authMiddleware, checkRol(['doctor', 'patient']), createAppointment)
+
 router
   .route('/:id')
-  .get(getAppointment)
-  .put(updateAppointment)
-  .delete(deleteAppointment)
+  .get(authMiddleware, checkRol(['doctor', 'patient']), getAppointment)
+  .put(authMiddleware, checkRol(['doctor']), validatorUpdate, updateAppointment)
+  .delete(authMiddleware, checkRol(['doctor']), deleteAppointment)
 
 export { router }
