@@ -8,7 +8,7 @@ const create = async (appointmentData: Appointment): Promise<Appointment> => {
       doctor: appointmentData.medico,
       dia: appointmentData.fecha
     })
-    if (horarios == null) throw new Error('No hay horarios para el medico')
+    if (horarios.length === 0) throw new Error('No hay horarios para el medico')
 
     const fechaInicio = new Date(appointmentData.fecha)
     fechaInicio.setHours(

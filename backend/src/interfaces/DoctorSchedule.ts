@@ -2,7 +2,7 @@ import { type ObjectId } from 'mongoose'
 
 export interface DoctorSchedule {
   doctor: ObjectId
-  dia: string
+  dia: Date
   entrada: string
   salida: string
   intervalo: number

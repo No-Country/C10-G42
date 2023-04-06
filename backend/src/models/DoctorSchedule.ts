@@ -5,8 +5,7 @@ import { type DoctorSchedule } from '../interfaces/DoctorSchedule'
 const DoctorScheduleSchema = new mongoose.Schema<DoctorSchedule>(
   {
     dia: {
-      type: String,
-      enum: ['Mon', 'tue', 'wed', 'thu', 'fri'],
+      type: Date,
       required: true
     },
     entrada: {
