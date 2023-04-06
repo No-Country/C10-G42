@@ -8,9 +8,9 @@ const create = async (
   doctorScheduleData: DoctorSchedule
 ): Promise<DoctorSchedule> => {
   try {
-    const doctorScheduleCreated = await DoctorScheduleModel.create(
-      doctorScheduleData
-    )
+    const doctorSchedule = await DoctorScheduleModel.find({ doctor: doctorScheduleData.doctor, dia: doctorScheduleData.dia })
+    if(doctorSchedule.length > 0) throw new Error('Ya existe un horario para este dia')
+    const doctorScheduleCreated = await DoctorScheduleModel.create(doctorScheduleData)
     return doctorScheduleCreated
   } catch (e) {
     const error: string = e as string
@@ -62,6 +62,7 @@ const update = async (
     schedule.entrada = scheduleData.entrada
     schedule.salida = scheduleData.salida
     schedule.intervalo = scheduleData.intervalo
+    schedule.dia = scheduleData.dia
     return await schedule.save()
   } catch (e) {
     const error: string = e as string

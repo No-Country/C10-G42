@@ -10,6 +10,7 @@ const create = async (appointmentData: Appointment): Promise<Appointment> => {
       doctor: appointmentData.doctor,
       dia: appointmentData.fecha
     })
+    console.log(horarios)
     if (horarios.length === 0) throw new Error('No hay horarios para el medico')
 
     const fechaInicio = new Date(appointmentData.fecha)

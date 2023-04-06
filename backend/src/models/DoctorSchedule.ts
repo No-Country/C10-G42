@@ -32,8 +32,6 @@ const DoctorScheduleSchema = new mongoose.Schema<DoctorSchedule>(
   }
 )
 
-DoctorScheduleSchema.index({ dia: 1, doctor: 1 }, { unique: true })
-
 const DoctorScheduleModel = mongoose.model(
   'DoctorSchedule',
   DoctorScheduleSchema

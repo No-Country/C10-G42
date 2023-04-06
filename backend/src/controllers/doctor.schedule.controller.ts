@@ -41,20 +41,20 @@ const getAllSchedules = (req: Request, res: Response): void => {
 }
 
 const getAvailable = ({ params, body }: Request, res: Response): void => {
-  const { id } = params
-  const { fecha } = body
-  getArray(id, fecha)
+  const { doctor, fecha } = body
+  getArray(doctor, fecha)
     .then(appAvailable => res.json(appAvailable))
     .catch(error => { httpErrorHandler(res, error, 500) })
 }
 
 const updateSchedule = ({ params, body }: Request, res: Response): void => {
   const { id } = params
-  const { entrada, salida, intervalo } = body
+  const { entrada, salida, intervalo, dia } = body
   const scheduleData = {
     entrada,
     salida,
-    intervalo
+    intervalo,
+    dia
   }
   update(id, scheduleData)
     .then(doctorSchedule =>
