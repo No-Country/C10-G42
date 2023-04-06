@@ -5,6 +5,8 @@ import {
   create,
   deleteOne,
   get,
+  getAD,
+  getAP,
   getAll,
   update
 } from '../services/appointment.service'
@@ -16,7 +18,7 @@ const createAppointment = (req: Request, res: Response): void => {
     .then(appointment => {
       res
         .status(201)
-        .json({ msg: 'Usuario: Appointment creado correctamente', appointment })
+        .json(appointment)
     })
     .catch((error: any) => {
       httpErrorHandler(res, error, 500)
@@ -65,10 +67,34 @@ const deleteAppointment = ({ params }: Request, res: Response): void => {
     })
 }
 
+const getAppointmentsPatient = ({ params }: Request, res: Response): void => {
+  const { id } = params
+  getAP(id)
+    .then(appointments => {
+      res.json(appointments)
+    })
+    .catch(error => {
+      httpErrorHandler(res, error, 500)
+    })
+}
+
+const getAppointmentsDoctor = ({ params }: Request, res: Response): void => {
+  const { id } = params
+  getAD(id)
+    .then(appointments => {
+      res.json(appointments)
+    })
+    .catch(error => {
+      httpErrorHandler(res, error, 500)
+    })
+}
+
 export {
   createAppointment,
   getAppointment,
   getAllAppointments,
   updateAppointment,
-  deleteAppointment
+  deleteAppointment,
+  getAppointmentsPatient,
+  getAppointmentsDoctor
 }
