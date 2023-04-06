@@ -29,7 +29,7 @@ const AppointmentSchema = new mongoose.Schema<Appointment>(
       ref: 'Paciente',
       required: true
     },
-    medico: {
+    doctor: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Paciente',
       required: true
@@ -41,7 +41,7 @@ const AppointmentSchema = new mongoose.Schema<Appointment>(
   }
 )
 
-AppointmentSchema.index({ fecha: 1, hora: 1, medico: 1 }, { unique: true })
+AppointmentSchema.index({ fecha: 1, horaInicio: 1, minutoInicio: 1, medico: 1 }, { unique: true })
 
 const AppointmentModel = mongoose.model('Appointment', AppointmentSchema)
 

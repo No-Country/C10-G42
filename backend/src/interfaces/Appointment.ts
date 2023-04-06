@@ -6,5 +6,5 @@ export interface Appointment {
   minutoInicio: number
   duracion: number
   paciente: ObjectId
-  medico: ObjectId
+  doctor: ObjectId
 }

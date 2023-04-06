@@ -5,7 +5,7 @@ import DoctorScheduleModel from '../models/DoctorSchedule'
 const create = async (appointmentData: Appointment): Promise<Appointment> => {
   try {
     const horarios = await DoctorScheduleModel.find({
-      doctor: appointmentData.medico,
+      doctor: appointmentData.doctor,
       dia: appointmentData.fecha
     })
     if (horarios.length === 0) throw new Error('No hay horarios para el medico')
@@ -20,7 +20,7 @@ const create = async (appointmentData: Appointment): Promise<Appointment> => {
     )
 
     const turnoOcupado = await AppointmentModel.findOne({
-      medico: appointmentData.medico,
+      medico: appointmentData.doctor,
       fecha: {
         $gte: fechaInicio,
         $lt: fechaFin
