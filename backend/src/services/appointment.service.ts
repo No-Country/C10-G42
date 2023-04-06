@@ -1,6 +1,8 @@
 import { type Appointment } from '../interfaces/Appointment'
 import AppointmentModel from '../models/Appointment'
 import DoctorScheduleModel from '../models/DoctorSchedule'
+import DoctorModel from '../models/Doctors'
+import PatientModel from '../models/Patient'
 
 const create = async (appointmentData: Appointment): Promise<Appointment> => {
   try {
@@ -84,4 +86,28 @@ const deleteOne = async (id: string): Promise<Appointment> => {
   }
 }
 
-export { create, getAll, get, update, deleteOne }
+const getAP = async (id: string) => {
+  try {
+    const patient = await PatientModel.findById(id)
+    if (patient === null) return { msg: 'paciente no encontrado' }
+    const appointments = await AppointmentModel.find({ paciente: id })
+    if (!appointments.length) return { msg: 'turnos del paciente no encontrado' }
+    return appointments
+  } catch (error) {
+    throw new Error('Error al buscar turnos del paciente')
+  }
+}
+
+const getAD = async (id: string) => {
+  try {
+    const doctor = await DoctorModel.findById(id)
+    if (doctor === null) return { msg: 'doctor no encontrado' }
+    const appointments = await AppointmentModel.find({ medico: id })
+    if (!appointments.length) return { msg: 'turnos del doctor no encontrado' }
+    return appointments
+  } catch (error) {
+    throw new Error('Error al buscar turnos del doctor')
+  }
+}
+
+export { create, getAll, get, update, deleteOne, getAP, getAD }
