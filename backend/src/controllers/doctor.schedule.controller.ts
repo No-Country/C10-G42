@@ -10,8 +10,8 @@ import {
 import { httpErrorHandler } from '../utils/httpErrorHandler'
 
 const createSchedule = ({ body }: Request, res: Response): void => {
-  const { day, starttime, endtime, doctor } = body
-  create({ day, starttime, endtime, doctor })
+  const { dia, entrada, salida, intervalo, doctor } = body
+  create({ dia, entrada, salida, intervalo, doctor })
     .then(scheduleCreated =>
       res
         .status(201)
@@ -41,8 +41,13 @@ const getAllSchedules = (req: Request, res: Response): void => {
 
 const updateSchedule = ({ params, body }: Request, res: Response): void => {
   const { id } = params
-  const { starttime, endtime } = body
-  update(id, { starttime, endtime })
+  const { entrada, salida, intervalo } = body
+  const scheduleData = {
+    entrada,
+    salida,
+    intervalo
+  }
+  update(id, scheduleData)
     .then(doctorSchedule =>
       res.json({
         msg: 'Horario medico actualizado correctamente',

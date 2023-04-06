@@ -4,22 +4,26 @@ import { type DoctorSchedule } from '../interfaces/DoctorSchedule'
 
 const DoctorScheduleSchema = new mongoose.Schema<DoctorSchedule>(
   {
-    day: {
+    dia: {
       type: String,
       enum: ['Mon', 'tue', 'wed', 'thu', 'fri'],
       required: true
     },
-    starttime: {
+    entrada: {
       type: String,
       required: true
     },
-    endtime: {
+    salida: {
       type: String,
       required: true
     },
     doctor: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Doctor',
+      required: true
+    },
+    turnos: {
+      type: [String],
       required: true
     }
   },

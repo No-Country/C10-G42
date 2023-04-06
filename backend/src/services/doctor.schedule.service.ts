@@ -1,11 +1,6 @@
 import DoctorScheduleModel from '../models/DoctorSchedule'
 import { type DoctorSchedule } from './../interfaces/DoctorSchedule'
 
-interface ScheduleTimeType {
-  starttime: string
-  endtime: string
-}
-
 const create = async (
   doctorScheduleData: DoctorSchedule
 ): Promise<DoctorSchedule> => {
@@ -43,13 +38,14 @@ const getAll = async (): Promise<DoctorSchedule[]> => {
 
 const update = async (
   id: string,
-  scheduleData: ScheduleTimeType
+  scheduleData: any
 ): Promise<DoctorSchedule> => {
   try {
     const schedule = await DoctorScheduleModel.findById(id)
     if (schedule === null) throw new Error('Horario del doctor no encontrado')
-    schedule.starttime = scheduleData.starttime
-    schedule.endtime = scheduleData.endtime
+    schedule.entrada = scheduleData.entrada
+    schedule.salida = scheduleData.salida
+    schedule.intervalo = scheduleData.intervalo
     return await schedule.save()
   } catch (e) {
     const error: string = e as string

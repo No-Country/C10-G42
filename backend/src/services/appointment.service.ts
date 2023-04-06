@@ -1,12 +1,39 @@
 import { type Appointment } from '../interfaces/Appointment'
 import AppointmentModel from '../models/Appointment'
+import DoctorScheduleModel from '../models/DoctorSchedule'
 
 const create = async (appointmentData: Appointment): Promise<Appointment> => {
   try {
+    const horarios = await DoctorScheduleModel.find({
+      doctor: appointmentData.medico,
+      dia: appointmentData.fecha
+    })
+    if (horarios == null) throw new Error('No hay horarios para el medico')
+
+    const fechaInicio = new Date(appointmentData.fecha)
+    fechaInicio.setHours(
+      appointmentData.horaInicio,
+      appointmentData.minutoInicio
+    )
+    const fechaFin = new Date(
+      fechaInicio.getTime() + appointmentData.duracion * 60000
+    )
+
+    const turnoOcupado = await AppointmentModel.findOne({
+      medico: appointmentData.medico,
+      fecha: {
+        $gte: fechaInicio,
+        $lt: fechaFin
+      }
+    })
+
+    if (turnoOcupado !== null) throw new Error('El turno ya esta ocupado')
+
     const appointment = await AppointmentModel.create(appointmentData)
     return appointment
-  } catch (error) {
-    throw new Error('Error al crear appointment')
+  } catch (e) {
+    const error: string = e as string
+    throw new Error(error)
   }
 }
 
