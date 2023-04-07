@@ -5,18 +5,26 @@ import {
   create,
   deleteOne,
   get,
+  getAD,
+  getAP,
   getAll,
   update
 } from '../services/appointment.service'
 import { httpErrorHandler } from '../utils/httpErrorHandler'
 
 const createAppointment = (req: Request, res: Response): void => {
-  const appointmentData: Appointment = req.body
+  const { fecha, horaInicio, duracion, paciente, doctor } =
+    req.body
+  const appointmentData: Appointment = {
+    fecha,
+    horaInicio,
+    duracion,
+    paciente,
+    doctor
+  }
   create(appointmentData)
     .then(appointment => {
-      res
-        .status(201)
-        .json({ msg: 'Usuario: Appointment creado correctamente', appointment })
+      res.status(201).json(appointment)
     })
     .catch((error: any) => {
       httpErrorHandler(res, error, 500)
@@ -65,10 +73,34 @@ const deleteAppointment = ({ params }: Request, res: Response): void => {
     })
 }
 
+const getAppointmentsPatient = ({ params }: Request, res: Response): void => {
+  const { id } = params
+  getAP(id)
+    .then(appointments => {
+      res.json(appointments)
+    })
+    .catch(error => {
+      httpErrorHandler(res, error, 500)
+    })
+}
+
+const getAppointmentsDoctor = ({ params }: Request, res: Response): void => {
+  const { id } = params
+  getAD(id)
+    .then(appointments => {
+      res.json(appointments)
+    })
+    .catch(error => {
+      httpErrorHandler(res, error, 500)
+    })
+}
+
 export {
   createAppointment,
   getAppointment,
   getAllAppointments,
   updateAppointment,
-  deleteAppointment
+  deleteAppointment,
+  getAppointmentsPatient,
+  getAppointmentsDoctor
 }

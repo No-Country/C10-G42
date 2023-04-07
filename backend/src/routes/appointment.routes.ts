@@ -5,6 +5,8 @@ import {
   deleteAppointment,
   getAllAppointments,
   getAppointment,
+  getAppointmentsDoctor,
+  getAppointmentsPatient,
   updateAppointment
 } from '../controllers/appointment.controller'
 import { checkRol } from '../middlewares/role'
@@ -31,5 +33,9 @@ router
   .get(authMiddleware, checkRol(['doctor', 'patient']), getAppointment)
   .put(authMiddleware, checkRol(['doctor']), validatorUpdate, updateAppointment)
   .delete(authMiddleware, checkRol(['doctor']), deleteAppointment)
+
+router.route('/doctor/:id').get(getAppointmentsDoctor)
+
+router.route('/patient/:id').get(getAppointmentsPatient)
 
 export { router }

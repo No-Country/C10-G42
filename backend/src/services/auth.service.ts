@@ -65,7 +65,6 @@ const registerDoctor = async (user: User, data: any): Promise<object> => {
     const newUser = await UserModel.create(dataUser)
     if (newUser == null) throw new Error('Error al registrar usuario')
     const newDoctor = await DoctorModel.create({ ...data, user: newUser._id })
-    console.log(newUser)
 
     const response = {
       token: tokenSign(newUser.id, user.firstname),
