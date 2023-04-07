@@ -5,9 +5,8 @@ import {
   create,
   deleteOne,
   get,
-  getAD,
-  getAP,
   getAll,
+  getAppxPatOrDoc,
   update
 } from '../services/appointment.service'
 import { httpErrorHandler } from '../utils/httpErrorHandler'
@@ -73,9 +72,31 @@ const deleteAppointment = ({ params }: Request, res: Response): void => {
     })
 }
 
-const getAppointmentsPatient = ({ params }: Request, res: Response): void => {
+/**
+ * @param req Request<{ReqParams},{ResParams}, {ReqBody}, {ReqQuery}>
+ * @param res Response
+ */
+const getAppointmentsPatient = (
+  {
+    params,
+    query
+  }: Request<
+    { id: string },
+    {},
+    {},
+    { fechaInicio: string; fechaFin: string; page: number }
+  >,
+  res: Response
+): void => {
   const { id } = params
-  getAP(id)
+  const { fechaInicio, fechaFin, page } = query
+  getAppxPatOrDoc(
+    id,
+    'paciente',
+    fechaInicio as string,
+    fechaFin as string,
+    page
+  )
     .then(appointments => {
       res.json(appointments)
     })
@@ -84,9 +105,25 @@ const getAppointmentsPatient = ({ params }: Request, res: Response): void => {
     })
 }
 
-const getAppointmentsDoctor = ({ params }: Request, res: Response): void => {
+/**
+ * @param req Request<{ReqParams},{ResParams}, {ReqBody}, {ReqQuery}>
+ * @param res Response
+ */
+const getAppointmentsDoctor = (
+  {
+    params,
+    query
+  }: Request<
+    { id: string },
+    {},
+    {},
+    { fechaInicio: string; fechaFin: string; page: number }
+  >,
+  res: Response
+): void => {
   const { id } = params
-  getAD(id)
+  const { fechaInicio, fechaFin, page } = query
+  getAppxPatOrDoc(id, 'medico', fechaInicio, fechaFin, page)
     .then(appointments => {
       res.json(appointments)
     })

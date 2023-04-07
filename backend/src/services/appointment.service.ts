@@ -3,6 +3,7 @@ import AppointmentModel from '../models/Appointment'
 import DoctorScheduleModel from '../models/DoctorSchedule'
 import DoctorModel from '../models/Doctors'
 import PatientModel from '../models/Patient'
+import { AppointmentPaginated } from '../utils/types/appointment.types'
 
 const create = async (appointmentData: Appointment): Promise<Appointment> => {
   try {
@@ -74,6 +75,32 @@ const deleteOne = async (id: string): Promise<Appointment> => {
   }
 }
 
+
+/**
+ * lista de turnos paginados con id del paciente o medico, filtros por fechas
+ * @param id string
+ * @param typeId 'medico' | 'paciente'
+ * @param fechaInicio string
+ * @param fechaFin string
+ * @returns Promise <AppointmentPaginated | {msg: string}>
+ */
+const getAppxPatOrDoc = async (
+  id: string,
+  typeId: 'medico' | 'paciente',
+  fechaInicio: string,
+  fechaFin: string,
+  page: number = 1
+): Promise<AppointmentPaginated | { msg: string }> => {
+  const query = {
+    ...(typeId === 'medico' ? { medico: id } : { paciente: id }),
+    ...(fechaInicio &&
+      fechaFin && {
+      fecha: {
+        $gte: new Date(fechaInicio),
+        $lte: new Date(fechaFin)
+      }
+    })
+
 const getAP = async (id: string): Promise<Appointment[]> => {
   try {
     const patient = await PatientModel.findById(id)
@@ -84,6 +111,44 @@ const getAP = async (id: string): Promise<Appointment[]> => {
   } catch (error) {
     throw new Error('Error al buscar turnos del paciente')
   }
+
+  const ITEMS_PER_PAGE = 2
+  const skip = (page - 1) * ITEMS_PER_PAGE // 1 * 20 = 20
+  try {
+    //check user :  doctor | patient
+    const userFound =
+      typeId === 'medico'
+        ? await DoctorModel.findById(id)
+        : await PatientModel.findById(id)
+    if (userFound === null)
+      return {
+        msg: `${typeId === 'medico' ? 'Medico' : 'Paciente'} no encontrado`
+      }
+
+    const countAP = AppointmentModel.countDocuments(query)
+    const appointments = AppointmentModel.find(query)
+      .limit(ITEMS_PER_PAGE)
+      .skip(skip)
+    const [itemsCount, items] = await Promise.all([countAP, appointments])
+    const pageCount = Math.ceil(itemsCount / ITEMS_PER_PAGE)
+
+    if (!items.length)
+      return {
+        msg: `Turnos del del usuario ${typeId === 'medico' ? 'Medico' : 'Paciente'
+          } no encontrado`
+      }
+    return {
+      pagination: {
+        itemsCount,
+        pageCount
+      },
+      items
+    }
+  } catch (error) {
+    throw new Error(
+      `Error al buscar turnos del usuario ${typeId === 'medico' ? 'Medico' : 'Paciente'
+      } - ${error}`
+    )
 }
 
 const getAD = async (id: string): Promise<Appointment[]> => {
@@ -99,4 +164,4 @@ const getAD = async (id: string): Promise<Appointment[]> => {
   }
 }
 
-export { create, getAll, get, update, deleteOne, getAP, getAD }
+export { create, getAll, get, update, deleteOne, getAppxPatOrDoc }
