@@ -7,6 +7,7 @@ import {
   getAppointment,
   getAppointmentsDoctor,
   getAppointmentsPatient,
+  getAvailable,
   updateAppointment
 } from '../controllers/appointment.controller'
 import { checkRol } from '../middlewares/role'
@@ -21,12 +22,7 @@ const router = Router()
 router
   .route('/')
   .get(authMiddleware, checkRol(['doctor']), getAllAppointments)
-  .post(
-    authMiddleware,
-    checkRol(['doctor', 'patient']),
-    validatorCreate,
-    createAppointment
-  )
+  .post(authMiddleware, checkRol(['doctor', 'patient']), validatorCreate, createAppointment)
 
 router
   .route('/:id')
@@ -37,5 +33,7 @@ router
 router.route('/doctor/:id').get(getAppointmentsDoctor)
 
 router.route('/patient/:id').get(getAppointmentsPatient)
+
+router.route('/:idDoctor').post(getAvailable)
 
 export { router }

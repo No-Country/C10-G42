@@ -5,7 +5,6 @@ import {
   deleteOne,
   get,
   getAll,
-  getArray,
   update
 } from '../services/doctor.schedule.service'
 import { httpErrorHandler } from '../utils/httpErrorHandler'
@@ -35,16 +34,6 @@ const getSchedule = ({ params }: Request, res: Response): void => {
 const getAllSchedules = (req: Request, res: Response): void => {
   getAll()
     .then(doctorSchedules => res.json(doctorSchedules))
-    .catch(error => {
-      httpErrorHandler(res, error, 500)
-    })
-}
-
-const getAvailable = ({ params, body }: Request, res: Response): void => {
-  const { idDoctor } = params
-  const { fecha } = body
-  getArray(idDoctor, fecha)
-    .then(appAvailable => res.json(appAvailable))
     .catch(error => {
       httpErrorHandler(res, error, 500)
     })
@@ -84,7 +73,6 @@ export {
   createSchedule,
   getSchedule,
   getAllSchedules,
-  getAvailable,
   updateSchedule,
   deleteSchedule
 }
