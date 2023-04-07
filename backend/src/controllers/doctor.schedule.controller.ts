@@ -5,13 +5,14 @@ import {
   deleteOne,
   get,
   getAll,
+  getArray,
   update
 } from '../services/doctor.schedule.service'
 import { httpErrorHandler } from '../utils/httpErrorHandler'
 
 const createSchedule = ({ body }: Request, res: Response): void => {
-  const { day, starttime, endtime, doctor } = body
-  create({ day, starttime, endtime, doctor })
+  const { dia, entrada, salida, intervalo, doctor } = body
+  create({ dia, entrada, salida, intervalo, doctor })
     .then(scheduleCreated =>
       res
         .status(201)
@@ -39,10 +40,26 @@ const getAllSchedules = (req: Request, res: Response): void => {
     })
 }
 
+const getAvailable = ({ params, body }: Request, res: Response): void => {
+  const { idDoctor } = params
+  const { fecha } = body
+  getArray(idDoctor, fecha)
+    .then(appAvailable => res.json(appAvailable))
+    .catch(error => {
+      httpErrorHandler(res, error, 500)
+    })
+}
+
 const updateSchedule = ({ params, body }: Request, res: Response): void => {
   const { id } = params
-  const { starttime, endtime } = body
-  update(id, { starttime, endtime })
+  const { entrada, salida, intervalo, dia } = body
+  const scheduleData = {
+    entrada,
+    salida,
+    intervalo,
+    dia
+  }
+  update(id, scheduleData)
     .then(doctorSchedule =>
       res.json({
         msg: 'Horario medico actualizado correctamente',
@@ -67,6 +84,7 @@ export {
   createSchedule,
   getSchedule,
   getAllSchedules,
+  getAvailable,
   updateSchedule,
   deleteSchedule
 }
