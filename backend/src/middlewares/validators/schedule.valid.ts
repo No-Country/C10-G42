@@ -6,13 +6,13 @@ import { validateResults } from '../../utils/handleValidator'
 const validatorCreate = [
   body()
     .custom((value, { req }) => {
-      const allowedFields = ['day', 'starttime', 'endtime', 'doctor']
+      const allowedFields = ['dia', 'entrada', 'salida', 'intervalo', 'doctor']
       const receivedFields = Object.keys(req.body)
       return receivedFields.every(field => allowedFields.includes(field))
     })
     .withMessage('El formulario contiene campos invalidos'),
 
-  body('day')
+  body('dia')
     .trim()
     .notEmpty()
     .withMessage('Dia requerido')
@@ -20,21 +20,29 @@ const validatorCreate = [
     .isString()
     .withMessage('Dia no válido'),
 
-  body('starttime')
+  body('entrada')
     .trim()
     .notEmpty()
-    .withMessage('Hora inicio requerida')
+    .withMessage('Entrada requerida')
     .bail()
     .isString()
-    .withMessage('Hora inicio no válida'),
+    .withMessage('Entrada no válida'),
 
-  body('endtime')
+  body('salida')
     .trim()
     .notEmpty()
-    .withMessage('Minuto Inicio requerido')
+    .withMessage('Salida requerida')
     .bail()
     .isString()
-    .withMessage('Minuto Inicio no válido'),
+    .withMessage('Salida no válida'),
+
+  body('intervalo')
+    .trim()
+    .notEmpty()
+    .withMessage('Intervalo requerido')
+    .bail()
+    .isNumeric()
+    .withMessage('Intervalo no válido'),
 
   body('doctor')
     .trim()

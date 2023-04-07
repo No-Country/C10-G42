@@ -12,7 +12,7 @@ const validatorCreate = [
         'minutoInicio',
         'duracion',
         'paciente',
-        'medico'
+        'doctor'
       ]
       const receivedFields = Object.keys(req.body)
       return receivedFields.every(field => allowedFields.includes(field))
@@ -32,16 +32,8 @@ const validatorCreate = [
     .notEmpty()
     .withMessage('Hora inicio requerida')
     .bail()
-    .isNumeric()
+    .isString()
     .withMessage('Hora inicio no válida'),
-
-  body('minutoInicio')
-    .trim()
-    .notEmpty()
-    .withMessage('Minuto Inicio requerido')
-    .bail()
-    .isNumeric()
-    .withMessage('Minuto Inicio no válido'),
 
   body('duracion')
     .trim()
@@ -59,7 +51,7 @@ const validatorCreate = [
     .isString()
     .withMessage('Id Paciente no válido'),
 
-  body('medico')
+  body('doctor')
     .trim()
     .notEmpty()
     .withMessage('Fecha requerida')

@@ -12,7 +12,15 @@ import {
 import { httpErrorHandler } from '../utils/httpErrorHandler'
 
 const createAppointment = (req: Request, res: Response): void => {
-  const appointmentData: Appointment = req.body
+  const { fecha, horaInicio, duracion, paciente, doctor } =
+    req.body
+  const appointmentData: Appointment = {
+    fecha,
+    horaInicio,
+    duracion,
+    paciente,
+    doctor
+  }
   create(appointmentData)
     .then(appointment => {
       res.status(201).json(appointment)

@@ -14,9 +14,7 @@ const getAll = async (): Promise<Patient[]> => {
 
 const get = async (id: string): Promise<Patient> => {
   try {
-    const user = await UserModel.findById(id)
-    if (user === null) throw new Error('Usuario no encontrado')
-    const patient = await PatientModel.findOne({ user: user._id })
+    const patient = await PatientModel.findById(id)
     if (patient === null) throw new Error('Paciente no encontrado')
     return patient
   } catch (e) {
@@ -27,9 +25,7 @@ const get = async (id: string): Promise<Patient> => {
 
 const update = async (id: string, patientData: any): Promise<Patient> => {
   try {
-    const user = await UserModel.findById(id)
-    if (user === null) throw new Error('Usuario no encontrado')
-    const patient = await PatientModel.findOne({ user: user._id })
+    const patient = await PatientModel.findById(id)
     if (patient === null) throw new Error('Paciente no encontrado')
     patient.birthdate = patientData.birthdate
     patient.phone = patientData.phone
@@ -44,10 +40,10 @@ const update = async (id: string, patientData: any): Promise<Patient> => {
 
 const deleteOne = async (id: string): Promise<Patient> => {
   try {
-    const user = await UserModel.findById(id)
-    if (user === null) throw new Error('Usuario no encontrado')
-    const patient = await PatientModel.findOne({ user: user._id })
+    const patient = await PatientModel.findById(id)
     if (patient === null) throw new Error('Paciente no encontrado')
+    const user = await UserModel.findOne({ _id: patient.user })
+    if (user === null) throw new Error('Usuario no encontrado')
     await user.deleteOne()
     return await patient.deleteOne()
   } catch (e) {
