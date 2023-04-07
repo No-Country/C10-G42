@@ -96,7 +96,13 @@ const getAppointmentsPatient = (
 ): void => {
   const { id } = params
   const { fechaInicio, fechaFin, page } = query
-  getAppxPatOrDoc(id, 'paciente', fechaInicio, fechaFin, page)
+  getAppxPatOrDoc(
+    id,
+    'paciente',
+    fechaInicio as string,
+    fechaFin as string,
+    page
+  )
     .then(appointments => {
       res.json(appointments)
     })
