@@ -1,9 +1,8 @@
-import ISODate from 'mongoose'
-
 import { type Appointment } from '../interfaces/Appointment'
 import AppointmentModel from '../models/Appointment'
 import DoctorModel from '../models/Doctors'
 import PatientModel from '../models/Patient'
+import { AppointmentPaginated } from '../utils/types/appointment.types'
 
 const create = async (appointmentData: Appointment): Promise<Appointment> => {
   try {
@@ -62,69 +61,69 @@ const deleteOne = async (id: string): Promise<Appointment> => {
 }
 
 /**
- * lista de turnos id del paciente, filtros por fecha
- * @param id 
- * @param fechaInicio 
- * @param fechaFin 
- * @returns []Appointment || {msg: string}
+ * lista de turnos paginados con id del paciente o medico, filtros por fechas
+ * @param id string
+ * @param typeId 'medico' | 'paciente'
+ * @param fechaInicio string
+ * @param fechaFin string
+ * @returns Promise <AppointmentPaginated | {msg: string}>
  */
-const getAP = async (id: string, fechaInicio: string, fechaFin: string) => {
-  try {
-    const patient = await PatientModel.findById(id)
-    if (patient === null) return { msg: 'paciente no encontrado' }
-    let appointments
-    if (fechaInicio && fechaFin) {
-      appointments = await AppointmentModel.find({
-        paciente: id,
-        fecha: {
-          $gte: new Date(fechaInicio),
-          $lte: new Date(fechaFin)
-        }
-      })
-      return appointments
-    }
-    appointments = await AppointmentModel.find({
-      paciente: id
+const getAppxPatOrDoc = async (
+  id: string,
+  typeId: 'medico' | 'paciente',
+  fechaInicio: string,
+  fechaFin: string,
+  page: number = 1
+): Promise<AppointmentPaginated | { msg: string }> => {
+  const query = {
+    ...(typeId === 'medico' ? { medico: id } : { paciente: id }),
+    ...(fechaInicio &&
+      fechaFin && {
+      fecha: {
+        $gte: new Date(fechaInicio),
+        $lte: new Date(fechaFin)
+      }
     })
-    if (!appointments.length)
-      return { msg: 'turnos del paciente no encontrado' }
-    return appointments
+  }
+
+  const ITEMS_PER_PAGE = 2
+  const skip = (page - 1) * ITEMS_PER_PAGE // 1 * 20 = 20
+  try {
+    //check user :  doctor | patient
+    const userFound =
+      typeId === 'medico'
+        ? await DoctorModel.findById(id)
+        : await PatientModel.findById(id)
+    if (userFound === null)
+      return {
+        msg: `${typeId === 'medico' ? 'Medico' : 'Paciente'} no encontrado`
+      }
+
+    const countAP = AppointmentModel.countDocuments(query)
+    const appointments = AppointmentModel.find(query)
+      .limit(ITEMS_PER_PAGE)
+      .skip(skip)
+    const [itemsCount, items] = await Promise.all([countAP, appointments])
+    const pageCount = Math.ceil(itemsCount / ITEMS_PER_PAGE)
+
+    if (!items.length)
+      return {
+        msg: `Turnos del del usuario ${typeId === 'medico' ? 'Medico' : 'Paciente'
+          } no encontrado`
+      }
+    return {
+      pagination: {
+        itemsCount,
+        pageCount
+      },
+      items
+    }
   } catch (error) {
-    throw new Error('Error al buscar turnos del paciente')
+    throw new Error(
+      `Error al buscar turnos del usuario ${typeId === 'medico' ? 'Medico' : 'Paciente'
+      } - ${error}`
+    )
   }
 }
 
-/**
- * lista de turnos por id del doctor, filtros por fecha
- * @param id 
- * @param fechaInicio 
- * @param fechaFin 
- * @returns []Appointment || {msg: string}
- */
-const getAD = async (id: string, fechaInicio?: string, fechaFin?: string) => {
-  try {
-    const doctor = await DoctorModel.findById(id)
-    if (doctor === null) return { msg: 'doctor no encontrado' }
-    let appointments
-    if (fechaInicio && fechaFin) {
-      appointments = await AppointmentModel.find({
-        medico: id,
-        fecha: {
-          $gte: new Date(fechaInicio),
-          $lte: new Date(fechaFin)
-        }
-      })
-      return appointments
-    }
-    appointments = await AppointmentModel.find({
-      medico: id
-    })
-    if (!appointments.length) return { msg: 'turnos del doctor no encontrado' }
-    return appointments
-  } catch (error) {
-    throw new Error('Error al buscar turnos del doctor')
-  }
-}
-
-
-export { create, getAll, get, update, deleteOne, getAP, getAD }
+export { create, getAll, get, update, deleteOne, getAppxPatOrDoc }
