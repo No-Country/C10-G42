@@ -34,12 +34,7 @@ router
   .put(authMiddleware, checkRol(['doctor']), validatorUpdate, updateAppointment)
   .delete(authMiddleware, checkRol(['doctor']), deleteAppointment)
 
-router
-  .route('/doctor/:id')
-  .get(getAppointmentsDoctor)
-
-router
-  .route('/patient/:id')
-  .get(getAppointmentsPatient)
+router.get('/doctor/:id', getAppointmentsDoctor)
+router.get('/patient/:id', getAppointmentsPatient)
 
 export { router }

@@ -16,9 +16,7 @@ const createAppointment = (req: Request, res: Response): void => {
   const appointmentData: Appointment = req.body
   create(appointmentData)
     .then(appointment => {
-      res
-        .status(201)
-        .json(appointment)
+      res.status(201).json(appointment)
     })
     .catch((error: any) => {
       httpErrorHandler(res, error, 500)
@@ -67,9 +65,16 @@ const deleteAppointment = ({ params }: Request, res: Response): void => {
     })
 }
 
-const getAppointmentsPatient = ({ params }: Request, res: Response): void => {
+const getAppointmentsPatient = (
+  {
+    params,
+    query
+  }: Request<{ id: string }, {}, {}, { fechaInicio: string; fechaFin: string }>,
+  res: Response
+): void => {
   const { id } = params
-  getAP(id)
+  const { fechaInicio, fechaFin } = query
+  getAP(id, fechaInicio, fechaFin)
     .then(appointments => {
       res.json(appointments)
     })
@@ -78,9 +83,16 @@ const getAppointmentsPatient = ({ params }: Request, res: Response): void => {
     })
 }
 
-const getAppointmentsDoctor = ({ params }: Request, res: Response): void => {
+const getAppointmentsDoctor = (
+  {
+    params,
+    query
+  }: Request<{ id: string }, {}, {}, { fechaInicio: string; fechaFin: string }>,
+  res: Response
+): void => {
   const { id } = params
-  getAD(id)
+  const { fechaInicio, fechaFin } = query
+  getAD(id, fechaInicio as string, fechaFin as string)
     .then(appointments => {
       res.json(appointments)
     })
