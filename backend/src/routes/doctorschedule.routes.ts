@@ -4,8 +4,8 @@ import {
   createSchedule,
   deleteSchedule,
   getAllSchedules,
-  getSchedule,
   getAvailable,
+  getSchedule,
   updateSchedule
 } from '../controllers/doctor.schedule.controller'
 import { checkRol } from '../middlewares/role'
@@ -28,8 +28,6 @@ router
   .put(authMiddleware, checkRol(['doctor']), validatorUpdate, updateSchedule)
   .delete(authMiddleware, checkRol(['doctor']), deleteSchedule)
 
-router
-  .route('/:idMedico')
-  .post(getAvailable)
+router.route('/:idDoctor').post(getAvailable)
 
 export { router }

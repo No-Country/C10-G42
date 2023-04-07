@@ -16,6 +16,10 @@ const DoctorScheduleSchema = new mongoose.Schema<DoctorSchedule>(
       type: String,
       required: true
     },
+    intervalo: {
+      type: Number,
+      required: true
+    },
     doctor: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Doctor',

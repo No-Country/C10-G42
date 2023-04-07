@@ -1,4 +1,3 @@
-import { Appointment } from '../interfaces/Appointment'
 import AppointmentModel from '../models/Appointment'
 import DoctorScheduleModel from '../models/DoctorSchedule'
 import { getAvailableAppointments } from '../utils/handleSchedule'
@@ -8,9 +7,15 @@ const create = async (
   doctorScheduleData: DoctorSchedule
 ): Promise<DoctorSchedule> => {
   try {
-    const doctorSchedule = await DoctorScheduleModel.find({ doctor: doctorScheduleData.doctor, dia: doctorScheduleData.dia })
-    if(doctorSchedule.length > 0) throw new Error('Ya existe un horario para este dia')
-    const doctorScheduleCreated = await DoctorScheduleModel.create(doctorScheduleData)
+    const doctorSchedule = await DoctorScheduleModel.find({
+      doctor: doctorScheduleData.doctor,
+      dia: doctorScheduleData.dia
+    })
+    if (doctorSchedule.length > 0)
+      throw new Error('Ya existe un horario para este dia')
+    const doctorScheduleCreated = await DoctorScheduleModel.create(
+      doctorScheduleData
+    )
     return doctorScheduleCreated
   } catch (e) {
     const error: string = e as string
@@ -39,12 +44,18 @@ const getAll = async (): Promise<DoctorSchedule[]> => {
   }
 }
 
-const getArray = async (id: string, fecha: Date): Promise<[{}]> => {
+const getArray = async (id: string, fecha: Date): Promise<any[]> => {
   try {
-    const schedule = await DoctorScheduleModel.findOne({doctor: id, fecha: fecha})
-    if(schedule === null) throw new Error('No hay turnos disponibles')
-    const appointments = await AppointmentModel.find({doctor: id, fecha: fecha})
-    const available = getAvailableAppointments(schedule, appointments);
+    const schedule = await DoctorScheduleModel.findOne({
+      doctor: id,
+      dia: fecha
+    })
+    if (schedule === null) throw new Error('No hay turnos disponibles')
+    const appointments = await AppointmentModel.find({
+      doctor: id,
+      fecha
+    })
+    const available = getAvailableAppointments(schedule, appointments)
     return available
   } catch (e) {
     const error: string = e as string

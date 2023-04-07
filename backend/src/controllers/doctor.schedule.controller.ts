@@ -41,10 +41,13 @@ const getAllSchedules = (req: Request, res: Response): void => {
 }
 
 const getAvailable = ({ params, body }: Request, res: Response): void => {
-  const { doctor, fecha } = body
-  getArray(doctor, fecha)
+  const { idDoctor } = params
+  const { fecha } = body
+  getArray(idDoctor, fecha)
     .then(appAvailable => res.json(appAvailable))
-    .catch(error => { httpErrorHandler(res, error, 500) })
+    .catch(error => {
+      httpErrorHandler(res, error, 500)
+    })
 }
 
 const updateSchedule = ({ params, body }: Request, res: Response): void => {
