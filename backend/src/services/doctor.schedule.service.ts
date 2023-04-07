@@ -1,6 +1,4 @@
-import AppointmentModel from '../models/Appointment'
 import DoctorScheduleModel from '../models/DoctorSchedule'
-import { getAvailableAppointments } from '../utils/handleSchedule'
 import { type DoctorSchedule } from './../interfaces/DoctorSchedule'
 
 const create = async (
@@ -44,25 +42,6 @@ const getAll = async (): Promise<DoctorSchedule[]> => {
   }
 }
 
-const getArray = async (id: string, fecha: Date): Promise<any[]> => {
-  try {
-    const schedule = await DoctorScheduleModel.findOne({
-      doctor: id,
-      dia: fecha
-    })
-    if (schedule === null) throw new Error('No hay turnos disponibles')
-    const appointments = await AppointmentModel.find({
-      doctor: id,
-      fecha
-    })
-    const available = getAvailableAppointments(schedule, appointments)
-    return available
-  } catch (e) {
-    const error: string = e as string
-    throw new Error(error)
-  }
-}
-
 const update = async (
   id: string,
   scheduleData: any
@@ -92,4 +71,4 @@ const deleteOne = async (id: string): Promise<DoctorSchedule> => {
   }
 }
 
-export { create, getAll, get, getArray, update, deleteOne }
+export { create, getAll, get, update, deleteOne }
