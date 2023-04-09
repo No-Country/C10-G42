@@ -11,59 +11,13 @@
 
 ## Auth
 
-| TYPE    | DETAIL            | ROUTE                                                     | SEND                                                         |
-| ------- | ----------------- | --------------------------------------------------------- | ------------------------------------------------------------ |
-| POST    | login user        | https://consultoriomern.onrender.com/api/auth/login       | headers: {token}                                             |
-| POST    | register patient  | https://consultoriomern.onrender.com/api/auth/register    | headers: {token}, params: {id}, body: Patient Schema         |
-| POST    | register doctor   | https://consultoriomern.onrender.com/api//register/doctor | headers: {token}, params: {id}, body: Doctor Schema          |
+| TYPE    | DETAIL            | ROUTE                                      | SEND                                                         |
+| ------- | ----------------- | ------------------------------------------ | ------------------------------------------------------------ |
+| POST    | login user        | http://localhost:PORT/api/auth/login       | headers: {token}                                             |
+| POST    | register patient  | http://localhost:PORT/api/auth/register    | headers: {token}, params: {id}, body: Patient Schema         |
+| POST    | register doctor   | http://localhost:PORT/api//register/doctor | headers: {token}, params: {id}, body: Doctor Schema          |
 
-
-## Patient
-
-| TYPE   | DETAIL            | ROUTE                                                  | SEND                                                              |
-| ------ | ----------------- | ------------------------------------------------------ | ----------------------------------------------------------------- |
-| GET    | get all patients  | https://consultoriomern.onrender.com/api/patient       | headers: {token}                                                  |
-| GET    | get patient by Id | https://consultoriomern.onrender.com/api/patient/:id   | headers: {token}, params: {id}                                    |
-| PUT    | update patient    | https://consultoriomern.onrender.com/api/patient/:id   | headers: {token}, params: {id}, body: {birthdate,phone,gender,dni}|
-| DELETE | delete patient    | https://consultoriomern.onrender.com/api/patient/:id   | headers: {token}, params: {id}                                    |
-
-
-## Doctor
-
-| TYPE   | DETAIL           | ROUTE                                                 | SEND                                                                |
-| ------ | ---------------- | ----------------------------------------------------- | ------------------------------------------------------------------- |
-| GET    | get all doctor   | https://consultoriomern.onrender.com/api/doctor       | headers: {token}                                                    |
-| GET    | get doctor by Id | https://consultoriomern.onrender.com/api/doctor/:id   | headers: {token}, params: {id}                                      |
-| PUT    | update doctor    | https://consultoriomern.onrender.com/api/doctor/:id   | headers: {token}, params: {id}, body: {speciality, phone, photoUrl} |
-| DELETE | delete doctor    | https://consultoriomern.onrender.com/api/doctor/:id   | headers: {token}, params: {id}                                      |
-
-
-## Doctor Schedules
-
-| TYPE   | DETAIL             | ROUTE                                                       | SEND                                                         |
-| ------ | ------------------ | ----------------------------------------------------------- | ------------------------------------------------------------ |
-| GET    | get all schedules  | https://consultoriomern.onrender.com/api/doctorschedule     |                                                              |
-| GET    | get schedule by Id | https://consultoriomern.onrender.com/api/doctorschedule/:id | params: {id}                                                 |
-| POST   | create schedule    | https://consultoriomern.onrender.com/api/doctorschedule     | headers: {token}, body: DoctorSchedule Schema                |
-| PUT    | update schedule    | https://consultoriomern.onrender.com/api/doctorschedule/:id | headers: {token}, params: {id}, body: {day,starttime,endtime}|
-| DELETE | delete schedule    | https://consultoriomern.onrender.com/api/doctorschedule/:id | headers: {token}, params: {id}                               |
-
-
-
-## Appointments
-
-| TYPE   | DETAIL              | ROUTE                                                    | SEND                                                         |
-| ------ | ------------------- | -------------------------------------------------------- | ------------------------------------------------------------ |
-| GET    | get all appointment | https://consultoriomern.onrender.com/api/appointment     | headers: {token}                                             |
-| GET    | get appoint. by Id  | https://consultoriomern.onrender.com/api/appointment/:id | headers: {token}, params: {id}                               |
-| POST   | get array of avail. | https://consultoriomern.onrender.com/api/appointment/:id | params: {idDoctor}                                           |
-| POST   | create appointment  | https://consultoriomern.onrender.com/api/appointment     | headers: {token}, body: Appointment Schema                   |
-| PUT    | update appointment  | https://consultoriomern.onrender.com/api/appointment/:id | headers: {token}, params: {id}, body: Appointment Schema     |
-| DELETE | delete appointment  | https://consultoriomern.onrender.com/api/appointment/:id | headers: {token}, params: {id}                               |
-
-
-
-## User Schema
+### User Schema
 
 | KEY        | TYPE      | REQUIRED |
 | ---------- | --------- | -------- |
@@ -73,17 +27,18 @@
 | lastname   | String    |   YES    |
 | role       | String    |   YES    |
 
-## Doctor Schema
 
-| KEY        | TYPE       | REQUIRED |
-| ---------- | ---------- | -------- |
-| user       | ObjectId   |   YES    |
-| name       | String     |   YES    |
-| speciality | String     |   YES    |
-| phone      | String     |   YES    |
-| photoUrl   | String     |   YES    |
 
-## Patient Schema
+## Patient
+
+| TYPE   | DETAIL            | ROUTE                                   | SEND                                                              |
+| ------ | ----------------- | --------------------------------------- | ----------------------------------------------------------------- |
+| GET    | get all patients  | http://localhost:PORT/api/patient       | headers: {token}                                                  |
+| GET    | get patient by Id | http://localhost:PORT/api/patient/:id   | headers: {token}, params: {id}                                    |
+| PUT    | update patient    | http://localhost:PORT/api/patient/:id   | headers: {token}, params: {id}, body: {birthdate,phone,gender,dni}|
+| DELETE | delete patient    | http://localhost:PORT/api/patient/:id   | headers: {token}, params: {id}                                    |
+
+### Patient Schema
 
 | KEY       | TYPE        | REQUIRED |
 | --------- | ----------- | -------- |
@@ -94,7 +49,60 @@
 | gender    | String      |   YES    |
 | dni       | String      |   YES    |
 
-## Appointment Schema
+
+## Doctor
+
+| TYPE   | DETAIL           | ROUTE                                  | SEND                                                                |
+| ------ | ---------------- | -------------------------------------- | ------------------------------------------------------------------- |
+| GET    | get all doctor   | http://localhost:PORT/api/doctor       | headers: {token}                                                    |
+| GET    | get doctor by Id | http://localhost:PORT/api/doctor/:id   | headers: {token}, params: {id}                                      |
+| PUT    | update doctor    | http://localhost:PORT/api/doctor/:id   | headers: {token}, params: {id}, body: {speciality, phone, photoUrl} |
+| DELETE | delete doctor    | http://localhost:PORT/api/doctor/:id   | headers: {token}, params: {id}                                      |
+
+### Doctor Schema
+
+| KEY        | TYPE       | REQUIRED |
+| ---------- | ---------- | -------- |
+| user       | ObjectId   |   YES    |
+| name       | String     |   YES    |
+| speciality | String     |   YES    |
+| phone      | String     |   YES    |
+| photoUrl   | String     |   YES    |
+
+
+## Doctor Schedules
+
+| TYPE   | DETAIL             | ROUTE                                        | SEND                                                         |
+| ------ | ------------------ | -------------------------------------------- | ------------------------------------------------------------ |
+| GET    | get all schedules  | http://localhost:PORT/api/doctorschedule     |                                                              |
+| GET    | get schedule by Id | http://localhost:PORT/api/doctorschedule/:id | params: {id}                                                 |
+| POST   | create schedule    | http://localhost:PORT/api/doctorschedule     | headers: {token}, body: DoctorSchedule Schema                |
+| PUT    | update schedule    | http://localhost:PORT/api/doctorschedule/:id | headers: {token}, params: {id}, body: {day,starttime,endtime}|
+| DELETE | delete schedule    | http://localhost:PORT/api/doctorschedule/:id | headers: {token}, params: {id}                               |
+
+### DoctorSchedule Schema
+
+| KEY       | TYPE       | REQUIRED |
+| --------- | ---------- | -------- |
+| doctor    | ObjectId   |   YES    |
+| day       | Date       |   YES    |
+| in_time   | String     |   YES    |
+| out_time  | String     |   YES    |
+| interval  | Number     |   YES    |
+
+
+## Appointments
+
+| TYPE   | DETAIL              | ROUTE                                     | SEND                                                         |
+| ------ | ------------------- | ----------------------------------------- | ------------------------------------------------------------ |
+| GET    | get all appointment | http://localhost:PORT/api/appointment     | headers: {token}                                             |
+| GET    | get appoint. by Id  | http://localhost:PORT/api/appointment/:id | headers: {token}, params: {id}                               |
+| POST   | get array of avail. | http://localhost:PORT/api/appointment/:id | params: {idDoctor}                                           |
+| POST   | create appointment  | http://localhost:PORT/api/appointment     | headers: {token}, body: Appointment Schema                   |
+| PUT    | update appointment  | http://localhost:PORT/api/appointment/:id | headers: {token}, params: {id}, body: Appointment Schema     |
+| DELETE | delete appointment  | http://localhost:PORT/api/appointment/:id | headers: {token}, params: {id}                               |
+
+### Appointment Schema
 
 | KEY        | TYPE       | REQUIRED |
 | ---------- | ---------- | -------- |
@@ -104,12 +112,4 @@
 | patient    | ObjectId   |   YES    |
 | doctor     | ObjectId   |   YES    |
 
-## DoctorSchedule Schema
 
-| KEY       | TYPE       | REQUIRED |
-| --------- | ---------- | -------- |
-| doctor    | ObjectId   |   YES    |
-| day       | Date       |   YES    |
-| in_time   | String     |   YES    |
-| out_time  | String     |   YES    |
-| interval  | Number     |   YES    |
