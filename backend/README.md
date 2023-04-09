@@ -54,8 +54,8 @@
 
 | TYPE   | DETAIL           | ROUTE                                  | SEND                                                                |
 | ------ | ---------------- | -------------------------------------- | ------------------------------------------------------------------- |
-| GET    | get all doctor   | http://localhost:PORT/api/doctor       | headers: {token}                                                    |
-| GET    | get doctor by Id | http://localhost:PORT/api/doctor/:id   | headers: {token}, params: {id}                                      |
+| GET    | get all doctor   | http://localhost:PORT/api/doctor       |                                                                     |
+| GET    | get doctor by Id | http://localhost:PORT/api/doctor/:id   | params: {id}                                                        |
 | PUT    | update doctor    | http://localhost:PORT/api/doctor/:id   | headers: {token}, params: {id}, body: {speciality, phone, photoUrl} |
 | DELETE | delete doctor    | http://localhost:PORT/api/doctor/:id   | headers: {token}, params: {id}                                      |
 
@@ -93,14 +93,16 @@
 
 ## Appointments
 
-| TYPE   | DETAIL              | ROUTE                                     | SEND                                                         |
-| ------ | ------------------- | ----------------------------------------- | ------------------------------------------------------------ |
-| GET    | get all appointment | http://localhost:PORT/api/appointment     | headers: {token}                                             |
-| GET    | get appoint. by Id  | http://localhost:PORT/api/appointment/:id | headers: {token}, params: {id}                               |
-| POST   | get array of avail. | http://localhost:PORT/api/appointment/:id | params: {idDoctor}                                           |
-| POST   | create appointment  | http://localhost:PORT/api/appointment     | headers: {token}, body: Appointment Schema                   |
-| PUT    | update appointment  | http://localhost:PORT/api/appointment/:id | headers: {token}, params: {id}, body: Appointment Schema     |
-| DELETE | delete appointment  | http://localhost:PORT/api/appointment/:id | headers: {token}, params: {id}                               |
+| TYPE   | DETAIL              | ROUTE                                             | SEND                                                      |
+| ------ | ------------------- | ------------------------------------------------- | --------------------------------------------------------- |
+| GET    | get all appointment | http://localhost:PORT/api/appointment             | headers: {token}                                          |
+| GET    | get appoint. by Id  | http://localhost:PORT/api/appointment/:id         | headers: {token}, params: {id}                            |
+| GET    | get doctor appoint. | http://localhost:PORT/api/appointment/doctor/:id  | headers: {token}                                          |
+| GET    | get patient appoint.| http://localhost:PORT/api/appointment/patient/:id | headers: {token}                                          |
+| POST   | get array of avail. | http://localhost:PORT/api/appointment/:id         | params: {idDoctor}                                        |
+| POST   | create appointment  | http://localhost:PORT/api/appointment             | headers: {token}, body: Appointment Schema                |
+| PUT    | update appointment  | http://localhost:PORT/api/appointment/:id         | headers: {token}, params: {id}, body: Appointment Schema  |
+| DELETE | delete appointment  | http://localhost:PORT/api/appointment/:id         | headers: {token}, params: {id}                            |
 
 ### Appointment Schema
 
