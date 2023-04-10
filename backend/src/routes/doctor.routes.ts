@@ -19,7 +19,12 @@ router.get('/random/:limit', getRandomDoctors)
 router
   .route('/:id')
   .get(getDoctor)
-  .put(authMiddleware, checkRol(['doctor', 'admin']), validatorUpdate, updateDoctor)
+  .put(
+    authMiddleware,
+    checkRol(['doctor', 'admin']),
+    validatorUpdate,
+    updateDoctor
+  )
   .delete(authMiddleware, checkRol(['admin']), deleteDoctor)
 
 export { router }

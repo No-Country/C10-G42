@@ -22,13 +22,14 @@ const get = async (id: string): Promise<Doctor> => {
 const getAll = async (
   page: number = 1,
   speciality: string
-): Promise<{ pagination: { itemsCount: number; pageCount: number }, items: Doctor[] }
+): Promise<
+  | { pagination: { itemsCount: number; pageCount: number }; items: Doctor[] }
   | { msg: string }
 > => {
   const ITEMS_PER_PAGE = 2
   const skip = (page - 1) * ITEMS_PER_PAGE // 1 * 20 = 20
   const query = {
-    ...(speciality && { speciality })
+    ...(speciality != null && { speciality })
   }
   try {
     const countDoc = DoctorModel.countDocuments(query)
@@ -83,12 +84,14 @@ const deleteOne = async (id: string): Promise<Doctor> => {
 
 /**
  * obtener lista aleatoria limitada de doctores
- * @param limit 
- * @returns 
+ * @param limit
+ * @returns
  */
 const getRandom = async (limit: string): Promise<Doctor[]> => {
   try {
-    const doctors = await DoctorModel.aggregate([{ $sample: { size: Number(limit) } }])
+    const doctors = await DoctorModel.aggregate([
+      { $sample: { size: Number(limit) } }
+    ])
     return doctors
   } catch (e) {
     const error: string = e as string

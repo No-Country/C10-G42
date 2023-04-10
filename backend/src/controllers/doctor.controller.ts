@@ -1,9 +1,14 @@
 import { type Request, type Response } from 'express'
 
-import { deleteOne, get, getAll, getRandom, update } from '../services/doctor.service'
+import {
+  deleteOne,
+  get,
+  getAll,
+  getRandom,
+  update
+} from '../services/doctor.service'
 import { httpErrorHandler } from '../utils/httpErrorHandler'
 import { type Doctor } from './../interfaces/Doctor'
-import { param } from 'express-validator'
 
 const getDoctor = ({ params }: Request, res: Response): void => {
   const { id } = params
@@ -19,12 +24,7 @@ const getDoctor = ({ params }: Request, res: Response): void => {
 const getAllDoctors = (
   {
     query
-  }: Request<
-    unknown,
-    unknown,
-    unknown,
-    { page: number, speciality: string }
-  >,
+  }: Request<unknown, unknown, unknown, { page: number; speciality: string }>,
   res: Response
 ): void => {
   const { page, speciality } = query
@@ -61,7 +61,7 @@ const deleteDoctor = ({ params }: Request, res: Response): void => {
 const getRandomDoctors = ({ params }: Request, res: Response): void => {
   const { limit } = params
   getRandom(limit)
-    .then((doctors) => {
+    .then(doctors => {
       res.json(doctors)
     })
     .catch(error => {
@@ -69,4 +69,10 @@ const getRandomDoctors = ({ params }: Request, res: Response): void => {
     })
 }
 
-export { getDoctor, getAllDoctors, updateDoctor, deleteDoctor, getRandomDoctors }
+export {
+  getDoctor,
+  getAllDoctors,
+  updateDoctor,
+  deleteDoctor,
+  getRandomDoctors
+}

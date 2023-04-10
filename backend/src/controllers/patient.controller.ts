@@ -20,9 +20,9 @@ const getAllPatients = (_req: Request, res: Response): void => {
     })
 }
 
-const updatePatient = ({ params, body }: Request, res: Response): void => {
-  const { id } = params
-  const { birthdate, phone, gender, dni } = body
+const updatePatient = (req: Request, res: Response): void => {
+  const { id } = req.params
+  const { birthdate, phone, gender, dni } = req.body
   const patient = {
     birthdate,
     phone,

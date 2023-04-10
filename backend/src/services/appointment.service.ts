@@ -9,13 +9,13 @@ const create = async (appointmentData: Appointment): Promise<Appointment> => {
   try {
     const horarios = await DoctorScheduleModel.find({
       doctor: appointmentData.doctor,
-      dia: appointmentData.fecha
+      dia: new Date(appointmentData.fecha)
     })
     if (horarios.length === 0) throw new Error('No hay horarios para el medico')
 
     const turnoOcupado = await AppointmentModel.findOne({
       medico: appointmentData.doctor,
-      fecha: appointmentData.fecha,
+      fecha: new Date(appointmentData.fecha),
       horaInicio: appointmentData.horaInicio
     })
     if (turnoOcupado !== null) throw new Error('El turno ya esta ocupado')
@@ -47,16 +47,16 @@ const getAll = async (): Promise<Appointment[]> => {
   }
 }
 
-const getArray = async (id: string, fecha: Date): Promise<any[]> => {
+const getArray = async (id: string, fecha: string): Promise<any[]> => {
   try {
     const schedule = await DoctorScheduleModel.findOne({
       doctor: id,
-      dia: fecha
+      dia: new Date(fecha)
     })
     if (schedule === null) throw new Error('No hay turnos disponibles')
     const appointments = await AppointmentModel.find({
       doctor: id,
-      fecha
+      dia: new Date(fecha)
     })
     const available = getAvailableAppointments(schedule, appointments)
     return available
@@ -102,12 +102,13 @@ const getAppxPatOrDoc = async (
 ): Promise<any> => {
   const query = {
     ...(typeId === 'doctor' ? { doctor: id } : { paciente: id }),
-    ...(fechaInicio && fechaFin && {
-      fecha: {
-        $gte: new Date(fechaInicio),
-        $lte: new Date(fechaFin)
-      }
-    })
+    ...(fechaInicio != null &&
+      fechaFin != null && {
+        fecha: {
+          $gte: new Date(fechaInicio),
+          $lte: new Date(fechaFin)
+        }
+      })
   }
 
   const ITEMS_PER_PAGE = 2
@@ -132,8 +133,9 @@ const getAppxPatOrDoc = async (
 
     if (items.length === 0)
       return {
-        msg: `Turnos del del usuario ${typeId === 'doctor' ? 'Doctor' : 'Paciente'
-          } no encontrado`
+        msg: `Turnos del del usuario ${
+          typeId === 'doctor' ? 'Doctor' : 'Paciente'
+        } no encontrado`
       }
 
     return {
@@ -144,8 +146,9 @@ const getAppxPatOrDoc = async (
       items
     }
   } catch (e) {
-    const error: string = `Error al buscar turnos del usuario ${typeId === 'doctor' ? 'Doctor' : 'Paciente'
-      } - ${e as string}`
+    const error: string = `Error al buscar turnos del usuario ${
+      typeId === 'doctor' ? 'Doctor' : 'Paciente'
+    } - ${e as string}`
     throw new Error(error)
   }
 }
