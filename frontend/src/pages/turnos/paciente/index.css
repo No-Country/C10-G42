@@ -1,0 +1,19 @@
+.paciente-container{
+ background-color:#3232ac;
+ padding: 2rem;
+ 
+}.paciente-container h5{
+    color: #fff;
+    
+   }
+
+   .horarios{
+    margin: .4rem;
+   }
+   .days{
+    padding: .5rem
+   }
+   .time a {
+    margin: 0.5rem;
+   }
+   
