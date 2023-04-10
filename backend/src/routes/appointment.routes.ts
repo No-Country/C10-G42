@@ -16,6 +16,7 @@ import {
   validatorCreate,
   validatorUpdate
 } from '../middlewares/validators/appointment.valid'
+import { checkUserOrRol } from '../middlewares/user'
 
 const router = Router()
 
@@ -31,9 +32,9 @@ router
 
 router
   .route('/:id')
-  .get(authMiddleware, checkRol(['doctor', 'patient']), getAppointment)
-  .put(authMiddleware, checkRol(['doctor']), validatorUpdate, updateAppointment)
-  .delete(authMiddleware, checkRol(['doctor']), deleteAppointment)
+  .get(authMiddleware, checkUserOrRol(['doctor', 'admin']), getAppointment)
+  .put(authMiddleware, checkUserOrRol(['doctor']), validatorUpdate, updateAppointment)
+  .delete(authMiddleware, checkUserOrRol(['doctor']), deleteAppointment)
 
 router
   .route('/doctor/:id')
@@ -41,7 +42,7 @@ router
 
 router
   .route('/patient/:id')
-  .get(authMiddleware, checkRol(['patient']), getAppointmentsPatient)
+  .get(authMiddleware, checkUserOrRol(['doctor']), getAppointmentsPatient)
 
 router.route('/:idDoctor').post(getAvailable)
 

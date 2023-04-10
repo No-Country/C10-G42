@@ -35,6 +35,17 @@ const getAllDoctors = (
     })
 }
 
+const getRandomDoctors = ({ params }: Request, res: Response): void => {
+  const { limit } = params
+  getRandom(limit)
+    .then(doctors => {
+      res.json(doctors)
+    })
+    .catch(error => {
+      httpErrorHandler(res, error, 500)
+    })
+}
+
 const updateDoctor = ({ params, body }: Request, res: Response): void => {
   const { id } = params
   const doctorData: Doctor = body
@@ -58,16 +69,6 @@ const deleteDoctor = ({ params }: Request, res: Response): void => {
     })
 }
 
-const getRandomDoctors = ({ params }: Request, res: Response): void => {
-  const { limit } = params
-  getRandom(limit)
-    .then(doctors => {
-      res.json(doctors)
-    })
-    .catch(error => {
-      httpErrorHandler(res, error, 500)
-    })
-}
 
 export {
   getDoctor,
