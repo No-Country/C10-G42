@@ -7,9 +7,9 @@ import {
   getRandomDoctors,
   updateDoctor
 } from '../controllers/doctor.controller'
-import { checkRol } from '../middlewares/role'
 import { authMiddleware } from '../middlewares/session'
 import { validatorUpdate } from '../middlewares/validators/doctor.valid'
+import { checkUserOrRol } from '../middlewares/user'
 
 const router = Router()
 
@@ -21,10 +21,10 @@ router
   .get(getDoctor)
   .put(
     authMiddleware,
-    checkRol(['doctor', 'admin']),
+    checkUserOrRol(['admin']),
     validatorUpdate,
     updateDoctor
   )
-  .delete(authMiddleware, checkRol(['admin']), deleteDoctor)
+  .delete(authMiddleware, checkUserOrRol(['admin']), deleteDoctor)
 
 export { router }
