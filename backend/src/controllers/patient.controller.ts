@@ -27,7 +27,7 @@ const updatePatient = (req: Request, res: Response): void => {
     birthdate,
     phone,
     gender,
-    dni,
+    dni
   }
 
   update(id, patient)

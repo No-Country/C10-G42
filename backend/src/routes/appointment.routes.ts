@@ -22,7 +22,12 @@ const router = Router()
 router
   .route('/')
   .get(authMiddleware, checkRol(['doctor']), getAllAppointments)
-  .post(authMiddleware, checkRol(['doctor', 'patient']), validatorCreate, createAppointment)
+  .post(
+    authMiddleware,
+    checkRol(['doctor', 'patient']),
+    validatorCreate,
+    createAppointment
+  )
 
 router
   .route('/:id')
@@ -30,11 +35,14 @@ router
   .put(authMiddleware, checkRol(['doctor']), validatorUpdate, updateAppointment)
   .delete(authMiddleware, checkRol(['doctor']), deleteAppointment)
 
+router
+  .route('/doctor/:id')
+  .get(authMiddleware, checkRol(['doctor']), getAppointmentsDoctor)
 
-router.route('/doctor/:id').get(authMiddleware,  getAppointmentsDoctor)
+router
+  .route('/patient/:id')
+  .get(authMiddleware, checkRol(['patient']), getAppointmentsPatient)
 
-router.route('/patient/:id').get(authMiddleware,  getAppointmentsPatient)
-
-router.route('/available/:idDoctor').get(getAvailable)
+router.route('/:idDoctor').post(getAvailable)
 
 export { router }

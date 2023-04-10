@@ -129,7 +129,7 @@ const getAppxPatOrDoc = async (
       .limit(ITEMS_PER_PAGE)
       .skip(skip)
     const [itemsCount, items] = await Promise.all([countAP, appointments])
-    const pageCount = Math.ceil(itemsCount / ITEMS_PER_PAGE)
+    const pagesCount = Math.ceil(itemsCount / ITEMS_PER_PAGE)
 
     if (items.length === 0)
       return {
@@ -141,7 +141,7 @@ const getAppxPatOrDoc = async (
     return {
       pagination: {
         itemsCount,
-        pageCount
+        pagesCount
       },
       items
     }
