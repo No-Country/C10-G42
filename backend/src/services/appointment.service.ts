@@ -102,13 +102,12 @@ const getAppxPatOrDoc = async (
 ): Promise<any> => {
   const query = {
     ...(typeId === 'doctor' ? { doctor: id } : { paciente: id }),
-    ...(fechaInicio !== '' &&
-      fechaFin !== '' && {
-        fecha: {
-          $gte: new Date(fechaInicio),
-          $lte: new Date(fechaFin)
-        }
-      })
+    ...(fechaInicio && fechaFin && {
+      fecha: {
+        $gte: new Date(fechaInicio),
+        $lte: new Date(fechaFin)
+      }
+    })
   }
 
   const ITEMS_PER_PAGE = 2
@@ -129,26 +128,24 @@ const getAppxPatOrDoc = async (
       .limit(ITEMS_PER_PAGE)
       .skip(skip)
     const [itemsCount, items] = await Promise.all([countAP, appointments])
-    const pageCount = Math.ceil(itemsCount / ITEMS_PER_PAGE)
+    const pagesCount = Math.ceil(itemsCount / ITEMS_PER_PAGE)
 
     if (items.length === 0)
       return {
-        msg: `Turnos del del usuario ${
-          typeId === 'doctor' ? 'Doctor' : 'Paciente'
-        } no encontrado`
+        msg: `Turnos del del usuario ${typeId === 'doctor' ? 'Doctor' : 'Paciente'
+          } no encontrado`
       }
 
     return {
       pagination: {
         itemsCount,
-        pageCount
+        pagesCount
       },
       items
     }
   } catch (e) {
-    const error: string = `Error al buscar turnos del usuario ${
-      typeId === 'doctor' ? 'Doctor' : 'Paciente'
-    } - ${e as string}`
+    const error: string = `Error al buscar turnos del usuario ${typeId === 'doctor' ? 'Doctor' : 'Paciente'
+      } - ${e as string}`
     throw new Error(error)
   }
 }

@@ -31,7 +31,10 @@ router
   .delete(authMiddleware, checkRol(['doctor']), deleteAppointment)
 
 
-router.route('/doctor/:id').get(getAppointmentsDoctor)
+router
+  .route('/:id')
+  .get(authMiddleware), getAppointmentsDoctor)
+router.route('/doctor/:id').get(authMiddleware, getAppointmentsDoctor)
 
 router.route('/patient/:id').get(getAppointmentsPatient)
 

@@ -4,6 +4,7 @@ import {
   deleteDoctor,
   getAllDoctors,
   getDoctor,
+  getRandomDoctors,
   updateDoctor
 } from '../controllers/doctor.controller'
 import { checkRol } from '../middlewares/role'
@@ -13,6 +14,7 @@ import { validatorUpdate } from '../middlewares/validators/doctor.valid'
 const router = Router()
 
 router.get('/', getAllDoctors)
+router.get('/random/:limit', getRandomDoctors)
 
 router
   .route('/:id')

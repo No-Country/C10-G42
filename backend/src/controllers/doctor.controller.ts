@@ -1,8 +1,9 @@
 import { type Request, type Response } from 'express'
 
-import { deleteOne, get, getAll, update } from '../services/doctor.service'
+import { deleteOne, get, getAll, getRandom, update } from '../services/doctor.service'
 import { httpErrorHandler } from '../utils/httpErrorHandler'
 import { type Doctor } from './../interfaces/Doctor'
+import { param } from 'express-validator'
 
 const getDoctor = ({ params }: Request, res: Response): void => {
   const { id } = params
@@ -15,8 +16,19 @@ const getDoctor = ({ params }: Request, res: Response): void => {
     })
 }
 
-const getAllDoctors = (req: Request, res: Response): void => {
-  getAll()
+const getAllDoctors = (
+  {
+    query
+  }: Request<
+    unknown,
+    unknown,
+    unknown,
+    { page: number, speciality: string }
+  >,
+  res: Response
+): void => {
+  const { page, speciality } = query
+  getAll(page, speciality)
     .then(doctors => res.json(doctors))
     .catch(error => {
       httpErrorHandler(res, error, 500)
@@ -46,4 +58,15 @@ const deleteDoctor = ({ params }: Request, res: Response): void => {
     })
 }
 
-export { getDoctor, getAllDoctors, updateDoctor, deleteDoctor }
+const getRandomDoctors = ({ params }: Request, res: Response): void => {
+  const { limit } = params
+  getRandom(limit)
+    .then((doctors) => {
+      res.json(doctors)
+    })
+    .catch(error => {
+      httpErrorHandler(res, error, 500)
+    })
+}
+
+export { getDoctor, getAllDoctors, updateDoctor, deleteDoctor, getRandomDoctors }
