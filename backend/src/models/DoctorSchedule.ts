@@ -24,10 +24,6 @@ const DoctorScheduleSchema = new mongoose.Schema<DoctorSchedule>(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Doctor',
       required: true
-    },
-    turnos: {
-      type: [String],
-      required: true
     }
   },
   {

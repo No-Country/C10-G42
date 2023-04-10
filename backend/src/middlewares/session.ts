@@ -31,6 +31,7 @@ const authMiddleware = (
         .then(user => {
           if (user != null) {
             req.user = user
+            req.userId = user._id.toString()
             next()
           }
         })

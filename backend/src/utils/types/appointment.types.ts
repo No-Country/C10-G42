@@ -1,9 +1,9 @@
-import { Appointment } from '../../interfaces/Appointment'
+import { type Appointment } from '../../interfaces/Appointment'
 
-export type AppointmentPaginated = {
-	pagination: {
-		itemsCount: number
-		pageCount: number
-	}
-	items: Appointment[]
+export interface AppointmentPaginated {
+  pagination: {
+    itemsCount: number
+    pageCount: number
+  }
+  items: Appointment[]
 }

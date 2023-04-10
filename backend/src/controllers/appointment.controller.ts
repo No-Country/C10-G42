@@ -49,10 +49,10 @@ const getAllAppointments = (req: Request, res: Response): void => {
     })
 }
 
-const getAvailable = ({ params, body }: Request, res: Response): void => {
+const getAvailable = ({ query, params }: Request, res: Response): void => {
   const { idDoctor } = params
-  const { fecha } = body
-  getArray(idDoctor, fecha)
+  const { fecha } = query
+  getArray(idDoctor, fecha as string)
     .then(appAvailable => res.json(appAvailable))
     .catch(error => {
       httpErrorHandler(res, error, 500)
@@ -83,25 +83,18 @@ const deleteAppointment = ({ params }: Request, res: Response): void => {
 }
 
 const getAppointmentsPatient = (
-  {
-    params,
-    query
-  }: Request<
-    { id: string },
-    unknown,
-    unknown,
-    { fechaInicio: string; fechaFin: string; page: number }
-  >,
+  { params, query }: Request,
   res: Response
 ): void => {
   const { id } = params
   const { fechaInicio, fechaFin, page } = query
+
   getAppxPatOrDoc(
     id,
     'paciente',
     fechaInicio as string,
     fechaFin as string,
-    page
+    Number(page)
   )
     .then(appointments => {
       res.json(appointments)
@@ -115,22 +108,17 @@ const getAppointmentsPatient = (
  * @param req Request<{ReqParams},{ResParams}, {ReqBody}, {ReqQuery}>
  * @param res Response
  */
-const getAppointmentsDoctor = (
-  {
-    params,
-    query
-  }: Request<
-    { id: string },
-    unknown,
-    unknown,
-    { fechaInicio: string; fechaFin: string; page: number }
-  >,
-  res: Response
-): void => {
-  const { id } = params
-  const { fechaInicio, fechaFin, page } = query
+const getAppointmentsDoctor = (req: Request, res: Response): void => {
+  const { id } = req.params
+  const { fechaInicio, fechaFin, page } = req.query
 
-  getAppxPatOrDoc(id, 'doctor', fechaInicio, fechaFin, page)
+  getAppxPatOrDoc(
+    id,
+    'doctor',
+    fechaInicio as string,
+    fechaFin as string,
+    Number(page)
+  )
     .then(appointments => {
       res.json(appointments)
     })

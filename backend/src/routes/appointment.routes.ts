@@ -31,10 +31,10 @@ router
   .delete(authMiddleware, checkRol(['doctor']), deleteAppointment)
 
 
-router.route('/doctor/:id').get(getAppointmentsDoctor)
+router.route('/doctor/:id').get(authMiddleware,  getAppointmentsDoctor)
 
-router.route('/patient/:id').get(getAppointmentsPatient)
+router.route('/patient/:id').get(authMiddleware,  getAppointmentsPatient)
 
-router.route('/:idDoctor').post(getAvailable)
+router.route('/available/:idDoctor').get(getAvailable)
 
 export { router }
