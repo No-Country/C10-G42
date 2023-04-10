@@ -119,18 +119,12 @@ const getAppointmentsDoctor = (
   {
     params,
     query
-  }: Request<
-    { id: string },
-    unknown,
-    unknown,
-    { fechaInicio: string; fechaFin: string; page: number }
-  >,
+  }: Request,
   res: Response
 ): void => {
   const { id } = params
   const { fechaInicio, fechaFin, page } = query
-
-  getAppxPatOrDoc(id, 'doctor', fechaInicio, fechaFin, page)
+  getAppxPatOrDoc(id, 'doctor', fechaInicio as string, fechaFin as string, Number(page))
     .then(appointments => {
       res.json(appointments)
     })
