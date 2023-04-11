@@ -1,0 +1,12 @@
+footer{
+   width:100%;
+background-color:#282c35;
+}
+.footer-container{
+    margin-top:10rem;
+}
+
+.logo-text{
+    font-family:"Roboto";
+    font-size:1.5rem;
+}

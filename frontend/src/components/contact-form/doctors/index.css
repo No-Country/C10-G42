@@ -1,0 +1,67 @@
+.doctors-section {
+    background-color: #3232ac;
+}
+.doctors-container {
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+   
+}
+.doctor-grid{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+}
+
+
+.doctors-img img {
+    width: 150px;
+    border-radius: 1rem;
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    -ms-border-radius: 1rem;
+    background-color: #8888ff;
+    -o-border-radius: 1rem;
+
+}
+
+.doctors-cta {
+    margin: 0.4rem;
+}
+
+
+.loading-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.doctors-title h4{
+    margin: .6rem;
+    padding-top: 1rem;
+    padding: 1rem;
+}
+
+@media screen and (max-width:1024px){
+    .doctor-grid{
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+
+        .map iframe{
+            width: 300px;
+            height: 300px;
+        }
+        
+        }
+        
+        
+        /* media queries (small devices) */
+        @media screen and (max-width:600px){
+    
+          
+        
+        }

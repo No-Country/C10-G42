@@ -1,6 +1,14 @@
 import { type Request, type Response } from 'express'
 
-import { deleteOne, get, getAll, update } from '../services/doctor.service'
+import {
+  deleteOne,
+  get,
+  getAll,
+  getRandom,
+  getSpDocArray,
+  getSpecialties,
+  update
+} from '../services/doctor.service'
 import { httpErrorHandler } from '../utils/httpErrorHandler'
 import { type Doctor } from './../interfaces/Doctor'
 
@@ -15,9 +23,47 @@ const getDoctor = ({ params }: Request, res: Response): void => {
     })
 }
 
-const getAllDoctors = (req: Request, res: Response): void => {
-  getAll()
+const getAllDoctors = (
+  {
+    query
+  }: Request<unknown, unknown, unknown, { page: number; specialty: string }>,
+  res: Response
+): void => {
+  const { page, specialty } = query
+  getAll(page, specialty)
     .then(doctors => res.json(doctors))
+    .catch(error => {
+      httpErrorHandler(res, error, 500)
+    })
+}
+
+const getRandomDoctors = ({ params }: Request, res: Response): void => {
+  const { limit } = params
+  getRandom(limit)
+    .then(doctors => {
+      res.json(doctors)
+    })
+    .catch(error => {
+      httpErrorHandler(res, error, 500)
+    })
+}
+
+const getSpecialty = (req: Request, res: Response): void => {
+  getSpecialties()
+    .then(doctors => {
+      res.json(doctors)
+    })
+    .catch(error => {
+      httpErrorHandler(res, error, 500)
+    })
+}
+
+const getSpecialtyDoctorArray = (req: Request, res: Response): void => {
+  const { specialty } = req.params
+  getSpDocArray(specialty)
+    .then(doctors => {
+      res.json(doctors)
+    })
     .catch(error => {
       httpErrorHandler(res, error, 500)
     })
@@ -46,4 +92,12 @@ const deleteDoctor = ({ params }: Request, res: Response): void => {
     })
 }
 
-export { getDoctor, getAllDoctors, updateDoctor, deleteDoctor }
+export {
+  getDoctor,
+  getAllDoctors,
+  updateDoctor,
+  deleteDoctor,
+  getRandomDoctors,
+  getSpecialty,
+  getSpecialtyDoctorArray
+}

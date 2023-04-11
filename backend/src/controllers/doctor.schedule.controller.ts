@@ -5,14 +5,20 @@ import {
   deleteOne,
   get,
   getAll,
-  getArray,
   update
 } from '../services/doctor.schedule.service'
 import { httpErrorHandler } from '../utils/httpErrorHandler'
 
 const createSchedule = ({ body }: Request, res: Response): void => {
-  const { dia, entrada, salida, intervalo, doctor } = body
-  create({ dia, entrada, salida, intervalo, doctor })
+  const { day, start_time, end_time, interval, doctor } = body
+  const scheduleData = {
+    day,
+    start_time,
+    end_time,
+    interval,
+    doctor
+  }
+  create(scheduleData)
     .then(scheduleCreated =>
       res
         .status(201)
@@ -23,28 +29,20 @@ const createSchedule = ({ body }: Request, res: Response): void => {
     })
 }
 
-const getSchedule = ({ params }: Request, res: Response): void => {
+const getSchedule = ({ params, query }: Request, res: Response): void => {
   const { id } = params
-  get(id)
+  const { date } = query
+  get(id, date as string)
     .then(doctorSchedule => res.json(doctorSchedule))
     .catch(error => {
       httpErrorHandler(res, error, 500)
     })
 }
 
-const getAllSchedules = (req: Request, res: Response): void => {
-  getAll()
+const getAllSchedules = ({ params }: Request, res: Response): void => {
+  const { id } = params
+  getAll(id)
     .then(doctorSchedules => res.json(doctorSchedules))
-    .catch(error => {
-      httpErrorHandler(res, error, 500)
-    })
-}
-
-const getAvailable = ({ params, body }: Request, res: Response): void => {
-  const { idDoctor } = params
-  const { fecha } = body
-  getArray(idDoctor, fecha)
-    .then(appAvailable => res.json(appAvailable))
     .catch(error => {
       httpErrorHandler(res, error, 500)
     })
@@ -84,7 +82,6 @@ export {
   createSchedule,
   getSchedule,
   getAllSchedules,
-  getAvailable,
   updateSchedule,
   deleteSchedule
 }

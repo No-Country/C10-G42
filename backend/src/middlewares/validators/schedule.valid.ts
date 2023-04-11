@@ -6,13 +6,19 @@ import { validateResults } from '../../utils/handleValidator'
 const validatorCreate = [
   body()
     .custom((value, { req }) => {
-      const allowedFields = ['dia', 'entrada', 'salida', 'intervalo', 'doctor']
+      const allowedFields = [
+        'day',
+        'start_time',
+        'end_time',
+        'interval',
+        'doctor'
+      ]
       const receivedFields = Object.keys(req.body)
       return receivedFields.every(field => allowedFields.includes(field))
     })
     .withMessage('El formulario contiene campos invalidos'),
 
-  body('dia')
+  body('day')
     .trim()
     .notEmpty()
     .withMessage('Dia requerido')
@@ -20,7 +26,7 @@ const validatorCreate = [
     .isString()
     .withMessage('Dia no válido'),
 
-  body('entrada')
+  body('start_time')
     .trim()
     .notEmpty()
     .withMessage('Entrada requerida')
@@ -28,7 +34,7 @@ const validatorCreate = [
     .isString()
     .withMessage('Entrada no válida'),
 
-  body('salida')
+  body('end_time')
     .trim()
     .notEmpty()
     .withMessage('Salida requerida')
@@ -36,7 +42,7 @@ const validatorCreate = [
     .isString()
     .withMessage('Salida no válida'),
 
-  body('intervalo')
+  body('interval')
     .trim()
     .notEmpty()
     .withMessage('Intervalo requerido')
@@ -60,7 +66,7 @@ const validatorCreate = [
 const validatorUpdate = [
   body()
     .custom((value, { req }) => {
-      const allowedFields = ['day', 'starttime', 'endtime']
+      const allowedFields = ['day', 'start_time', 'end_time']
       const receivedFields = Object.keys(req.body)
       return receivedFields.every(field => allowedFields.includes(field))
     })
@@ -74,7 +80,7 @@ const validatorUpdate = [
     .isString()
     .withMessage('Dia no válido'),
 
-  body('starttime')
+  body('start_time')
     .trim()
     .notEmpty()
     .withMessage('Hora inicio requerida')
@@ -82,7 +88,7 @@ const validatorUpdate = [
     .isString()
     .withMessage('Hora inicio no válida'),
 
-  body('endtime')
+  body('end_time')
     .trim()
     .notEmpty()
     .withMessage('Hora fin requerida')

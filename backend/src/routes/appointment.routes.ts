@@ -7,10 +7,12 @@ import {
   getAppointment,
   getAppointmentsDoctor,
   getAppointmentsPatient,
+  getAvailable,
   updateAppointment
 } from '../controllers/appointment.controller'
 import { checkRol } from '../middlewares/role'
 import { authMiddleware } from '../middlewares/session'
+import { checkUserOrRol } from '../middlewares/user'
 import {
   validatorCreate,
   validatorUpdate
@@ -30,12 +32,23 @@ router
 
 router
   .route('/:id')
-  .get(authMiddleware, checkRol(['doctor', 'patient']), getAppointment)
-  .put(authMiddleware, checkRol(['doctor']), validatorUpdate, updateAppointment)
-  .delete(authMiddleware, checkRol(['doctor']), deleteAppointment)
+  .get(authMiddleware, checkUserOrRol(['doctor', 'admin']), getAppointment)
+  .put(
+    authMiddleware,
+    checkUserOrRol(['doctor']),
+    validatorUpdate,
+    updateAppointment
+  )
+  .delete(authMiddleware, checkUserOrRol(['doctor']), deleteAppointment)
 
-router.route('/doctor/:id').get(getAppointmentsDoctor)
+router
+  .route('/doctor/:id')
+  .get(authMiddleware, checkRol(['doctor']), getAppointmentsDoctor)
 
-router.route('/patient/:id').get(getAppointmentsPatient)
+router
+  .route('/patient/:id')
+  .get(authMiddleware, checkUserOrRol(['doctor']), getAppointmentsPatient)
+
+router.route('/available/:idDoctor').get(getAvailable)
 
 export { router }

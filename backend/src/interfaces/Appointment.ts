@@ -1,9 +1,9 @@
 import { type ObjectId } from 'mongoose'
 
 export interface Appointment {
-  fecha: Date
-  horaInicio: string
-  duracion: number
-  paciente: ObjectId
+  date: Date
+  start_time: string
+  duration: number
+  patient: ObjectId
   doctor: ObjectId
 }
