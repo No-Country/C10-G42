@@ -66,7 +66,7 @@ const getSpecialties = async (): Promise<string[]> => {
 
 const getSpDocArray = async (specialty: string): Promise<any[]> => {
   try {
-    const list = (await DoctorModel.find({ specialty }).select('name -_id')).map((list) => list.name)
+    const list = (await DoctorModel.find({ specialty }).select('name'))
 
     return list
   } catch (e) {
