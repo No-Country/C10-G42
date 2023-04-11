@@ -5,6 +5,7 @@ import {
   get,
   getAll,
   getRandom,
+  getSpDocArray,
   getSpecialties,
   update
 } from '../services/doctor.service'
@@ -57,6 +58,17 @@ const getSpecialty = (req: Request, res: Response): void => {
     })
 }
 
+const getSpecialtyDoctorArray = (req: Request, res: Response): void => {
+  const { specialty } = req.params
+  getSpDocArray(specialty)
+    .then(doctors => {
+      res.json(doctors)
+    })
+    .catch(error => {
+      httpErrorHandler(res, error, 500)
+    })
+}
+
 const updateDoctor = ({ params, body }: Request, res: Response): void => {
   const { id } = params
   const doctorData: Doctor = body
@@ -86,5 +98,6 @@ export {
   updateDoctor,
   deleteDoctor,
   getRandomDoctors,
-  getSpecialty
+  getSpecialty,
+  getSpecialtyDoctorArray
 }
