@@ -7,13 +7,15 @@ const create = async (
   try {
     const doctorSchedule = await DoctorScheduleModel.find({
       doctor: doctorScheduleData.doctor,
-      dia: doctorScheduleData.dia
+      day: new Date(doctorScheduleData.day)
     })
     if (doctorSchedule.length > 0)
       throw new Error('Ya existe un horario para este dia')
-    const doctorScheduleCreated = await DoctorScheduleModel.create(
-      doctorScheduleData
-    )
+    const newSchedule = {
+      ...doctorScheduleData,
+      day: new Date(doctorScheduleData.day)
+    }
+    const doctorScheduleCreated = await DoctorScheduleModel.create(newSchedule)
     return doctorScheduleCreated
   } catch (e) {
     const error: string = e as string
@@ -21,9 +23,12 @@ const create = async (
   }
 }
 
-const get = async (id: string): Promise<DoctorSchedule> => {
+const get = async (id: string, date: string): Promise<DoctorSchedule> => {
   try {
-    const schedule = await DoctorScheduleModel.findById(id)
+    const schedule = await DoctorScheduleModel.findOne({
+      doctor: id,
+      day: new Date(date)
+    })
     if (schedule === null) throw new Error('Horario del doctor no encontrado')
     return schedule
   } catch (e) {
@@ -32,9 +37,9 @@ const get = async (id: string): Promise<DoctorSchedule> => {
   }
 }
 
-const getAll = async (): Promise<DoctorSchedule[]> => {
+const getAll = async (id: string): Promise<DoctorSchedule[]> => {
   try {
-    const allSchedules = await DoctorScheduleModel.find()
+    const allSchedules = await DoctorScheduleModel.find({ doctor: id })
     return allSchedules
   } catch (e) {
     const error: string = e as string
@@ -49,10 +54,10 @@ const update = async (
   try {
     const schedule = await DoctorScheduleModel.findById(id)
     if (schedule === null) throw new Error('Horario del doctor no encontrado')
-    schedule.entrada = scheduleData.entrada
-    schedule.salida = scheduleData.salida
-    schedule.intervalo = scheduleData.intervalo
-    schedule.dia = scheduleData.dia
+    schedule.start_time = scheduleData.start_time
+    schedule.end_time = scheduleData.end_time
+    schedule.interval = scheduleData.interval
+    schedule.day = scheduleData.day
     return await schedule.save()
   } catch (e) {
     const error: string = e as string

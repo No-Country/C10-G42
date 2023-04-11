@@ -4,19 +4,19 @@ import { type DoctorSchedule } from '../interfaces/DoctorSchedule'
 
 const DoctorScheduleSchema = new mongoose.Schema<DoctorSchedule>(
   {
-    dia: {
+    day: {
       type: Date,
       required: true
     },
-    entrada: {
+    start_time: {
       type: String,
       required: true
     },
-    salida: {
+    end_time: {
       type: String,
       required: true
     },
-    intervalo: {
+    interval: {
       type: Number,
       required: true
     },

@@ -49,6 +49,6 @@ router
   .route('/patient/:id')
   .get(authMiddleware, checkUserOrRol(['doctor']), getAppointmentsPatient)
 
-router.route('/:idDoctor').post(getAvailable)
+router.route('/available/:idDoctor').get(getAvailable)
 
 export { router }

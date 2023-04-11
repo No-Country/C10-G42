@@ -9,14 +9,14 @@ const create = async (appointmentData: Appointment): Promise<Appointment> => {
   try {
     const horarios = await DoctorScheduleModel.find({
       doctor: appointmentData.doctor,
-      dia: new Date(appointmentData.fecha)
+      day: new Date(appointmentData.date)
     })
     if (horarios.length === 0) throw new Error('No hay horarios para el medico')
 
     const turnoOcupado = await AppointmentModel.findOne({
-      medico: appointmentData.doctor,
-      fecha: new Date(appointmentData.fecha),
-      horaInicio: appointmentData.horaInicio
+      doctor: appointmentData.doctor,
+      date: new Date(appointmentData.date),
+      start_time: appointmentData.start_time
     })
     if (turnoOcupado !== null) throw new Error('El turno ya esta ocupado')
 
@@ -47,16 +47,16 @@ const getAll = async (): Promise<Appointment[]> => {
   }
 }
 
-const getArray = async (id: string, fecha: string): Promise<any[]> => {
+const getArray = async (id: string, date: string): Promise<any[]> => {
   try {
     const schedule = await DoctorScheduleModel.findOne({
       doctor: id,
-      dia: new Date(fecha)
+      day: new Date(date)
     })
     if (schedule === null) throw new Error('No hay turnos disponibles')
     const appointments = await AppointmentModel.find({
       doctor: id,
-      dia: new Date(fecha)
+      date: new Date(date)
     })
     const available = getAvailableAppointments(schedule, appointments)
     return available
@@ -73,9 +73,9 @@ const update = async (
   try {
     const appointment = await AppointmentModel.findById(id)
     if (appointment === null) throw new Error('Appointment no encontrado')
-    appointment.fecha = appointmentData.fecha
-    appointment.horaInicio = appointmentData.horaInicio
-    appointment.duracion = appointmentData.duracion
+    appointment.date = appointmentData.date
+    appointment.start_time = appointmentData.start_time
+    appointment.duration = appointmentData.duration
     return await appointment.save()
   } catch (e) {
     const error: string = e as string

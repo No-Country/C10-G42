@@ -13,12 +13,12 @@ import {
 import { httpErrorHandler } from '../utils/httpErrorHandler'
 
 const createAppointment = (req: Request, res: Response): void => {
-  const { fecha, horaInicio, duracion, paciente, doctor } = req.body
+  const { date, start_time, duration, patient, doctor } = req.body
   const appointmentData: Appointment = {
-    fecha,
-    horaInicio,
-    duracion,
-    paciente,
+    date,
+    start_time,
+    duration,
+    patient,
     doctor
   }
   create(appointmentData)
@@ -51,8 +51,8 @@ const getAllAppointments = (req: Request, res: Response): void => {
 
 const getAvailable = ({ query, params }: Request, res: Response): void => {
   const { idDoctor } = params
-  const { fecha } = query
-  getArray(idDoctor, fecha as string)
+  const { date } = query
+  getArray(idDoctor, date as string)
     .then(appAvailable => res.json(appAvailable))
     .catch(error => {
       httpErrorHandler(res, error, 500)
