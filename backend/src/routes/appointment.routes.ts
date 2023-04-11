@@ -12,11 +12,11 @@ import {
 } from '../controllers/appointment.controller'
 import { checkRol } from '../middlewares/role'
 import { authMiddleware } from '../middlewares/session'
+import { checkUserOrRol } from '../middlewares/user'
 import {
   validatorCreate,
   validatorUpdate
 } from '../middlewares/validators/appointment.valid'
-import { checkUserOrRol } from '../middlewares/user'
 
 const router = Router()
 
@@ -33,7 +33,12 @@ router
 router
   .route('/:id')
   .get(authMiddleware, checkUserOrRol(['doctor', 'admin']), getAppointment)
-  .put(authMiddleware, checkUserOrRol(['doctor']), validatorUpdate, updateAppointment)
+  .put(
+    authMiddleware,
+    checkUserOrRol(['doctor']),
+    validatorUpdate,
+    updateAppointment
+  )
   .delete(authMiddleware, checkUserOrRol(['doctor']), deleteAppointment)
 
 router

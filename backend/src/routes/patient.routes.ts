@@ -8,8 +8,8 @@ import {
 } from '../controllers/patient.controller'
 import { checkRol } from '../middlewares/role'
 import { authMiddleware } from '../middlewares/session'
-import { validatorUpdate } from '../middlewares/validators/patient.valid'
 import { checkUserOrRol } from '../middlewares/user'
+import { validatorUpdate } from '../middlewares/validators/patient.valid'
 
 const router = Router()
 

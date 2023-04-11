@@ -8,8 +8,8 @@ import {
   updateDoctor
 } from '../controllers/doctor.controller'
 import { authMiddleware } from '../middlewares/session'
-import { validatorUpdate } from '../middlewares/validators/doctor.valid'
 import { checkUserOrRol } from '../middlewares/user'
+import { validatorUpdate } from '../middlewares/validators/doctor.valid'
 
 const router = Router()
 
@@ -19,12 +19,7 @@ router.get('/random/:limit', getRandomDoctors)
 router
   .route('/:id')
   .get(getDoctor)
-  .put(
-    authMiddleware,
-    checkUserOrRol(['admin']),
-    validatorUpdate,
-    updateDoctor
-  )
+  .put(authMiddleware, checkUserOrRol(['admin']), validatorUpdate, updateDoctor)
   .delete(authMiddleware, checkUserOrRol(['admin']), deleteDoctor)
 
 export { router }

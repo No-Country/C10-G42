@@ -69,7 +69,6 @@ const deleteDoctor = ({ params }: Request, res: Response): void => {
     })
 }
 
-
 export {
   getDoctor,
   getAllDoctors,
