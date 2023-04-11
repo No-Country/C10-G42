@@ -29,7 +29,7 @@ const getAll = async (
   const ITEMS_PER_PAGE = 2
   const skip = (page - 1) * ITEMS_PER_PAGE // 1 * 20 = 20
   const query = {
-    ...(speciality != null && { speciality })
+    ...(speciality !== '' && { speciality })
   }
   try {
     const countDoc = DoctorModel.countDocuments(query)
