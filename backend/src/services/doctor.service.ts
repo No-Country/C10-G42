@@ -64,6 +64,17 @@ const getSpecialties = async (): Promise<string[]> => {
   }
 }
 
+const getSpDocArray = async (specialty: string): Promise<any[]> => {
+  try {
+    const list = (await DoctorModel.find({ specialty }).select('name -_id')).map((list) => list.name)
+
+    return list
+  } catch (e) {
+    const error: string = e as string
+    throw new Error(error)
+  }
+}
+
 const update = async (id: string, doctorData: Doctor): Promise<Doctor> => {
   try {
     const doctor = await DoctorModel.findById(id)
@@ -109,4 +120,12 @@ const getRandom = async (limit: string): Promise<Doctor[]> => {
   }
 }
 
-export { getAll, get, getSpecialties, update, deleteOne, getRandom }
+export {
+  getAll,
+  get,
+  getSpecialties,
+  update,
+  deleteOne,
+  getRandom,
+  getSpDocArray
+}
