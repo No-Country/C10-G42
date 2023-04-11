@@ -47,7 +47,7 @@ const registerCtrl = ({ body }: Request, res: Response): void => {
 }
 
 const registerDoctorCtrl = ({ body }: Request, res: Response): void => {
-  const { email, password, firstname, lastname, speciality, phone, photoUrl } =
+  const { email, password, firstname, lastname, specialty, phone, photoUrl } =
     body
   const user = {
     email,
@@ -60,7 +60,7 @@ const registerDoctorCtrl = ({ body }: Request, res: Response): void => {
   const dataDoctor = {
     name: `${firstname as string} ${lastname as string}`,
     phone,
-    speciality,
+    specialty,
     photoUrl
   }
 

@@ -16,12 +16,12 @@ const get = async (id: string): Promise<Doctor> => {
 /**
  * lista de doctores paginado
  * @param page
- * @param speciality
+ * @param specialty
  * @returns Promise<{pagination: {itemsCount: number, pageCount: number}, items: Doctor} | {msg: string}>
  */
 const getAll = async (
   page: number = 1,
-  speciality: string
+  specialty: string
 ): Promise<
   | { pagination: { itemsCount: number; pageCount: number }; items: Doctor[] }
   | { msg: string }
@@ -29,7 +29,7 @@ const getAll = async (
   const ITEMS_PER_PAGE = 2
   const skip = (page - 1) * ITEMS_PER_PAGE // 1 * 20 = 20
   const query = {
-    ...(speciality !== '' && { speciality })
+    ...(specialty && { specialty })
   }
   try {
     const countDoc = DoctorModel.countDocuments(query)
@@ -54,14 +54,23 @@ const getAll = async (
   }
 }
 
+const getSpecialties = async (): Promise<string[]> => {
+  try {
+    const specialities = await DoctorModel.find().distinct('specialty')
+    return specialities
+  } catch (e) {
+    const error: string = e as string
+    throw new Error(error)
+  }
+}
+
 const update = async (id: string, doctorData: Doctor): Promise<Doctor> => {
   try {
     const doctor = await DoctorModel.findById(id)
     if (doctor === null) throw new Error('Doctor no encontrado')
     doctor.photoUrl = doctorData.photoUrl
     doctor.phone = doctorData.phone
-    doctor.speciality = doctorData.speciality
-    console.log(doctor)
+    doctor.specialty = doctorData.specialty
     return await doctor.save()
   } catch (e) {
     const error: string = e as string
@@ -100,4 +109,4 @@ const getRandom = async (limit: string): Promise<Doctor[]> => {
   }
 }
 
-export { getAll, get, update, deleteOne, getRandom }
+export { getAll, get, getSpecialties, update, deleteOne, getRandom }

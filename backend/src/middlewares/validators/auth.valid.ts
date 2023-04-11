@@ -135,7 +135,7 @@ const validatorRegisterDoctor = [
         'password',
         'firstname',
         'lastname',
-        'speciality',
+        'specialty',
         'phone',
         'photoUrl'
       ]
@@ -181,7 +181,7 @@ const validatorRegisterDoctor = [
     .isLength({ min: 3, max: 100 })
     .withMessage('Apellido debe tener entre 5 y 100 caracteres'),
 
-  body('speciality')
+  body('specialty')
     .notEmpty()
     .withMessage('Especialidad requerida')
     .bail()

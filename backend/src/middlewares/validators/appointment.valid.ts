@@ -7,11 +7,10 @@ const validatorCreate = [
   body()
     .custom((value, { req }) => {
       const allowedFields = [
-        'fecha',
-        'horaInicio',
-        'minutoInicio',
-        'duracion',
-        'paciente',
+        'date',
+        'start_time',
+        'duration',
+        'patient',
         'doctor'
       ]
       const receivedFields = Object.keys(req.body)
@@ -19,15 +18,15 @@ const validatorCreate = [
     })
     .withMessage('El formulario contiene campos invalidos'),
 
-  body('fecha')
+  body('date')
     .trim()
     .notEmpty()
     .withMessage('Fecha requerida')
     .bail()
-    .isDate()
+    .isISO8601()
     .withMessage('Fecha no válida'),
 
-  body('horaInicio')
+  body('start_time')
     .trim()
     .notEmpty()
     .withMessage('Hora inicio requerida')
@@ -35,7 +34,7 @@ const validatorCreate = [
     .isString()
     .withMessage('Hora inicio no válida'),
 
-  body('duracion')
+  body('duration')
     .trim()
     .notEmpty()
     .withMessage('Duracion requerida')
@@ -43,7 +42,7 @@ const validatorCreate = [
     .isNumeric()
     .withMessage('Duracion no válida'),
 
-  body('paciente')
+  body('patient')
     .trim()
     .notEmpty()
     .withMessage('Fecha requerida')

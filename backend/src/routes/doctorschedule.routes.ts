@@ -18,8 +18,9 @@ const router = Router()
 
 router
   .route('/')
-  .get(getAllSchedules)
   .post(authMiddleware, checkRol(['doctor']), validatorCreate, createSchedule)
+
+router.route('/doctor/:id').get(getAllSchedules)
 
 router
   .route('/:id')

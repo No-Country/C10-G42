@@ -5,6 +5,7 @@ import {
   get,
   getAll,
   getRandom,
+  getSpecialties,
   update
 } from '../services/doctor.service'
 import { httpErrorHandler } from '../utils/httpErrorHandler'
@@ -24,11 +25,11 @@ const getDoctor = ({ params }: Request, res: Response): void => {
 const getAllDoctors = (
   {
     query
-  }: Request<unknown, unknown, unknown, { page: number; speciality: string }>,
+  }: Request<unknown, unknown, unknown, { page: number; specialty: string }>,
   res: Response
 ): void => {
-  const { page, speciality } = query
-  getAll(page, speciality)
+  const { page, specialty } = query
+  getAll(page, specialty)
     .then(doctors => res.json(doctors))
     .catch(error => {
       httpErrorHandler(res, error, 500)
@@ -38,6 +39,16 @@ const getAllDoctors = (
 const getRandomDoctors = ({ params }: Request, res: Response): void => {
   const { limit } = params
   getRandom(limit)
+    .then(doctors => {
+      res.json(doctors)
+    })
+    .catch(error => {
+      httpErrorHandler(res, error, 500)
+    })
+}
+
+const getSpecialty = (req: Request, res: Response): void => {
+  getSpecialties()
     .then(doctors => {
       res.json(doctors)
     })
@@ -74,5 +85,6 @@ export {
   getAllDoctors,
   updateDoctor,
   deleteDoctor,
-  getRandomDoctors
+  getRandomDoctors,
+  getSpecialty
 }

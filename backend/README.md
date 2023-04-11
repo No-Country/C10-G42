@@ -56,7 +56,7 @@
 | ------ | ---------------- | -------------------------------------- | ------------------------------------------------------------------- |
 | GET    | get all doctor   | http://localhost:PORT/api/doctor       |                                                                     |
 | GET    | get doctor by Id | http://localhost:PORT/api/doctor/:id   | params: {id}                                                        |
-| PUT    | update doctor    | http://localhost:PORT/api/doctor/:id   | headers: {token}, params: {id}, body: {speciality, phone, photoUrl} |
+| PUT    | update doctor    | http://localhost:PORT/api/doctor/:id   | headers: {token}, params: {id}, body: {specialty, phone, photoUrl} |
 | DELETE | delete doctor    | http://localhost:PORT/api/doctor/:id   | headers: {token}, params: {id}                                      |
 
 ### Doctor Schema
@@ -65,7 +65,7 @@
 | ---------- | ---------- | -------- |
 | user       | ObjectId   |   YES    |
 | name       | String     |   YES    |
-| speciality | String     |   YES    |
+| specialty  | String     |   YES    |
 | phone      | String     |   YES    |
 | photoUrl   | String     |   YES    |
 

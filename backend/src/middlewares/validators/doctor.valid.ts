@@ -6,13 +6,13 @@ import { validateResults } from '../../utils/handleValidator'
 const validatorUpdate = [
   body()
     .custom((value, { req }) => {
-      const allowedFields = ['speciality', 'phone', 'photoUrl']
+      const allowedFields = ['specialty', 'phone', 'photoUrl']
       const receivedFields = Object.keys(req.body)
       return receivedFields.every(field => allowedFields.includes(field))
     })
     .withMessage('El formulario contiene campos invalidos'),
 
-  body('speciality')
+  body('specialty')
     .trim()
     .notEmpty()
     .withMessage('Especialidad requerida')
