@@ -16,7 +16,7 @@ const create = async (appointmentData: Appointment): Promise<Appointment> => {
     const turnoOcupado = await AppointmentModel.findOne({
       doctor: appointmentData.doctor,
       date: new Date(appointmentData.date),
-      start_time: appointmentData.start_time
+      startTime: appointmentData.startTime
     })
     if (turnoOcupado !== null) throw new Error('El turno ya esta ocupado')
 
@@ -74,7 +74,7 @@ const update = async (
     const appointment = await AppointmentModel.findById(id)
     if (appointment === null) throw new Error('Appointment no encontrado')
     appointment.date = appointmentData.date
-    appointment.start_time = appointmentData.start_time
+    appointment.startTime = appointmentData.startTime
     appointment.duration = appointmentData.duration
     return await appointment.save()
   } catch (e) {
@@ -133,9 +133,9 @@ const getAppxPatOrDoc = async (
 
     if (items.length === 0)
       return {
-        msg: `Turnos del del usuario ${
+        msg: `No se encontraron turnos del ${
           typeId === 'doctor' ? 'Doctor' : 'Paciente'
-        } no encontrado`
+        }`
       }
 
     return {
@@ -146,7 +146,7 @@ const getAppxPatOrDoc = async (
       items
     }
   } catch (e) {
-    const error: string = `Error al buscar turnos del usuario ${
+    const error: string = `Error al buscar turnos del ${
       typeId === 'doctor' ? 'Doctor' : 'Paciente'
     } - ${e as string}`
     throw new Error(error)

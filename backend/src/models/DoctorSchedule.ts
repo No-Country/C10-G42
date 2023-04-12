@@ -8,11 +8,11 @@ const DoctorScheduleSchema = new mongoose.Schema<DoctorSchedule>(
       type: Date,
       required: true
     },
-    start_time: {
+    startTime: {
       type: String,
       required: true
     },
-    end_time: {
+    endTime: {
       type: String,
       required: true
     },

@@ -4,6 +4,7 @@ import {
   deleteOne,
   get,
   getAll,
+  getAllPaginated,
   getRandom,
   getSpDocArray,
   getSpecialties,
@@ -23,14 +24,25 @@ const getDoctor = ({ params }: Request, res: Response): void => {
     })
 }
 
-const getAllDoctors = (
+const getAllDoctors = ({ query }: Request, res: Response): void => {
+  const { specialty } = query
+  getAll(specialty as string)
+    .then(doctors => {
+      res.json(doctors)
+    })
+    .catch(error => {
+      httpErrorHandler(res, error, 500)
+    })
+}
+
+const getAllDoctorsPaginated = (
   {
     query
   }: Request<unknown, unknown, unknown, { page: number; specialty: string }>,
   res: Response
 ): void => {
   const { page, specialty } = query
-  getAll(page, specialty)
+  getAllPaginated(page, specialty)
     .then(doctors => res.json(doctors))
     .catch(error => {
       httpErrorHandler(res, error, 500)
@@ -95,6 +107,7 @@ const deleteDoctor = ({ params }: Request, res: Response): void => {
 export {
   getDoctor,
   getAllDoctors,
+  getAllDoctorsPaginated,
   updateDoctor,
   deleteDoctor,
   getRandomDoctors,
