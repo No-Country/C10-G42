@@ -13,10 +13,10 @@ import {
 import { httpErrorHandler } from '../utils/httpErrorHandler'
 
 const createAppointment = (req: Request, res: Response): void => {
-  const { date, start_time, duration, patient, doctor } = req.body
+  const { date, startTime, duration, patient, doctor } = req.body
   const appointmentData: Appointment = {
     date,
-    start_time,
+    startTime,
     duration,
     patient,
     doctor

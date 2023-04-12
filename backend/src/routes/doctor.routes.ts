@@ -3,6 +3,7 @@ import { Router } from 'express'
 import {
   deleteDoctor,
   getAllDoctors,
+  getAllDoctorsPaginated,
   getDoctor,
   getRandomDoctors,
   getSpecialty,
@@ -16,6 +17,7 @@ import { validatorUpdate } from '../middlewares/validators/doctor.valid'
 const router = Router()
 
 router.get('/', getAllDoctors)
+router.get('/paginated', getAllDoctorsPaginated)
 router.get('/specialty', getSpecialty)
 router.get('/specialty/list/:specialty', getSpecialtyDoctorArray)
 router.get('/random/:limit', getRandomDoctors)

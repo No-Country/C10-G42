@@ -10,11 +10,11 @@ import {
 import { httpErrorHandler } from '../utils/httpErrorHandler'
 
 const createSchedule = ({ body }: Request, res: Response): void => {
-  const { day, start_time, end_time, interval, doctor } = body
+  const { day, startTime, endTime, interval, doctor } = body
   const scheduleData = {
     day,
-    start_time,
-    end_time,
+    startTime,
+    endTime,
     interval,
     doctor
   }
@@ -50,12 +50,12 @@ const getAllSchedules = ({ params }: Request, res: Response): void => {
 
 const updateSchedule = ({ params, body }: Request, res: Response): void => {
   const { id } = params
-  const { entrada, salida, intervalo, dia } = body
+  const { startTime, endTime, interval, day } = body
   const scheduleData = {
-    entrada,
-    salida,
-    intervalo,
-    dia
+    startTime,
+    endTime,
+    interval,
+    day
   }
   update(id, scheduleData)
     .then(doctorSchedule =>
