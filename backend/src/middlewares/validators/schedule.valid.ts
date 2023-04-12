@@ -8,8 +8,8 @@ const validatorCreate = [
     .custom((value, { req }) => {
       const allowedFields = [
         'day',
-        'start_time',
-        'end_time',
+        'startTime',
+        'endTime',
         'interval',
         'doctor'
       ]
@@ -26,7 +26,7 @@ const validatorCreate = [
     .isString()
     .withMessage('Dia no válido'),
 
-  body('start_time')
+  body('startTime')
     .trim()
     .notEmpty()
     .withMessage('Entrada requerida')
@@ -34,7 +34,7 @@ const validatorCreate = [
     .isString()
     .withMessage('Entrada no válida'),
 
-  body('end_time')
+  body('endTime')
     .trim()
     .notEmpty()
     .withMessage('Salida requerida')
@@ -66,7 +66,7 @@ const validatorCreate = [
 const validatorUpdate = [
   body()
     .custom((value, { req }) => {
-      const allowedFields = ['day', 'start_time', 'end_time']
+      const allowedFields = ['day', 'startTime', 'endTime']
       const receivedFields = Object.keys(req.body)
       return receivedFields.every(field => allowedFields.includes(field))
     })
@@ -80,7 +80,7 @@ const validatorUpdate = [
     .isString()
     .withMessage('Dia no válido'),
 
-  body('start_time')
+  body('startTime')
     .trim()
     .notEmpty()
     .withMessage('Hora inicio requerida')
@@ -88,13 +88,21 @@ const validatorUpdate = [
     .isString()
     .withMessage('Hora inicio no válida'),
 
-  body('end_time')
+  body('endTime')
     .trim()
     .notEmpty()
     .withMessage('Hora fin requerida')
     .bail()
     .isString()
     .withMessage('Hora fin no válida'),
+
+  body('interval')
+    .trim()
+    .notEmpty()
+    .withMessage('Intervalo requerido')
+    .bail()
+    .isNumeric()
+    .withMessage('Intervalo no válido'),
 
   (req: Request, res: Response, next: NextFunction) => {
     validateResults(req, res, next)

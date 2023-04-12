@@ -14,6 +14,7 @@ import {
 const router = Router()
 
 router.post('/login', validatorLogin, loginCtrl)
+
 router.post('/register', validatorRegister, registerCtrl)
 
 router.post('/register/doctor', validatorRegisterDoctor, registerDoctorCtrl)
