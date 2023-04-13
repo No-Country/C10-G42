@@ -1,6 +1,14 @@
 import { type Request, type Response } from 'express'
 
-import { login, register, registerDoctor } from '../services/auth.service'
+import {
+  forgot,
+  login,
+  newPassword,
+  register,
+  registerDoctor,
+  verify,
+  verifyRecovery
+} from '../services/auth.service'
 import { httpErrorHandler } from '../utils/httpErrorHandler'
 
 const loginCtrl = ({ body }: Request, res: Response): void => {
@@ -76,4 +84,50 @@ const getProfile = (req: Request, res: Response): void => {
   res.json({ user })
 }
 
-export { loginCtrl, registerCtrl, registerDoctorCtrl, getProfile }
+const verifyUser = ({ params }: Request, res: Response): void => {
+  const { code } = params
+  verify(code)
+    .then(response => res.status(200).json(response))
+    .catch(error => {
+      httpErrorHandler(res, error, 500)
+    })
+}
+
+const forgotPassword = ({ body }: Request, res: Response): void => {
+  const email = body.email
+  forgot(email)
+    .then(response => res.status(200).json(response))
+    .catch(error => {
+      httpErrorHandler(res, error, 500)
+    })
+}
+
+const verifyRecoveryCode = ({ params }: Request, res: Response): void => {
+  const { code } = params
+  verifyRecovery(code)
+    .then(response => res.status(200).json(response))
+    .catch(error => {
+      httpErrorHandler(res, error, 500)
+    })
+}
+
+const resetPassword = ({ params, body }: Request, res: Response): void => {
+  const { code } = params
+  const { password } = body
+  newPassword(password, code)
+    .then(response => res.status(200).json(response))
+    .catch(error => {
+      httpErrorHandler(res, error, 500)
+    })
+}
+
+export {
+  loginCtrl,
+  registerCtrl,
+  registerDoctorCtrl,
+  getProfile,
+  verifyUser,
+  forgotPassword,
+  verifyRecoveryCode,
+  resetPassword
+}

@@ -1,8 +1,10 @@
+import { v4 } from 'uuid'
+
 import { type Auth } from '../interfaces/Auth'
-import { type User } from '../interfaces/User'
 import DoctorModel from '../models/Doctors'
 import PatientModel from '../models/Patient'
 import UserModel from '../models/User'
+import { sendMailForgotPassword, sendVerifyMail } from '../utils/handleEmail'
 import { tokenSign } from '../utils/handleJwt'
 import { encrypt, verifyHash } from '../utils/handlePassword'
 
@@ -30,52 +32,131 @@ const login = async ({ email, password }: Auth): Promise<object> => {
   }
 }
 
-const register = async (user: User, data: any): Promise<object> => {
+const register = async (user: any, data: any): Promise<object> => {
   try {
     const checkIs = await UserModel.findOne({ email: user.email })
     if (checkIs != null) throw new Error('El email ya se encuentra registrado')
 
     const hashPassword = await encrypt(user.password)
-    const dataUser = { ...user, password: hashPassword }
+    const uuidCode = v4()
+    const dataUser = {
+      ...user,
+      password: hashPassword,
+      code: uuidCode
+    }
 
     const newUser = await UserModel.create(dataUser)
     if (newUser == null) throw new Error('Error al registrar el usuario')
     const newPatient = await PatientModel.create({ ...data, user: newUser._id })
     if (newPatient == null) throw new Error('Error al registrar el paciente')
 
-    const response = {
-      token: tokenSign(newUser.id, user.firstname),
-      newPatient
-    }
+    await sendVerifyMail(newUser.email, newUser.firstname, newUser.code)
 
-    return response
+    return {
+      msg: 'Usuario registrado correctamente. Por favor, verifique su correo electrónico para activar su cuenta.'
+    }
   } catch (e) {
     const error: string = e as string
     throw new Error(error)
   }
 }
 
-const registerDoctor = async (user: User, data: any): Promise<object> => {
+const registerDoctor = async (user: any, data: any): Promise<object> => {
   try {
     const checkIs = await UserModel.findOne({ email: user.email })
     if (checkIs != null) throw new Error('El email ya se encuentra registrado')
     const hashPassword = await encrypt(user.password)
-    const dataUser = { ...user, password: hashPassword }
+    const uuidCode = v4()
+    const dataUser = {
+      ...user,
+      password: hashPassword,
+      code: uuidCode
+    }
 
     const newUser = await UserModel.create(dataUser)
     if (newUser == null) throw new Error('Error al registrar usuario')
     const newDoctor = await DoctorModel.create({ ...data, user: newUser._id })
+    if (newDoctor == null) throw new Error('Error al registrar doctor')
 
-    const response = {
-      token: tokenSign(newUser.id, user.firstname),
-      newDoctor
+    await sendVerifyMail(newUser.email, newUser.firstname, newUser.code)
+
+    return {
+      msg: 'Doctor registrado correctamente. Por favor, verifique su correo electrónico para activar su cuenta.'
     }
-
-    return response
   } catch (e) {
     const error: string = e as string
     throw new Error(error)
   }
 }
 
-export { login, register, registerDoctor }
+const verify = async (code: string): Promise<object> => {
+  try {
+    const userConfirm = await UserModel.findOne({ code })
+    if (userConfirm == null) throw new Error('No se ha encontrado el usuario')
+
+    userConfirm.confirmed = true
+    userConfirm.code = ''
+    await userConfirm.save()
+
+    return { msg: 'Usuario verificado correctamente' }
+  } catch (e) {
+    const error: string = e as string
+    throw new Error(error)
+  }
+}
+
+const forgot = async (email: string): Promise<object> => {
+  try {
+    const usuario = await UserModel.findOne({ email })
+    if (usuario == null) throw new Error('No se ha encontrado el usuario')
+
+    usuario.code = v4()
+    await usuario.save()
+
+    await sendMailForgotPassword(usuario.email, usuario.firstname, usuario.code)
+    return {
+      msg: 'Se ha enviado un correo electrónico para restablecer su contraseña.'
+    }
+  } catch (e) {
+    const error: string = e as string
+    throw new Error(error)
+  }
+}
+
+const verifyRecovery = async (code: string): Promise<object> => {
+  try {
+    const usuario = await UserModel.findOne({ code })
+    if (usuario == null) throw new Error('No se ha encontrado el usuario')
+
+    return { msg: 'Código verificado correctamente' }
+  } catch (e) {
+    const error: string = e as string
+    throw new Error(error)
+  }
+}
+
+const newPassword = async (password: string, code: string): Promise<object> => {
+  try {
+    const usuario = await UserModel.findOne({ code })
+    if (usuario == null) throw new Error('No se ha encontrado el usuario')
+
+    usuario.password = await encrypt(password)
+    usuario.code = ''
+    await usuario.save()
+
+    return { msg: 'Contraseña actualizada correctamente' }
+  } catch (e) {
+    const error: string = e as string
+    throw new Error(error)
+  }
+}
+
+export {
+  login,
+  register,
+  registerDoctor,
+  verify,
+  forgot,
+  verifyRecovery,
+  newPassword
+}
