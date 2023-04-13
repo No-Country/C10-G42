@@ -207,4 +207,10 @@ const validatorRegisterDoctor = [
   }
 ]
 
-export { validatorRegister, validatorRegisterDoctor, validatorLogin }
+const getProfile = async (req: Request, res: Response) => {
+  const { user } = req
+  res.json({ user })
+}
+
+
+export { validatorRegister, validatorRegisterDoctor, validatorLogin, getProfile }
