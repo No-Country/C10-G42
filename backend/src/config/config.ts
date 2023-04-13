@@ -10,16 +10,10 @@ if (missing.length > 0) {
   throw new Error(`Missing environment variables: ${missing.join(', ')}.`)
 }
 
-const whiteList = [process.env.URL_FRONTEND]
 export const corsOptions = {
-  origin: function (origin: any, callback: any) {
-    if (whiteList.includes(origin)) {
-      // dominio habilitado para API
-      callback(null, true)
-    } else {
-      callback(new Error('Error de cors'))
-    }
-  }
+  origin: process.env.URL_FRONTEND,
+  methods: ['GET', 'PUT', 'POST', 'DELETE'],
+  optionsSuccessStatus: 200,
 }
 
 export const PORT = process.env.PORT ?? ('3001' as string)
