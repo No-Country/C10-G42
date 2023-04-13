@@ -10,12 +10,25 @@ if (missing.length > 0) {
   throw new Error(`Missing environment variables: ${missing.join(', ')}.`)
 }
 
+// CORS config
 export const corsOptions = {
   origin: process.env.URL_FRONTEND,
   methods: ['GET', 'PUT', 'POST', 'DELETE'],
-  optionsSuccessStatus: 200,
+  optionsSuccessStatus: 200
 }
 
+// NODEMAILER config
+export const transportOptions = {
+  host: process.env.EMAIL_HOST,
+  port: Number(process.env.EMAIL_PORT),
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
+  }
+}
+
+// ENV config
 export const PORT = process.env.PORT ?? ('3001' as string)
 export const DB_URL = process.env.DB_URL ?? ('' as string)
 export const SECRET = process.env.SECRET ?? ('secreto' as string)
+export const URL_FRONTEND = process.env.URL_FRONTEND ?? ('' as string)
