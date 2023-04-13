@@ -2,13 +2,18 @@
     background-color: #3232ac;
 }
 .doctors-container {
-    margin: 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-   
+   margin: 1rem;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   color: #fff;
+   background: rgba( 242, 242, 242, 0.1 );
+   box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+   backdrop-filter: blur( 2px );
+   -webkit-backdrop-filter: blur( 2px );
+   border-radius: 10px;
+   border: 1px solid rgba( 255, 255, 255, 0.18 );
 }
 .doctor-grid{
     display: grid;
@@ -17,7 +22,8 @@
 
 
 .doctors-img img {
-    width: 150px;
+    width: 200px;
+    
     border-radius: 1rem;
     -webkit-border-radius: 1rem;
     -moz-border-radius: 1rem;
