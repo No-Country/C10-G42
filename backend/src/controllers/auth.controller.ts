@@ -71,4 +71,9 @@ const registerDoctorCtrl = ({ body }: Request, res: Response): void => {
     })
 }
 
-export { loginCtrl, registerCtrl, registerDoctorCtrl }
+const getProfile = (req: Request, res: Response): void => {
+  const { user } = req
+  res.json({ user })
+}
+
+export { loginCtrl, registerCtrl, registerDoctorCtrl, getProfile }
