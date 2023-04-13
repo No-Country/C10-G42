@@ -17,7 +17,7 @@ export const corsOptions = {
       // dominio habilitado para API
       callback(null, true)
     } else {
-      callback(new Error('Error de cors', origin))
+      callback(new Error('Error de cors'))
     }
   }
 }
