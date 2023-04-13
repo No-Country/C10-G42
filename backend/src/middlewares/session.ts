@@ -27,7 +27,7 @@ const authMiddleware = (
         return
       }
 
-      UserModel.findById(dataToken._id)
+      UserModel.findById(dataToken._id).select('-password -createdAt -updatedAt')
         .then(user => {
           if (user != null) {
             req.user = user
