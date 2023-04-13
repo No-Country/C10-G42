@@ -15,8 +15,10 @@ const get = async (id: string): Promise<Doctor> => {
 
 const getAll = async (specialty: string = ''): Promise<Doctor[]> => {
   try {
-    const query = {...(specialty && { specialty })}
-    const doctors = await DoctorModel.find(query).select('name specialty photoUrl phone')
+    const query = { ...(specialty !== '' && { specialty }) }
+    const doctors = await DoctorModel.find(query).select(
+      'name specialty photoUrl phone'
+    )
     if (doctors.length === 0) {
       throw new Error('No se encuentran registros de doctores')
     }
@@ -41,15 +43,21 @@ const getAllPaginated = async (
   | { msg: string }
 > => {
   try {
-    if(specialty === null) specialty = ''
+    if (specialty === null) specialty = ''
     const ITEMS_PER_PAGE = 2
-  
-    const skip = (page - 1) * ITEMS_PER_PAGE // 1 * 20 = 20
-    const query = {...(specialty && { specialty })}
-    const countDocQuery = DoctorModel.countDocuments(query)
-    const doctorsQuery = DoctorModel.find(query).limit(ITEMS_PER_PAGE).skip(skip).select('name specialty photoUrl phone')
 
-    const [itemsCount, doctors] = await Promise.all([countDocQuery, doctorsQuery])
+    const skip = (page - 1) * ITEMS_PER_PAGE // 1 * 20 = 20
+    const query = { ...(specialty !== '' && { specialty }) }
+    const countDocQuery = DoctorModel.countDocuments(query)
+    const doctorsQuery = DoctorModel.find(query)
+      .limit(ITEMS_PER_PAGE)
+      .skip(skip)
+      .select('name specialty photoUrl phone')
+
+    const [itemsCount, doctors] = await Promise.all([
+      countDocQuery,
+      doctorsQuery
+    ])
     const pageCount = Math.ceil(itemsCount / ITEMS_PER_PAGE)
     if (doctors.length === 0) {
       return { msg: 'No se encuentran registros de doctores' }
