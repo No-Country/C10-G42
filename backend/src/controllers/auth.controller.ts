@@ -77,7 +77,7 @@ const registerDoctorCtrl = ({ body }: Request, res: Response): void => {
 const getProfile = (req: Request, res: Response): void => {
   const { user, userId } = req
   profile(user, userId as string)
-    .then(response => res.status(200).json(response))
+    .then(user => res.status(200).json({user}))
     .catch(error => {
       httpErrorHandler(res, error, 500)
     })
