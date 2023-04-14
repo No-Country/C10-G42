@@ -10,3 +10,10 @@ header{
  font-family:'Roboto' ; 
  font-size:bold;
 }
+
+.links-container a {
+  margin: 1rem;
+  font-family: 'Roboto';
+  font-weight:400;
+  padding: 1rem;
+}
