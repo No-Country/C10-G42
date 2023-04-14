@@ -1,24 +1,31 @@
 import { Router } from 'express'
 
 import {
-  createDoctor,
   deleteDoctor,
   getAllDoctors,
+  getAllDoctorsPaginated,
   getDoctor,
+  getRandomDoctors,
+  getSpecialty,
+  getSpecialtyDoctorArray,
   updateDoctor
 } from '../controllers/doctor.controller'
-import { checkRol } from '../middlewares/role'
+import { authMiddleware } from '../middlewares/session'
+import { checkUserOrRol } from '../middlewares/user'
+import { validatorUpdate } from '../middlewares/validators/doctor.valid'
 
 const router = Router()
 
-router
-  .route('/')
-  .get(getAllDoctors)
-  .post(checkRol(['admin']), createDoctor)
+router.get('/', getAllDoctors)
+router.get('/paginated', getAllDoctorsPaginated)
+router.get('/specialty', getSpecialty)
+router.get('/specialty/list/:specialty', getSpecialtyDoctorArray)
+router.get('/random/:limit', getRandomDoctors)
+
 router
   .route('/:id')
   .get(getDoctor)
-  .put(checkRol(['doctor', 'admin']), updateDoctor)
-  .delete(checkRol(['admin']), deleteDoctor)
+  .put(authMiddleware, checkUserOrRol(['admin']), validatorUpdate, updateDoctor)
+  .delete(authMiddleware, checkUserOrRol(['admin']), deleteDoctor)
 
 export { router }

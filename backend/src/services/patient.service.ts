@@ -1,16 +1,6 @@
 import { type Patient } from '../interfaces/Patient'
 import PatientModel from '../models/Patient'
-
-const create = async (patientData: Patient): Promise<Patient> => {
-  try {
-    const patient = await PatientModel.create(patientData)
-    if (patient === null) throw new Error('Error al crear el paciente')
-    return patient
-  } catch (e) {
-    const error: string = e as string
-    throw new Error(error)
-  }
-}
+import UserModel from '../models/User'
 
 const getAll = async (): Promise<Patient[]> => {
   try {
@@ -33,13 +23,10 @@ const get = async (id: string): Promise<Patient> => {
   }
 }
 
-const update = async (id: string, patientData: Patient): Promise<Patient> => {
+const update = async (id: string, patientData: any): Promise<Patient> => {
   try {
     const patient = await PatientModel.findById(id)
     if (patient === null) throw new Error('Paciente no encontrado')
-    patient.birthdate = patientData.birthdate
-    patient.phone = patientData.phone
-    patient.gender = patientData.gender
     patient.dni = patientData.dni
     return await patient.save()
   } catch (e) {
@@ -52,6 +39,9 @@ const deleteOne = async (id: string): Promise<Patient> => {
   try {
     const patient = await PatientModel.findById(id)
     if (patient === null) throw new Error('Paciente no encontrado')
+    const user = await UserModel.findOne({ _id: patient.user })
+    if (user === null) throw new Error('Usuario no encontrado')
+    await user.deleteOne()
     return await patient.deleteOne()
   } catch (e) {
     const error: string = e as string
@@ -59,4 +49,4 @@ const deleteOne = async (id: string): Promise<Patient> => {
   }
 }
 
-export { create, getAll, get, update, deleteOne }
+export { getAll, get, update, deleteOne }

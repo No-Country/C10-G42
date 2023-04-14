@@ -1,7 +1,6 @@
 import { Router } from 'express'
 
 import {
-  createPatient,
   deletePatient,
   getAllPatients,
   getPatient,
@@ -9,18 +8,17 @@ import {
 } from '../controllers/patient.controller'
 import { checkRol } from '../middlewares/role'
 import { authMiddleware } from '../middlewares/session'
+import { checkUserOrRol } from '../middlewares/user'
+import { validatorUpdate } from '../middlewares/validators/patient.valid'
 
 const router = Router()
 
-router
-  .route('/')
-  .get(authMiddleware, checkRol(['doctor']), getAllPatients)
-  .post(createPatient)
+router.route('/').get(authMiddleware, checkRol(['doctor']), getAllPatients)
 
 router
   .route('/:id')
-  .get(authMiddleware, checkRol(['doctor', 'patient']), getPatient)
-  .put(authMiddleware, checkRol(['patient']), updatePatient)
-  .delete(authMiddleware, checkRol(['patient']), deletePatient)
+  .get(authMiddleware, checkUserOrRol(['doctor']), getPatient)
+  .put(authMiddleware, checkUserOrRol([]), validatorUpdate, updatePatient)
+  .delete(authMiddleware, checkUserOrRol([]), deletePatient)
 
 export { router }

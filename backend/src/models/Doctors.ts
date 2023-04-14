@@ -9,7 +9,11 @@ const DoctorSchema = new mongoose.Schema<Doctor>(
       ref: 'User',
       required: true
     },
-    speciality: {
+    name: {
+      type: String,
+      required: true
+    },
+    specialty: {
       type: String,
       required: true
     },

@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Roboto:wght@400;500&display=swap');
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+*{
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
+}
+
+body{
+  background-color:#f7f6fc;
+}
+:root {
+
+--color-principal: #3232ac;
+--color-secondary: #47c1b5;
+--color-dark: #282c35;
+--color-white: #f7f6fc;
+
+--font-primary: 'Poppins';
+--font-secondary:'Roboto';
+
+
+
+}
+
+

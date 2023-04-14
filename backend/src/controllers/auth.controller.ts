@@ -1,6 +1,14 @@
 import { type Request, type Response } from 'express'
 
-import { login, register, registerDoctor } from '../services/auth.service'
+import {
+  forgot,
+  login,
+  newPassword,
+  register,
+  registerDoctor,
+  verify,
+  verifyRecovery
+} from '../services/auth.service'
 import { httpErrorHandler } from '../utils/httpErrorHandler'
 
 const loginCtrl = ({ body }: Request, res: Response): void => {
@@ -18,9 +26,6 @@ const registerCtrl = ({ body }: Request, res: Response): void => {
     password,
     firstname,
     lastname,
-    birthdate,
-    phone,
-    gender,
     dni
   } = body
 
@@ -32,9 +37,7 @@ const registerCtrl = ({ body }: Request, res: Response): void => {
     role: 'patient'
   }
   const dataPatient = {
-    birthdate,
-    phone,
-    gender,
+    username: `${firstname as string} ${lastname as string}`,
     dni
   }
 
@@ -45,17 +48,8 @@ const registerCtrl = ({ body }: Request, res: Response): void => {
     })
 }
 
-// const loginDoctorCtrl = ({ body }: Request, res: Response): void => {
-//   const { email, password } = body
-//   loginDoctor({ email, password })
-//     .then(response => res.json(response))
-//     .catch(error => {
-//       httpErrorHandler(res, error, 500)
-//     })
-// }
-
 const registerDoctorCtrl = ({ body }: Request, res: Response): void => {
-  const { email, password, firstname, lastname, speciality, phone, photoUrl } =
+  const { email, password, firstname, lastname, specialty, phone, photoUrl } =
     body
   const user = {
     email,
@@ -66,8 +60,9 @@ const registerDoctorCtrl = ({ body }: Request, res: Response): void => {
   }
 
   const dataDoctor = {
+    name: `${firstname as string} ${lastname as string}`,
     phone,
-    speciality,
+    specialty,
     photoUrl
   }
 
@@ -78,4 +73,55 @@ const registerDoctorCtrl = ({ body }: Request, res: Response): void => {
     })
 }
 
-export { loginCtrl, registerCtrl, registerDoctorCtrl }
+const getProfile = (req: Request, res: Response): void => {
+  const { user } = req
+  res.json({ user })
+}
+
+const verifyUser = ({ params }: Request, res: Response): void => {
+  const { code } = params
+  verify(code)
+    .then(response => res.status(200).json(response))
+    .catch(error => {
+      httpErrorHandler(res, error, 500)
+    })
+}
+
+const forgotPassword = ({ body }: Request, res: Response): void => {
+  const email = body.email
+  forgot(email)
+    .then(response => res.status(200).json(response))
+    .catch(error => {
+      httpErrorHandler(res, error, 500)
+    })
+}
+
+const verifyRecoveryCode = ({ params }: Request, res: Response): void => {
+  const { code } = params
+  verifyRecovery(code)
+    .then(response => res.status(200).json(response))
+    .catch(error => {
+      httpErrorHandler(res, error, 500)
+    })
+}
+
+const resetPassword = ({ params, body }: Request, res: Response): void => {
+  const { code } = params
+  const { password } = body
+  newPassword(password, code)
+    .then(response => res.status(200).json(response))
+    .catch(error => {
+      httpErrorHandler(res, error, 500)
+    })
+}
+
+export {
+  loginCtrl,
+  registerCtrl,
+  registerDoctorCtrl,
+  getProfile,
+  verifyUser,
+  forgotPassword,
+  verifyRecoveryCode,
+  resetPassword
+}

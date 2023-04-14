@@ -1,36 +1,30 @@
 import mongoose from 'mongoose'
 
-import { type Appointment } from '../interfaces/Turno'
+import { type Appointment } from '../interfaces/Appointment'
 
 const AppointmentSchema = new mongoose.Schema<Appointment>(
   {
-    fecha: {
+    date: {
       type: Date,
       required: true
     },
-    horaInicio: {
-      type: Number,
-      required: true,
-      min: 0,
-      max: 23
+    startTime: {
+      type: String,
+      required: true
     },
-    minutoInicio: {
+    duration: {
       type: Number,
-      required: true,
-      min: 0,
-      max: 59
+      min: 10,
+      max: 60,
+      default: 30,
+      required: true
     },
-    duracion: {
-      type: Number,
-      required: true,
-      default: 60
-    },
-    paciente: {
+    patient: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Paciente',
       required: true
     },
-    medico: {
+    doctor: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Paciente',
       required: true
@@ -41,8 +35,6 @@ const AppointmentSchema = new mongoose.Schema<Appointment>(
     versionKey: false
   }
 )
-
-AppointmentSchema.index({ fecha: 1, hora: 1, medico: 1 }, { unique: true })
 
 const AppointmentModel = mongoose.model('Appointment', AppointmentSchema)
 

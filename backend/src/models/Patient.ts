@@ -9,17 +9,8 @@ const PatientSchema = new mongoose.Schema<Patient>(
       ref: 'User',
       required: true
     },
-    birthdate: {
-      type: Date,
-      required: true
-    },
-    phone: {
+    username: {
       type: String,
-      required: true
-    },
-    gender: {
-      type: String,
-      enum: ['male', 'female', 'other'],
       required: true
     },
     dni: {

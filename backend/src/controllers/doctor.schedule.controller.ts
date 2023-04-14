@@ -10,8 +10,15 @@ import {
 import { httpErrorHandler } from '../utils/httpErrorHandler'
 
 const createSchedule = ({ body }: Request, res: Response): void => {
-  const { day, starttime, endtime, doctor } = body
-  create({ day, starttime, endtime, doctor })
+  const { day, startTime, endTime, interval, doctor } = body
+  const scheduleData = {
+    day,
+    startTime,
+    endTime,
+    interval,
+    doctor
+  }
+  create(scheduleData)
     .then(scheduleCreated =>
       res
         .status(201)
@@ -22,17 +29,19 @@ const createSchedule = ({ body }: Request, res: Response): void => {
     })
 }
 
-const getSchedule = ({ params }: Request, res: Response): void => {
+const getSchedule = ({ params, query }: Request, res: Response): void => {
   const { id } = params
-  get(id)
+  const { date } = query
+  get(id, date as string)
     .then(doctorSchedule => res.json(doctorSchedule))
     .catch(error => {
       httpErrorHandler(res, error, 500)
     })
 }
 
-const getAllSchedules = (req: Request, res: Response): void => {
-  getAll()
+const getAllSchedules = ({ params }: Request, res: Response): void => {
+  const { id } = params
+  getAll(id)
     .then(doctorSchedules => res.json(doctorSchedules))
     .catch(error => {
       httpErrorHandler(res, error, 500)
@@ -41,8 +50,14 @@ const getAllSchedules = (req: Request, res: Response): void => {
 
 const updateSchedule = ({ params, body }: Request, res: Response): void => {
   const { id } = params
-  const { starttime, endtime } = body
-  update(id, { starttime, endtime })
+  const { startTime, endTime, interval, day } = body
+  const scheduleData = {
+    startTime,
+    endTime,
+    interval,
+    day
+  }
+  update(id, scheduleData)
     .then(doctorSchedule =>
       res.json({
         msg: 'Horario medico actualizado correctamente',
