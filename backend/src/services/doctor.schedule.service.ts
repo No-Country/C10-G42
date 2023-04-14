@@ -1,10 +1,14 @@
 import DoctorScheduleModel from '../models/DoctorSchedule'
+import DoctorModel from '../models/Doctors'
 import { type DoctorSchedule } from './../interfaces/DoctorSchedule'
 
 const create = async (
   doctorScheduleData: DoctorSchedule
 ): Promise<DoctorSchedule> => {
   try {
+    const doctor = await DoctorModel.findById(doctorScheduleData.doctor)
+    if (doctor === null) throw new Error('Doctor no encontrado')
+
     const doctorSchedule = await DoctorScheduleModel.find({
       doctor: doctorScheduleData.doctor,
       day: new Date(doctorScheduleData.day)
@@ -54,8 +58,8 @@ const update = async (
   try {
     const schedule = await DoctorScheduleModel.findById(id)
     if (schedule === null) throw new Error('Horario del doctor no encontrado')
-    schedule.start_time = scheduleData.start_time
-    schedule.end_time = scheduleData.end_time
+    schedule.startTime = scheduleData.startTime
+    schedule.endTime = scheduleData.endTime
     schedule.interval = scheduleData.interval
     schedule.day = scheduleData.day
     return await schedule.save()

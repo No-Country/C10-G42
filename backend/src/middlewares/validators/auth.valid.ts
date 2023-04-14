@@ -207,10 +207,48 @@ const validatorRegisterDoctor = [
   }
 ]
 
-const getProfile = async (req: Request, res: Response) => {
-  const { user } = req
-  res.json({ user })
+const validatorResetPassword = [
+  body()
+    .custom((value, { req }) => {
+      const allowedFields = ['password']
+      const receivedFields = Object.keys(req.body)
+      return receivedFields.every(field => allowedFields.includes(field))
+    })
+    .withMessage('El formulario contiene campos invalidos'),
+
+  body('password')
+    .trim()
+    .notEmpty()
+    .withMessage('Password requerida')
+    .bail()
+    .isString()
+    .withMessage('Tipo de dato no valido')
+    .isLength({ min: 5, max: 100 })
+    .withMessage('Password debe tener entre 5 y 100 caracteres')
+]
+
+const validatorForgotPassword = [
+  body()
+    .custom((value, { req }) => {
+      const allowedFields = ['email']
+      const receivedFields = Object.keys(req.body)
+      return receivedFields.every(field => allowedFields.includes(field))
+    })
+    .withMessage('El formulario contiene campos invalidos'),
+
+  body('email')
+    .trim()
+    .notEmpty()
+    .withMessage('Email requerido')
+    .bail()
+    .isEmail()
+    .withMessage('Email no válido')
+]
+
+export {
+  validatorRegister,
+  validatorRegisterDoctor,
+  validatorLogin,
+  validatorResetPassword,
+  validatorForgotPassword
 }
-
-
-export { validatorRegister, validatorRegisterDoctor, validatorLogin, getProfile }

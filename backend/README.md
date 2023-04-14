@@ -109,9 +109,12 @@
 | KEY        | TYPE       | REQUIRED |
 | ---------- | ---------- | -------- |
 | date       | Date       |   YES    |
-| start_time | String     |   YES    |
+| startTime  | String     |   YES    |
 | duration   | Number     |   YES    |
 | patient    | ObjectId   |   YES    |
 | doctor     | ObjectId   |   YES    |
 
 
+
+## POSTMAN DOCUMENTATION
+https://documenter.getpostman.com/view/24686438/2s93RXrq7M#177095a4-bd3d-4342-935a-41f7d5b5a6cb

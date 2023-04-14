@@ -13,40 +13,61 @@ const get = async (id: string): Promise<Doctor> => {
   }
 }
 
+const getAll = async (specialty: string = ''): Promise<Doctor[]> => {
+  try {
+    const query = { ...(specialty !== '' && { specialty }) }
+    const doctors = await DoctorModel.find(query).select(
+      'name specialty photoUrl phone'
+    )
+    if (doctors.length === 0) {
+      throw new Error('No se encuentran registros de doctores')
+    }
+    return doctors
+  } catch (e) {
+    const error: string = e as string
+    throw new Error(error)
+  }
+}
+
 /**
  * lista de doctores paginado
  * @param page
  * @param specialty
  * @returns Promise<{pagination: {itemsCount: number, pageCount: number}, items: Doctor} | {msg: string}>
  */
-const getAll = async (
+const getAllPaginated = async (
   page: number = 1,
   specialty: string
 ): Promise<
-  | { pagination: { itemsCount: number; pageCount: number }; items: Doctor[] }
+  | { pagination: { itemsCount: number; pageCount: number }; doctors: Doctor[] }
   | { msg: string }
 > => {
-  const ITEMS_PER_PAGE = 2
-  const skip = (page - 1) * ITEMS_PER_PAGE // 1 * 20 = 20
-  const query = {
-    ...(specialty && { specialty })
-  }
   try {
-    const countDoc = DoctorModel.countDocuments(query)
-    const doctors = DoctorModel.find(query).limit(ITEMS_PER_PAGE).skip(skip)
-    const [itemsCount, items] = await Promise.all([countDoc, doctors])
+    if (specialty === null) specialty = ''
+    const ITEMS_PER_PAGE = 2
+
+    const skip = (page - 1) * ITEMS_PER_PAGE // 1 * 20 = 20
+    const query = { ...(specialty !== '' && { specialty }) }
+    const countDocQuery = DoctorModel.countDocuments(query)
+    const doctorsQuery = DoctorModel.find(query)
+      .limit(ITEMS_PER_PAGE)
+      .skip(skip)
+      .select('name specialty photoUrl phone')
+
+    const [itemsCount, doctors] = await Promise.all([
+      countDocQuery,
+      doctorsQuery
+    ])
     const pageCount = Math.ceil(itemsCount / ITEMS_PER_PAGE)
-    if (items.length === 0) {
-      return {
-        msg: 'No se encuentran registros de doctores'
-      }
+    if (doctors.length === 0) {
+      return { msg: 'No se encuentran registros de doctores' }
     }
     return {
       pagination: {
         itemsCount,
         pageCount
       },
-      items
+      doctors
     }
   } catch (e) {
     const error: string = e as string
@@ -66,8 +87,7 @@ const getSpecialties = async (): Promise<string[]> => {
 
 const getSpDocArray = async (specialty: string): Promise<any[]> => {
   try {
-    const list = (await DoctorModel.find({ specialty }).select('name -_id')).map((list) => list.name)
-
+    const list = await DoctorModel.find({ specialty }).select('name')
     return list
   } catch (e) {
     const error: string = e as string
@@ -122,6 +142,7 @@ const getRandom = async (limit: string): Promise<Doctor[]> => {
 
 export {
   getAll,
+  getAllPaginated,
   get,
   getSpecialties,
   update,

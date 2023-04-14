@@ -8,7 +8,7 @@ const AppointmentSchema = new mongoose.Schema<Appointment>(
       type: Date,
       required: true
     },
-    start_time: {
+    startTime: {
       type: String,
       required: true
     },

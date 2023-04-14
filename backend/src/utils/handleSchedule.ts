@@ -8,8 +8,8 @@ const getAvailableAppointments = (
   const availableAppointments: any[] = []
 
   // Convertir la hora de entrada y salida a minutos
-  const entradaEnMinutos: number = hourToMinutes(doctorSchedule.start_time)
-  const salidaEnMinutos: number = hourToMinutes(doctorSchedule.end_time)
+  const entradaEnMinutos: number = hourToMinutes(doctorSchedule.startTime)
+  const salidaEnMinutos: number = hourToMinutes(doctorSchedule.endTime)
 
   // Calcular la cantidad de turnos disponibles
   const cantidadTurnos = Math.floor(
@@ -25,18 +25,18 @@ const getAvailableAppointments = (
   // Filtrar los turnos disponibles que no están ocupados
   turnosDisponibles.forEach(turno => {
     const turnoOcupado = appointments.some(appointment => {
-      const horaInicioEnMinutos = hourToMinutes(appointment.start_time)
+      const horaInicioEnMinutos = hourToMinutes(appointment.startTime)
       const horaFinEnMinutos = horaInicioEnMinutos + appointment.duration
 
       return turno >= horaInicioEnMinutos && turno < horaFinEnMinutos
     })
 
     if (!turnoOcupado) {
-      const start_time = minutesToHour(turno)
+      const startTime = minutesToHour(turno)
       const date = doctorSchedule.day
       availableAppointments.push({
         date,
-        start_time,
+        startTime,
         duration: doctorSchedule.interval,
         patient: null,
         doctor: doctorSchedule.doctor
