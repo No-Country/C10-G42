@@ -2,7 +2,7 @@ import * as dotenv from 'dotenv'
 
 dotenv.config()
 
-const missing = ['PORT', 'DB_URL', 'URL_FRONTEND', 'SECRET'].filter(
+const missing = ['PORT', 'DB_URL', 'SECRET', 'URL_FRONTEND', 'URL_FRONT_DEPLOYMENT'].filter(
   env => process.env[env] == null
 )
 
@@ -12,8 +12,9 @@ if (missing.length > 0) {
 
 // CORS config
 export const corsOptions = {
-  origin: process.env.URL_FRONTEND,
+  origin: '*',
   methods: ['GET', 'PUT', 'POST', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   optionsSuccessStatus: 200
 }
 
