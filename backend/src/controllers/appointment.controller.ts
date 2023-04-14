@@ -23,7 +23,7 @@ const createAppointment = (req: Request, res: Response): void => {
   }
   create(appointmentData)
     .then(appointment => {
-      res.status(201).json(appointment)
+      res.status(201).json({appointment})
     })
     .catch((error: any) => {
       httpErrorHandler(res, error, 500)
@@ -43,7 +43,7 @@ const getAppointment = ({ params }: Request, res: Response): void => {
 
 const getAllAppointments = (req: Request, res: Response): void => {
   getAll()
-    .then(appointments => res.json(appointments))
+    .then(appointments => res.json({appointments}))
     .catch(error => {
       httpErrorHandler(res, error, 500)
     })
