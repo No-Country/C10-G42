@@ -6,9 +6,24 @@ const DrawerComp = () => {
 
     const [openDrawer,setOpenDrawer]=useState(false)
 
-const PAGES=["Home","Contacto","Servicios","Nosotros","Pedir Turno","Soy Medico"]
-
-
+    const PAGES = [
+        {
+          title: "Home",
+          url: "/"
+        },
+        {
+          title: "Contacto",
+          url: "/contacto"
+        },
+        {
+          title: "Servicios",
+          url: "/servicios"
+        },
+        {
+          title: "Nosotros",
+          url: "/nosotros"
+        }
+      ];
 
   return (
 <React.Fragment>
