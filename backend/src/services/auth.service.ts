@@ -152,23 +152,51 @@ const newPassword = async (password: string, code: string): Promise<object> => {
   }
 }
 
-const profile = async(userData: any, userId: string): Promise<object> => {
+const profile = async(user: any, userId: string): Promise<object> => {
   try {
-    const patient = await PatientModel.findOne({ user: userId })
-    if(patient == null) throw new Error('No se ha encontrado el paciente')
-    
-    const patientData = {
-      userId: userData._id,
-      firstname: userData.firstname,
-      lastname: userData.lastname,
-      email: userData.email,
-      confirmed: userData.confirmed,
-      code: userData.code,
-      role: userData.role,
-      patientId: patient._id,
-      dni: patient.dni
+    let userData: any = {
+        userId: user._id,
+        firstname: user.firstname,
+        lastname: user.lastname,
+        email: user.email,
+        confirmed: user.confirmed,
+        code: user.code,
+        role: user.role,
     }
-    return patientData
+
+    switch(user.role) {
+      case 'patient':
+        const patient = await PatientModel.findOne({ user: userId })
+        if(patient == null) throw new Error('No se ha encontrado el paciente')
+        userData = {
+          ...userData,
+          patientID: patient._id,
+          dni: patient.dni,
+        }
+        break
+      case 'doctor':
+        const doctor = await DoctorModel.findOne({ user: userId })
+        if(doctor == null) throw new Error('No se ha encontrado el paciente')
+        userData = {
+          ...userData,
+          doctorID: doctor._id,
+          specialty: doctor.specialty,
+          photoUrl: doctor.photoUrl,
+          phone: doctor.phone,
+        }
+        break
+      case 'admin':
+        const admin = await UserModel.findById(userId)
+        if(admin == null) throw new Error('No se ha encontrado el administrador')
+        userData = {
+          admin: true
+        }
+        break
+      default:
+        break
+    }
+
+    return userData
   } catch (e) {
     const error: string = e as string
     throw new Error(error)
