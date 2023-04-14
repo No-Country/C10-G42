@@ -27,13 +27,6 @@ const Login = () => {
       });
 
       sessionStorage.setItem('token-user', data.token);
-      //setAuth(data);
-
-      //Ssi esta logueado y tiene rol, redigir a la ruta correspondiente
-      console.log('check token');
-      // sessionStorage.getItem('token-user').length &&
-      //   navigate('/dashboard/paciente');
-
       window.location.reload();
     } catch (error) {
       console.log(error);

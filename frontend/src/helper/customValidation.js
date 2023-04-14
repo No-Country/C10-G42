@@ -25,18 +25,6 @@ export const validateForm = (values) => {
   } else if (values.password !== values.passwordRepeat) {
     errors.passwordRepeat = 'Las contraseñas no coinciden';
   }
-  if (!values.phone) {
-    errors.phone = 'El campo CEL/TEL es obligatorio';
-  } else if (
-    !/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4}$/.test(
-      values.phone,
-    )
-  ) {
-    errors.phone = 'El campo CEL/TEL no tiene un formato correcto';
-  }
-  if (!values.gender) {
-    errors.gender = 'El campo GENERO es obligatorio';
-  }
   if (!values.dni) {
     errors.dni = 'El campo DNI es obligatorio';
   } else if (!/^[0-9]{8}$/.test(values.dni)) {
