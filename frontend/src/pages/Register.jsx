@@ -14,8 +14,6 @@ const Register = () => {
     email: '',
     password: '',
     passwordRepeat: '',
-    phone: '',
-    gender: '',
     dni: '',
   });
 
@@ -84,7 +82,7 @@ const Register = () => {
               type='text'
               name='email'
               label='CORREO'
-              placeholder='Ej: Test@email.com'
+              placeholder='Ej: user@email.com'
               handleChange={handleChange}
               value={values.email}
               errorField={errors.email}
@@ -110,32 +108,6 @@ const Register = () => {
               handleChange={handleChange}
               value={values.passwordRepeat}
               errorField={errors.passwordRepeat}
-            />
-          </div>
-          <div className='my-5'>
-            <InputComponent
-              type='text'
-              name='phone'
-              label='PHONE'
-              placeholder='ej: (675)546464'
-              handleChange={handleChange}
-              value={values.phone}
-              errorField={errors.phone}
-            />
-          </div>
-          <div className='my-5'>
-            <SelectComponent
-              name='gender'
-              label='GENERO'
-              handleChange={handleChange}
-              value={values.gender}
-              errorField={errors.gender}
-              options={[
-                { value: '', text: 'Seleccionar' },
-                { value: 'male', text: 'Masculino' },
-                { value: 'famale', text: 'Femenino' },
-                { value: 'other', text: 'Otro' },
-              ]}
             />
           </div>
           <div className='my-5'>
