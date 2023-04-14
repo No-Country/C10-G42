@@ -3,6 +3,7 @@ import { type Request, type Response } from 'express'
 import {
   forgot,
   login,
+  profile,
   newPassword,
   register,
   registerDoctor,
@@ -74,8 +75,12 @@ const registerDoctorCtrl = ({ body }: Request, res: Response): void => {
 }
 
 const getProfile = (req: Request, res: Response): void => {
-  const { user } = req
-  res.json({ user })
+  const { user, userId } = req
+  profile(user, userId as string)
+    .then(response => res.status(200).json(response))
+    .catch(error => {
+      httpErrorHandler(res, error, 500)
+    })
 }
 
 const verifyUser = ({ params }: Request, res: Response): void => {
