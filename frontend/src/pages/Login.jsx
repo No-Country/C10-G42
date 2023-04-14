@@ -5,6 +5,7 @@ import clienteAxios from '../config/clienteAxios';
 import useAuth from '../hooks/useAuth';
 
 const Login = () => {
+  console.log(import.meta.env.VITE_API_URL);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [alerta, setAlerta] = useState('');

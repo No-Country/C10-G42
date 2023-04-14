@@ -8,7 +8,9 @@ import mainRouter from './routes/index'
 
 const app = express()
 
-app.use(cors(corsOptions))
+console.log(process.env.URL_FRONTEND)
+
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
