@@ -22,13 +22,8 @@ const getAllPatients = (_req: Request, res: Response): void => {
 
 const updatePatient = ({ params, body }: Request, res: Response): void => {
   const { id } = params
-  const { birthdate, phone, gender, dni } = body
-  const patient = {
-    birthdate,
-    phone,
-    gender,
-    dni
-  }
+  const { dni } = body
+  const patient = { dni }
 
   update(id, patient)
     .then(response => res.json(response))

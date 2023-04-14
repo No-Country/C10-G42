@@ -10,9 +10,6 @@ const validatorRegister = [
         'email',
         'password',
         'firstname',
-        'lastname',
-        'birthdate',
-        'phone',
         'gender',
         'dni'
       ]
@@ -57,29 +54,6 @@ const validatorRegister = [
     .withMessage('Tipo de dato no valido')
     .isLength({ min: 3, max: 100 })
     .withMessage('Apellido debe tener entre 5 y 100 caracteres'),
-
-  body('birthdate')
-    .notEmpty()
-    .withMessage('Fecha de nacimiento requerida')
-    .bail()
-    .isDate()
-    .withMessage('Fecha de nacimiento debe tener un formato de fecha valido'),
-
-  body('phone')
-    .notEmpty()
-    .withMessage('Telefono requerido')
-    .bail()
-    .isString()
-    .withMessage('Tipo de dato no valido')
-    .isLength({ min: 5, max: 100 })
-    .withMessage('Telefono debe tener entre 5 y 100 caracteres'),
-
-  body('gender')
-    .notEmpty()
-    .withMessage('Genero requerido')
-    .bail()
-    .isString()
-    .withMessage('Tipo de dato no valido'),
 
   body('dni')
     .notEmpty()

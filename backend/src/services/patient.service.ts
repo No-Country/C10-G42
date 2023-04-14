@@ -27,9 +27,6 @@ const update = async (id: string, patientData: any): Promise<Patient> => {
   try {
     const patient = await PatientModel.findById(id)
     if (patient === null) throw new Error('Paciente no encontrado')
-    patient.birthdate = new Date(patientData.birthdate)
-    patient.phone = patientData.phone
-    patient.gender = patientData.gender
     patient.dni = patientData.dni
     return await patient.save()
   } catch (e) {
