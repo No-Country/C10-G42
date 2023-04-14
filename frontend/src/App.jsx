@@ -9,6 +9,7 @@ import MainLayout from './layouts/MainLayout';
 import PrivateRoutePatient from './routing/PrivateRoutePatient';
 import Doctors from './components/contact-form/doctors/Doctors';
 import DoctorDashboard from './pages/dashboard/Doctor';
+import Register from './pages/Register';
 
 function App() {
   return (
@@ -30,6 +31,10 @@ function App() {
               <Route
                 path='/login'
                 element={<Login />}
+              />
+              <Route
+                path='/registro'
+                element={<Register />}
               />
             </Route>
             <Route
