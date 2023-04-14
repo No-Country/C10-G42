@@ -11,8 +11,13 @@ if (missing.length > 0) {
 }
 
 // CORS config
+const allowOrigins = [
+  process.env.URL_FRONTEND ?? '' as string,
+  process.env.URL_FRONT_DEPLOYMENT ?? '' as string
+]
+
 export const corsOptions = {
-  origin: '*',
+  origin: allowOrigins,
   methods: ['GET', 'PUT', 'POST', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   optionsSuccessStatus: 200
