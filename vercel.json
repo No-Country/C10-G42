@@ -2,8 +2,12 @@
   "version": 2,
   "builds": [
     {
-      "src": "backend/index.js",
-      "use": "@vercel/node"
+      "src": "backend/app.ts",
+      "use": "@vercel/node",
+      "config": {
+        "buildCommand": "npm run build",
+        "outputDirectory": "backend/dist"
+      }
     },
     {
       "src": "frontend/package.json",
@@ -13,7 +17,7 @@
   "routes": [
     {
       "src": "/api/.*",
-      "dest": "backend/index.js"
+      "dest": "backend/dist/app.js"
     },
     {
       "src": "/(.*)",
