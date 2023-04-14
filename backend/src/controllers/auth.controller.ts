@@ -26,9 +26,6 @@ const registerCtrl = ({ body }: Request, res: Response): void => {
     password,
     firstname,
     lastname,
-    birthdate,
-    phone,
-    gender,
     dni
   } = body
 
@@ -41,9 +38,6 @@ const registerCtrl = ({ body }: Request, res: Response): void => {
   }
   const dataPatient = {
     username: `${firstname as string} ${lastname as string}`,
-    birthdate: new Date(birthdate),
-    phone,
-    gender,
     dni
   }
 
