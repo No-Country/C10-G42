@@ -10,7 +10,7 @@ const validatorRegister = [
         'email',
         'password',
         'firstname',
-        'gender',
+        'lastname',
         'dni'
       ]
       const receivedFields = Object.keys(req.body)
@@ -190,15 +190,15 @@ const validatorResetPassword = [
     })
     .withMessage('El formulario contiene campos invalidos'),
 
-  body('password')
+    body('password')
     .trim()
     .notEmpty()
     .withMessage('Password requerida')
     .bail()
-    .isString()
-    .withMessage('Tipo de dato no valido')
-    .isLength({ min: 5, max: 100 })
-    .withMessage('Password debe tener entre 5 y 100 caracteres')
+    .isStrongPassword()
+    .withMessage(
+      'Password debe tener entre minimo 8 caracteres, una mayuscula, una minuscula y un simbolo'
+    ),
 ]
 
 const validatorForgotPassword = [
@@ -215,7 +215,7 @@ const validatorForgotPassword = [
     .notEmpty()
     .withMessage('Email requerido')
     .bail()
-    .isEmail()
+    .isEmail()  
     .withMessage('Email no válido')
 ]
 
