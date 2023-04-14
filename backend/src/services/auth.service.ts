@@ -7,6 +7,7 @@ import UserModel from '../models/User'
 import { sendMailForgotPassword, sendVerifyMail } from '../utils/handleEmail'
 import { tokenSign } from '../utils/handleJwt'
 import { encrypt, verifyHash } from '../utils/handlePassword'
+import { User } from '../interfaces/User'
 
 const login = async ({ email, password }: Auth): Promise<object> => {
   try {
@@ -151,9 +152,27 @@ const newPassword = async (password: string, code: string): Promise<object> => {
   }
 }
 
+const profile = async(userData: any, userId: string): Promise<object> => {
+  try {
+    const patient = await PatientModel.findOne({ user: userId })
+    if(patient == null) throw new Error('No se ha encontrado el paciente')
+    
+    const patientData = {
+      ...userData,
+      idPatient: patient._id,
+      dni: patient.dni
+    }
+    return patientData
+  } catch (e) {
+    const error: string = e as string
+    throw new Error(error)
+  }
+}
+
 export {
   login,
   register,
+  profile,
   registerDoctor,
   verify,
   forgot,
