@@ -158,8 +158,14 @@ const profile = async(userData: any, userId: string): Promise<object> => {
     if(patient == null) throw new Error('No se ha encontrado el paciente')
     
     const patientData = {
-      ...userData,
-      idPatient: patient._id,
+      userId: userData._id,
+      firstname: userData.firstname,
+      lastname: userData.lastname,
+      email: userData.email,
+      confirmed: userData.confirmed,
+      code: userData.code,
+      role: userData.role,
+      patientId: patient._id,
       dni: patient.dni
     }
     return patientData
