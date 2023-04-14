@@ -4,7 +4,7 @@ import clienteAxios from '../config/clienteAxios';
 import useForm from '../hooks/useForm';
 import InputComponent from '../components/form/InputComponent';
 import SelectComponent from '../components/form/SelectComponent';
-import SubmitComponent from '../components/form/submitComponent';
+import SubmitComponent from '../components/form/SubmitComponent';
 
 const Register = () => {
   const [alerta, setAlerta] = useState({});

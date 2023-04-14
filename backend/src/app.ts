@@ -2,16 +2,11 @@ import cors from 'cors'
 import express from 'express'
 
 import './@types/index'
-import { PORT } from './config/config'
+import { PORT, corsOptions } from './config/config'
 import dbConnect from './config/database'
 import mainRouter from './routes/index'
 
 const app = express()
-
-const allowedOrigins = ['http://127.0.0.1:5173'];
-const corsOptions: cors.CorsOptions = {
-  origin: allowedOrigins,
-};
 
 app.use(cors(corsOptions));
 app.use(express.json())
