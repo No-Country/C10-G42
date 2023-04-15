@@ -12,8 +12,8 @@ if (missing.length > 0) {
 
 // CORS config
 const allowOrigins: string[] = [
-  process.env.URL_FRONTEND ?? '' as string,
-  process.env.URL_FRONT_DEPLOYMENT ?? '' as string
+  'https://consultoriomern.vercel.app',
+  'https://consultoriomern-git-dev-mernconsultorio.vercel.app'
 ]
 
 
@@ -27,7 +27,7 @@ export const corsOptions = {
   },
   methods: ['GET', 'PUT', 'POST', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  optionsSuccessStatus: 200
+  optionsSuccessStatus: 204
 }
 
 // NODEMAILER config
