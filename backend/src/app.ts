@@ -8,7 +8,6 @@ import dbConnect from './config/database'
 import mainRouter from './routes/index'
 
 const app = express()
-
 app.use(cors(corsOptions))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))

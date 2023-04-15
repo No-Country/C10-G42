@@ -11,13 +11,20 @@ if (missing.length > 0) {
 }
 
 // CORS config
-const allowOrigins = [
+const allowOrigins: string[] = [
   process.env.URL_FRONTEND ?? '' as string,
   process.env.URL_FRONT_DEPLOYMENT ?? '' as string
 ]
 
+
 export const corsOptions = {
-  origin: allowOrigins,
+  origin: function (origin: any, callback: any) {
+    if (allowOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ['GET', 'PUT', 'POST', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   optionsSuccessStatus: 200
