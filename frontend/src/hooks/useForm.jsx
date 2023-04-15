@@ -15,7 +15,6 @@ export default function useForm(defaultValues) {
     e.preventDefault();
     const errors = validateForm(values);
     setErrors(errors);
-    console.log(errors);
     if (Object.keys(errors).length === 0) {
       onSubmit(values);
     }
