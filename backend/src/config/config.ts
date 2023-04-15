@@ -12,6 +12,7 @@ if (missing.length > 0) {
 
 // CORS config
 const allowOrigins: string[] = [
+  'http://127.0.0.1:5173/',
   'https://consultoriomern.vercel.app',
   'https://consultoriomern-git-dev-mernconsultorio.vercel.app'
 ]
