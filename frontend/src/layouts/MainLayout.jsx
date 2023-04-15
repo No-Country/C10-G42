@@ -6,7 +6,7 @@ import Footer from '../layout/footer/Footer';
 const MainLayout = () => {
   return (
     <>
-      <main>
+      <main className='h-screen'>
         <Navbar />
         <div>
           <Outlet />

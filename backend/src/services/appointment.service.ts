@@ -3,10 +3,21 @@ import AppointmentModel from '../models/Appointment'
 import DoctorScheduleModel from '../models/DoctorSchedule'
 import DoctorModel from '../models/Doctors'
 import PatientModel from '../models/Patient'
+import UserModel from '../models/User'
+import { sendAppointmentEmail } from '../utils/handleEmail'
 import { getAvailableAppointments } from '../utils/handleSchedule'
 
-const create = async (appointmentData: Appointment): Promise<Appointment> => {
+const create = async (appointmentData: Appointment): Promise<object> => {
   try {
+    const doctor = await DoctorModel.findById(appointmentData.doctor)
+    if (doctor === null) throw new Error('Doctor no encontrado')
+    const patient = await PatientModel.findById(appointmentData.patient).select('user')
+    if (patient === null) throw new Error('Paciente no encontrado')
+    const user = await UserModel.findById(patient.user)
+    if (user === null) throw new Error('Usuario no encontrado')
+    if (user.confirmed === false) throw new Error('Usuario no verificado')
+
+
     const horarios = await DoctorScheduleModel.find({
       doctor: appointmentData.doctor,
       day: new Date(appointmentData.date)
@@ -19,9 +30,27 @@ const create = async (appointmentData: Appointment): Promise<Appointment> => {
       startTime: appointmentData.startTime
     })
     if (turnoOcupado !== null) throw new Error('El turno ya esta ocupado')
-
+    
     const appointment = await AppointmentModel.create(appointmentData)
-    return appointment
+    
+    const dataAppoint = {
+      doctor: doctor.name,
+      specialty: doctor.specialty,
+      date: appointment.date,
+      startTime: appointment.startTime,
+      duration: appointment.duration,  
+      appointmentID: appointment._id,
+      patientID: patient._id,
+      doctorID: doctor._id    
+    }
+
+    await sendAppointmentEmail(
+      user.email,
+      user.firstname,
+      dataAppoint
+    )
+    
+    return dataAppoint
   } catch (e) {
     const error: string = e as string
     throw new Error(error)
@@ -32,6 +61,7 @@ const get = async (id: string): Promise<Appointment> => {
   try {
     const appointment = await AppointmentModel.findById(id)
     if (appointment === null) throw new Error('turno no encontrado')
+
     return appointment
   } catch (error) {
     throw new Error('Error al obtener Appointment')

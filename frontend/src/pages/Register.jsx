@@ -5,6 +5,7 @@ import useForm from '../hooks/useForm';
 import InputComponent from '../components/form/InputComponent';
 import SelectComponent from '../components/form/SelectComponent';
 import SubmitComponent from '../components/form/SubmitComponent';
+import Alerta from '../components/Alerta';
 
 const Register = () => {
   const [alerta, setAlerta] = useState({});
@@ -21,21 +22,20 @@ const Register = () => {
     const filterData = { ...data };
     delete filterData.passwordRepeat;
     console.log('data form', filterData);
-    //enviar datos a la api
-    // try {
-    //   const {data} = await clienteAxios.post('/usuarios', {
-    //     nombre, email, password
-    //   });
-    //   setAlerta({
-    //     msg: data.msg,
-    //     error: false
-    //   })
-    // } catch (error) {
-    //   setAlerta({
-    //     msg: error.response.data.msg,
-    //     error: true
-    //   });
-    // }
+
+    try {
+      const { data } = await clienteAxios.post('/auth/register', filterData);
+      setAlerta({
+        msg: data.msg,
+        error: false,
+      });
+    } catch (error) {
+      console.log(error);
+      setAlerta({
+        msg: error.response.data,
+        error: true,
+      });
+    }
   };
 
   const { msg } = alerta;

@@ -2,13 +2,13 @@ export const validateForm = (values) => {
   let errors = {};
   if (!values.firstname) {
     errors.firstname = 'El campo NOMBRE es obligatorio';
-  } else if (values.firstname.length < 3) {
+  } else if (values.firstname.length <= 3) {
     errors.firstname = 'El campo NOMBRE debe tener mas de 3 caracteres';
   }
   if (!values.lastname) {
     errors.lastname = 'El campo APELLIDO es obligatorio';
-  } else if (values.lastname.length < 3) {
-    errors.name = 'El campo APELLIDO debe tener mas de 3 caracteres';
+  } else if (values.lastname.length <= 3) {
+    errors.lastname = 'El campo APELLIDO debe tener mas de 3 caracteres';
   }
   if (!values.password) {
     errors.password = 'El campo PASSWORD es obligatorio';

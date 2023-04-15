@@ -2,15 +2,12 @@ import React, {useState} from 'react'
 import {
     AppBar,
     Toolbar,
-    Container,
-    Tabs,
-    Tab,
     Button,
     useTheme,
     useMediaQuery,
     Typography
 } from '@mui/material'
-
+import {Link} from "react-router-dom"
  
 import Logo from "../../assets/logo.png";
 import DrawerComp from './DrawerComp';
@@ -54,15 +51,13 @@ const Navbar = () => {
   </>
 ) : ( 
   <> 
-    <Tabs>
-    {PAGES.map((page,index)=>{
-  return (
-    <Tab key={index}  to={page.url} sx={{color:"white"}} label={page.title} />
-  );
-})}
-    </Tabs>
-    <Button sx={{marginLeft: "auto", background:"#47c1b5"}} variant='contained'>Pedir turno</Button>
-    <Button sx={{marginLeft: "10px"}} variant='contained'>Soy Medico</Button>
+  <div className="links-container">
+{PAGES.map((page, index) => (
+  <Link key={index} to={page.url} className="text-white ">{page.title}</Link>
+))}
+  </div>
+    <Button sx={{marginLeft: "auto", background:"#47c1b5"}} variant='contained' ><Link to='/login'>Pedir turno</Link> </Button>
+    <Button sx={{marginLeft: "10px"}} variant='contained'><Link to='/login'>Soy Medico</Link></Button>
   </>
 )}
       </Toolbar>

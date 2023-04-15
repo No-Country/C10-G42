@@ -10,6 +10,9 @@ import PrivateRoutePatient from './routing/PrivateRoutePatient';
 import Doctors from './components/contact-form/doctors/Doctors';
 import DoctorDashboard from './pages/dashboard/Doctor';
 import Register from './pages/Register';
+import ConfirmarCuenta from './pages/ConfirmarCuenta';
+import OlvidePassword from './pages/OlvidePassword';
+import NuevoPassword from './pages/NuevoPassword';
 
 function App() {
   return (
@@ -35,6 +38,18 @@ function App() {
               <Route
                 path='/registro'
                 element={<Register />}
+              />
+              <Route
+                path='/confirmar/:code'
+                element={<ConfirmarCuenta />}
+              />
+              <Route
+                path='olvide-password'
+                element={<OlvidePassword />}
+              />
+              <Route
+                path='olvide-password/:token'
+                element={<NuevoPassword />}
               />
             </Route>
             <Route

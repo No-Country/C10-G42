@@ -11,11 +11,31 @@ if (missing.length > 0) {
 }
 
 // CORS config
+// const allowOrigins: string[] = [
+//   'http://127.0.0.1:5173/',
+//   'https://consultoriomern.vercel.app',
+//   'https://consultoriomern-git-dev-mernconsultorio.vercel.app'
+// ]
+
+
+// export const corsOptions = {
+//   origin: function (origin: any, callback: any) {
+//     if (allowOrigins.indexOf(origin) !== -1 || !origin) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('Not allowed by CORS'));
+//     }
+//   },
+//   methods: ['GET', 'PUT', 'POST', 'DELETE'],
+//   allowedHeaders: ['Content-Type', 'Authorization'],
+//   optionsSuccessStatus: 204
+// }
+
 export const corsOptions = {
   origin: '*',
   methods: ['GET', 'PUT', 'POST', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  optionsSuccessStatus: 200
+  optionsSuccessStatus: 204
 }
 
 // NODEMAILER config
