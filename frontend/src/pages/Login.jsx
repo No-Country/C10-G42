@@ -3,6 +3,7 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import Alerta from '../components/Alerta';
 import clienteAxios from '../config/clienteAxios';
 import useAuth from '../hooks/useAuth';
+import SubmitComponent from '../components/form/SubmitComponent';
 
 const Login = () => {
   console.log(import.meta.env.VITE_API_URL);
@@ -91,21 +92,24 @@ const Login = () => {
               />
             </div>
 
-            <input
-              type='submit'
-              value='Iniciar Sesion'
-              className='bg-main hover:bg-indigo-500 w-full py-3 mb-5 text-white uppercase font-bold rounded hover:cursor-pointer transition-colors'
-            />
+            <SubmitComponent value={'Iniciar Sesion'} />
           </form>
         </div>
 
-        <nav className='lg:flex lg:justify-center justify-center'>
-          <Link
-            className='block text-center my-5 text-slate-500 uppercase text-sm'
-            to='/registro'>
-            ¿No tienes cuenta? Registrate
-          </Link>
-        </nav>
+        <div className='flex justify-center'>
+          <nav className='lg:flex lg:justify-between md:gap-20'>
+            <Link
+              className='block text-center my-5 text-slate-500 uppercase text-sm'
+              to='/registro'>
+              ¿No tienes cuenta? Registrate
+            </Link>
+            <Link
+              className='block text-center my-5 text-slate-500 uppercase text-sm'
+              to='/olvide-password'>
+              Olvide mi password
+            </Link>
+          </nav>
+        </div>
       </div>
     </>
   );
