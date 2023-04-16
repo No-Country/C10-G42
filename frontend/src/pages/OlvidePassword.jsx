@@ -3,21 +3,27 @@ import { Link } from 'react-router-dom';
 import Alerta from '../components/Alerta';
 import clienteAxios from '../config/clienteAxios';
 import SubmitComponent from '../components/form/SubmitComponent';
+import InputComponent from '../components/form/InputComponent';
+import useForm from '../hooks/useForm';
+
+const validationRules = {
+  email: {
+    required: true,
+    pattern: /\S+@\S+.\S+/,
+    message: 'El formato es inválido',
+  },
+};
 
 const OlvidePassword = () => {
-  const [email, setEmail] = useState('');
+  const { values, handleChange, handleSubmit, errors } = useForm(
+    {
+      email: '',
+    },
+    validationRules,
+  );
   const [alerta, setAlerta] = useState({});
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (email === '' && email < 6) {
-      setAlerta({
-        msg: 'El correo es olbigatorio',
-        error: true,
-      });
-      return;
-    }
-
+  const onSubmit = async ({ email }) => {
     try {
       const { data } = await clienteAxios.post(`/auth/forgot-password`, {
         email,
@@ -47,21 +53,17 @@ const OlvidePassword = () => {
       {msg && <Alerta alerta={alerta} />}
       <div className='md:flex md:justify-center'>
         <form
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmit(onSubmit)}
           className='my-2 bg-white shadow p-10  md:w-1/2'>
           <div className='my-5'>
-            <label
-              htmlFor='email'
-              className='uppercase text-gray-600 block text-xl font-bold'>
-              Email:
-            </label>
-            <input
-              id='email'
-              type='email'
-              placeholder='Email de Registro'
-              className='w-full mt-3 p-3 border rounded-xl gb-gray-50'
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+            <InputComponent
+              type='text'
+              name='email'
+              label='CORREO'
+              placeholder='Ej: user@email.com'
+              handleChange={handleChange}
+              value={values.email}
+              errorField={errors.email}
             />
           </div>
           <SubmitComponent value={'Recuperar Contraseña'} />

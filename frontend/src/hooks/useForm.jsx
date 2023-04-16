@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { validateForm } from '../helper/customValidation';
 
-export default function useForm(defaultValues) {
+export default function useForm(defaultValues, validationRules) {
   const [values, setValues] = useState(defaultValues);
   const [errors, setErrors] = useState({});
 
@@ -13,7 +13,7 @@ export default function useForm(defaultValues) {
 
   const handleSubmit = (onSubmit) => (e) => {
     e.preventDefault();
-    const errors = validateForm(values);
+    const errors = validateForm(values, validationRules);
     setErrors(errors);
     if (Object.keys(errors).length === 0) {
       onSubmit(values);
