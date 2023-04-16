@@ -1,27 +1,63 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import clienteAxios from '../config/clienteAxios';
-import useForm from '../hooks/useForm';
+
 import InputComponent from '../components/form/InputComponent';
 import SelectComponent from '../components/form/SelectComponent';
 import SubmitComponent from '../components/form/SubmitComponent';
 import Alerta from '../components/Alerta';
+import useForm from '../hooks/useForm';
+
+const validationRules = {
+  firstname: {
+    required: true,
+    minLength: 4,
+  },
+  lastname: {
+    required: true,
+    minLength: 4,
+  },
+  password: {
+    required: true,
+    pattern:
+      /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[A-Z])(?=.*[-\#\$\.\%\&\*])(?=.*[a-zA-Z]).{8,16}$/,
+    message:
+      'Debe contener al menos 8 caracteres, 1 letra minúscula, 1 letra mayúscula y 1 carácter especial',
+  },
+  passwordRepeat: {
+    required: true,
+    match: 'password',
+    message: 'Las contraseñas deben coincidir',
+  },
+  dni: {
+    required: true,
+    pattern: /^[0-9]{8}$/,
+    message: 'Debe ser numérico y tener al menos 8 dígitos',
+  },
+  email: {
+    required: true,
+    pattern: /\S+@\S+.\S+/,
+    message: 'El formato es inválido',
+  },
+};
 
 const Register = () => {
   const [alerta, setAlerta] = useState({});
-  const { values, handleChange, handleSubmit, updateValues, errors } = useForm({
-    firstname: '',
-    lastname: '',
-    email: '',
-    password: '',
-    passwordRepeat: '',
-    dni: '',
-  });
+  const { values, handleChange, handleSubmit, errors } = useForm(
+    {
+      firstname: '',
+      lastname: '',
+      email: '',
+      password: '',
+      passwordRepeat: '',
+      dni: '',
+    },
+    validationRules,
+  );
 
   const onSubmit = async (data) => {
     const filterData = { ...data };
     delete filterData.passwordRepeat;
-    console.log('data form', filterData);
 
     try {
       const { data } = await clienteAxios.post('/auth/register', filterData);

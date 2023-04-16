@@ -3,14 +3,30 @@ import { useParams, Link } from 'react-router-dom';
 import clienteAxios from '../config/clienteAxios';
 import Alerta from '../components/Alerta';
 import SubmitComponent from '../components/form/SubmitComponent';
+import InputComponent from '../components/form/InputComponent';
+
+const validationRules = {
+  password: {
+    required: true,
+    pattern:
+      /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[A-Z])(?=.*[-\#\$\.\%\&\*])(?=.*[a-zA-Z]).{8,16}$/,
+    message:
+      'Debe contener al menos 8 caracteres, 1 letra minúscula, 1 letra mayúscula y 1 carácter especial',
+  },
+};
 
 const NuevoPassword = () => {
   const params = useParams();
   const { code } = params;
   const [alerta, setAlerta] = useState({});
   const [tokenValido, setTokenValido] = useState(false);
-  const [password, setPassword] = useState('');
   const [passwordUpdate, setPasswordUpdate] = useState(false);
+  const { values, handleChange, handleSubmit, errors } = useForm(
+    {
+      password: '',
+    },
+    validationRules,
+  );
 
   useEffect(() => {
     const comprobarToken = async () => {
@@ -31,15 +47,7 @@ const NuevoPassword = () => {
 
   const { msg } = alerta;
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (password.length < 6) {
-      setAlerta({
-        msg: 'La contraseña debe tener minimo: 8 carácteres',
-        error: true,
-      });
-      return;
-    }
+  const onSubmit = async ({ password }) => {
     try {
       const { data } = await clienteAxios.post(
         `/auth/forgot-password/${code}`,
@@ -73,23 +81,17 @@ const NuevoPassword = () => {
       <div className='bg-white md:flex md:justify-center'>
         {tokenValido && (
           <form
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(onSubmit)}
             className='md:my-10 bg-white shadow p-10 md:w-3/4'>
             <div className='my-5'>
-              <label
-                htmlFor='password'
-                className='uppercase text-gray-600 block text-xl font-bold'>
-                Password:
-              </label>
-              <input
-                id='password'
+              <InputComponent
                 type='password'
+                name='password'
+                label='CONTRASEÑA'
                 placeholder='Nueva contraseña'
-                className='w-full mt-3 p-3 border rounded-xl gb-gray-50'
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
+                handleChange={handleChange}
+                value={values.password}
+                errorField={errors.password}
               />
             </div>
             <SubmitComponent value={'Confirmar nueva Contraseña'} />
