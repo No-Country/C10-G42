@@ -5,7 +5,7 @@ import Hero from "../../assets/hero.svg"
 import features1 from "../../assets/features1.svg"
 import features2 from "../../assets/features2.svg"
 import features3 from "../../assets/features3.svg"
-
+import { Link } from 'react-router-dom'
 const services = [
     {
         title: 'Atencion las 24 horas',
@@ -44,13 +44,13 @@ const Home = () => {
                         variant="h6"
                         component="h6"
                         gutterBottom="gutterBottom">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed accumsan bibendum
-                        est, eget suscipit ipsum aliquam sit amet.
+                       En nuestro centro médico, trabajamos para garantizar que recibas los mejores cuidados de salud posibles. 
+                       Ofrecemos servicios completos y personalizados para ayudarte a mantener tu cuerpo y mente en las mejores condiciones. 
                     </Typography>
                     <button
                         type="button"
-                        className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">RESERVAR TURNO</button>
-                    <Button>Reservar Turno</Button>
+                        className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"><Link to='/login'>RESERVAR TURNO</Link> </button>
+                    <Button> <Link to='/services'>Saber más!</Link></Button>
                 </div>
                 <div className="hidden hero-image lg:flex">
                     <img src={Hero} alt="mockup"/>

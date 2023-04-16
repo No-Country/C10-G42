@@ -10,6 +10,9 @@ import PrivateRoutePatient from './routing/PrivateRoutePatient';
 import Doctors from './components/contact-form/doctors/Doctors';
 import DoctorDashboard from './pages/dashboard/Doctor';
 import Register from './pages/Register';
+ import ServicesSection from './pages/services/ServicesSection';
+
+
 
 function App() {
   return (
@@ -36,6 +39,11 @@ function App() {
                 path='/registro'
                 element={<Register />}
               />
+              <Route
+                path='/services'
+                element={<ServicesSection/>}
+              />
+      
             </Route>
             <Route
               path='/dashboard/paciente'
