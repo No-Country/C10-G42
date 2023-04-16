@@ -4,6 +4,7 @@ import clienteAxios from '../config/clienteAxios';
 import Alerta from '../components/Alerta';
 import SubmitComponent from '../components/form/SubmitComponent';
 import InputComponent from '../components/form/InputComponent';
+import useForm from '../hooks/useForm';
 
 const validationRules = {
   password: {
