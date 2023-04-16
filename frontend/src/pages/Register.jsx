@@ -58,9 +58,7 @@ const Register = () => {
   const onSubmit = async (data) => {
     const filterData = { ...data };
     delete filterData.passwordRepeat;
-    console.log('data form', filterData);
 
-    return;
     try {
       const { data } = await clienteAxios.post('/auth/register', filterData);
       setAlerta({
