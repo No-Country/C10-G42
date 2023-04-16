@@ -22,6 +22,7 @@ const NuevoPassword = () => {
   const [alerta, setAlerta] = useState({});
   const [tokenValido, setTokenValido] = useState(false);
   const [passwordUpdate, setPasswordUpdate] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { values, handleChange, handleSubmit, errors } = useForm(
     {
       password: '',
@@ -31,12 +32,15 @@ const NuevoPassword = () => {
 
   useEffect(() => {
     const comprobarToken = async () => {
+      setLoading(true);
       try {
         const { data } = await clienteAxios.get(
           `/auth/forgot-password/${code}`,
         );
         setTokenValido(true);
+        setLoading(false);
       } catch (error) {
+        setLoading(false);
         setAlerta({
           msg: error.response.data,
           error: true,
@@ -50,10 +54,9 @@ const NuevoPassword = () => {
 
   const onSubmit = async ({ password }) => {
     try {
-      const { data } = await clienteAxios.post(
-        `/auth/forgot-password/${code}`,
-        { password },
-      );
+      const { data } = await clienteAxios.post(`/auth/reset-password/${code}`, {
+        password,
+      });
       setAlerta({
         msg: data.msg,
         error: false,
@@ -68,6 +71,10 @@ const NuevoPassword = () => {
     }
   };
 
+  const msgLoading = loading && (
+    <p className='text-center my-2'>Comprobando token...</p>
+  );
+
   return (
     <div className='md:my-20'>
       <div className='flex justify-center mt-10'>
@@ -76,6 +83,7 @@ const NuevoPassword = () => {
           <span className='text-secondary uppercase'>turnos</span>
         </h1>
       </div>
+      {msgLoading}
       <div className='flex justify-center'>
         {msg && <Alerta alerta={alerta} />}
       </div>

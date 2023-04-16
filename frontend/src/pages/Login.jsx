@@ -60,7 +60,7 @@ const Login = () => {
         <div className='flex items-center justify-center'>
           <form
             onSubmit={handleSubmit}
-            className='p-5 bg-white shadow w-screen md:w-2/3'>
+            className='p-5 bg-white shadow md:w-2/3 w-full'>
             <div className='my-5'>
               <label
                 htmlFor='email'

@@ -6,7 +6,7 @@ import './index.css';
 export default function Footer() {
   return (
     <footer>
-      <div className='w-full footer-container max-w-screen-xl mx-auto p-4 md:py-8'>
+      <div className='footer-container max-w-screen-xl mx-auto p-4 md:py-8'>
         <div className='sm:flex sm:items-center sm:justify-between'>
           <a
             href='#'
