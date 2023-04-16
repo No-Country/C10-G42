@@ -6,7 +6,6 @@ import useAuth from '../hooks/useAuth';
 import SubmitComponent from '../components/form/SubmitComponent';
 
 const Login = () => {
-  console.log(import.meta.env.VITE_API_URL);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [alerta, setAlerta] = useState('');

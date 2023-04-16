@@ -13,6 +13,7 @@ import Register from './pages/Register';
 import ConfirmarCuenta from './pages/ConfirmarCuenta';
 import OlvidePassword from './pages/OlvidePassword';
 import NuevoPassword from './pages/NuevoPassword';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -51,6 +52,11 @@ function App() {
                 path='olvide-password/:code'
                 element={<NuevoPassword />}
               />
+
+              <Route
+                path='*'
+                element={<NotFound />}
+              />
             </Route>
             <Route
               path='/dashboard/paciente'
@@ -68,10 +74,6 @@ function App() {
                 element={<DoctorDashboard />}
               />
             </Route>
-            <Route
-              path='*'
-              element={<>Not found</>}
-            />
           </Routes>
         </AuthProvider>
       </BrowserRouter>
