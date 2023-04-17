@@ -17,6 +17,10 @@ import ProfilePatient from './pages/dashboard/Patient/ProfilePatient';
 import AppointmentPatient from './pages/dashboard/Patient/AppointmentPatient';
 import ProfileDoctor from './pages/dashboard/Doctor/ProfileDoctor';
 import HomeDoctor from './pages/dashboard/Doctor/HomeDoctor';
+ import ServicesSection from './pages/services/ServicesSection';
+ import About from './pages/about-us/About';
+//  import Contact from './pages/contact/Contact';
+
 
 function App() {
   return (
@@ -60,6 +64,20 @@ function App() {
                 path='*'
                 element={<NotFound />}
               />
+              <Route
+                path='/services'
+                element={<ServicesSection/>}
+              />
+              <Route
+                path='/nosotros'
+                element={<About/>}
+              />
+{/*       
+              <Route
+                path='/contact'
+                element={<Contact/>}
+              /> */}
+      
             </Route>
             <Route
               path='/dashboard/paciente'
