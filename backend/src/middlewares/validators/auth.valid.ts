@@ -190,7 +190,7 @@ const validatorResetPassword = [
     })
     .withMessage('El formulario contiene campos invalidos'),
 
-    body('password')
+  body('password')
     .trim()
     .notEmpty()
     .withMessage('Password requerida')
@@ -198,7 +198,7 @@ const validatorResetPassword = [
     .isStrongPassword()
     .withMessage(
       'Password debe tener entre minimo 8 caracteres, una mayuscula, una minuscula y un simbolo'
-    ),
+    )
 ]
 
 const validatorForgotPassword = [
@@ -215,7 +215,7 @@ const validatorForgotPassword = [
     .notEmpty()
     .withMessage('Email requerido')
     .bail()
-    .isEmail()  
+    .isEmail()
     .withMessage('Email no válido')
 ]
 
