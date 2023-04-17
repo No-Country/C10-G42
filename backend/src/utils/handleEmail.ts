@@ -45,7 +45,6 @@ export const sendMailForgotPassword = async (
   })
 }
 
-
 export const sendAppointmentEmail = async (
   email: string,
   firstname: string,
@@ -60,8 +59,12 @@ export const sendAppointmentEmail = async (
     text: 'Tu cita ha sido creada',
     html: `
 		<h3>¡Hola <b>${firstname}!</b></h3>
-		<p>Has solicitado un turno con el Doctor ${data.doctor} de la especialidad ${data.specialty}.</p>
-    <p>El turno es para el dia ${data.date} a las ${data.startTime} y tiene una duracion de ${data.duration} minutos.</p>
+		<p>Has solicitado un turno con el Doctor ${
+      data.doctor as string
+    } de la especialidad ${data.specialty as string}.</p>
+    <p>El turno es para el dia ${data.date as string} a las ${
+      data.startTime as string
+    } y tiene una duracion de ${data.duration as string} minutos.</p>
     <p>Para cancelar el turno, ingresa a tu cuenta y selecciona la opcion "Mis turnos".</p>
 	`
   })

@@ -4,7 +4,7 @@ import './index.css'
 const Maps = () => {
   return (
     <>
-    <section className="map-section">
+    <section className="map-section" id='contact'>
         <div className="map-title">
     <Typography textAlign="center" className="pd-4" variant="h4">¿Donde ubicarnos?</Typography>
         </div>
@@ -17,12 +17,14 @@ const Maps = () => {
     </div>
     
     <div className="map-text">
-        <Typography variant='h6'>Contacto</Typography>
+        <Typography variant='h4' align="center">¡Contáctanos!</Typography>
+        <Typography variant='h6' className='text-gray-500 '>¿Tienes preguntas sobre nuestros servicios? ¿Quieres programar una cita con uno de nuestros médicos? </Typography>
       
-       <Typography variant='pbody'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Explicabo consequatur voluptas illum ut quis eligendi veritatis fugiat doloremque quibusdam qui quae nisi cumque nesciunt ullam doloribus, c.</Typography>
-      
-    
-        <Typography variant="body1" gutterBottom>
+       <Typography variant='pbody'>¡Estamos aquí para ayudarte!
+
+Completa el formulario de contacto y uno de nuestros representantes se comunicará contigo lo antes posible. También puedes llamarnos directamente o enviarnos un correo electrónico.</Typography>
+    <div className="map-info">
+    <Typography variant="body1" gutterBottom>
             Dirección: Calle de la Paz, 10, 28012 Madrid
           </Typography>
           <Typography variant="body1" gutterBottom>
@@ -31,6 +33,9 @@ const Maps = () => {
           <Typography variant="body1" gutterBottom>
             Correo electrónico: info@example.com
           </Typography>
+    </div>
+      
+
     
     </div>
 

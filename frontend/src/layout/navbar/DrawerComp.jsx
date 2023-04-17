@@ -1,6 +1,7 @@
 import React,{useState} from 'react'
 import MenuIcon from '@mui/icons-material/Menu';
 import { Drawer,List,IconButton, ListItem,ListItemButton, ListItemIcon,ListItemText } from '@mui/material'
+import { Link } from 'react-router-dom';
 
 const DrawerComp = () => {
 
@@ -17,7 +18,7 @@ const DrawerComp = () => {
         },
         {
           title: "Servicios",
-          url: "/servicios"
+          url: "/services"
         },
         {
           title: "Nosotros",
@@ -31,9 +32,9 @@ const DrawerComp = () => {
 <List>
     {PAGES.map((page,index)=>{
         return(
-    <ListItemButton onClick={()=> setOpenDrawer(false)} key={index}>
+    <ListItemButton onClick={()=>   setOpenDrawer(false)} key={index}>
     <ListItemIcon>
-        <ListItemText>{page}</ListItemText>
+        <ListItemText><Link to={page.url} >{page.title}</Link></ListItemText>
     </ListItemIcon>
 </ListItemButton>)
     })

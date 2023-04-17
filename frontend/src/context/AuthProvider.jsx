@@ -63,6 +63,7 @@ const AuthProvider = ({ children }) => {
       value={{
         auth,
         setAuth,
+        setCargando,
         cargando,
         cerrarSesionAuth,
       }}>
