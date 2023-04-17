@@ -1,5 +1,5 @@
 import React from 'react'
-
+import './index.css'
 const ServicesSection = () => {
  
     const servicesHos = [
@@ -31,7 +31,7 @@ const ServicesSection = () => {
     <div>
           <div className="bg-gray-100 py-12">
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
+        <div className="text-center services-title">
           <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
             Nuestros servicios
           </h2>

@@ -52,7 +52,9 @@ box-shadow: 10px 4px 33px -6px rgba(0,0,0,0.75);
 }
 
 
-
+.map-info{
+    margin: 1rem;
+}
 
 @media screen and (max-width:1024px){
     .map-container{

@@ -24,7 +24,7 @@ const Navbar = () => {
       },
       {
         title: "Contacto",
-        url: "/contacto"
+        url: "/contact"
       },
       {
         title: "Servicios",
@@ -41,7 +41,10 @@ const Navbar = () => {
     <AppBar position="stat" sx={{background:"#3232ac"}}>
       <Toolbar>
         <div className="logo-mern">
+          <Link to='/'>
+          
         <img src={Logo} alt="" />
+          </Link>
         </div>
         {isMatch ? (
   <> 

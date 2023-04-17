@@ -15,7 +15,12 @@ const Paciente = () => {
 
     const [selectedTime, setSelectedTime] = useState("");
     const [duration, setDuration] = useState("");
+    const [idDoctor,setIdDoctor] = useState("");
 
+
+    const [formularioValido, cambiarFormularioValido] = useState(false);
+    const [enviado, cambiarEnviado] = useState(false); // nuevo estado agregado
+    const [enviandoCorreo, cambiarEnviandoCorreo] = useState(false);
 
     const {auth} = useAuth();
     // console.log(auth.user.patientID)
@@ -88,27 +93,38 @@ const Paciente = () => {
     }
 
 
-
     const handleSubmit = (event) => {
-      event.preventDefault();
-      console.log(`id medico ${selectedDoctorId}, id paciene ${auth.user.patientID} , date :${dateSelectedDoctor}, ${selectedTime} , ${duration} `);
+        event.preventDefault();
+        cambiarFormularioValido(true);
+        const token=  sessionStorage.getItem('token-user')
+        console.log(`token: ${token}`);
 
-      const data = {
-        doctorId: selectedDoctorId,
-        patientId: auth.user.patientID,
-        date: dateSelectedDoctor,
-        time: selectedTime,
-        duration: duration,
+        const data = { 
+            date: dateSelectedDoctor,
+            startTime: selectedTime, 
+            duration: duration,
+            doctor: idDoctor,
+            patient: auth.user.patientID,
+        };
+
+        const config = {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + token
+            }
+          };
+          
+          axios.post('https://consultoriomern.onrender.com/api/appointment', data, config)
+            .then(response => {
+              console.log('La cita ha sido creada exitosamente');
+              cambiarEnviandoCorreo(false);
+              cambiarEnviado(true); //
+             
+            })
+            .catch(error => {
+              console.error('Ha ocurrido un error al crear la cita:', error);
+            });
       };
-      axios.post('https://consultoriomern.onrender.com/api/appointment', data)
-        .then(response => {
-          console.log('La cita ha sido creada exitosamente');
-        })
-        .catch(error => {
-          console.error('Ha ocurrido un error al crear la cita:', error);
-        });
-    };
-
 
     return (
         <div>
@@ -184,6 +200,8 @@ const Paciente = () => {
                                         onClick={() => {
                                             setSelectedTime(schedule.startTime);
                                            setDuration(schedule.duration)
+                                           setIdDoctor(schedule.doctor)
+
                                         }}
                                         >
                                         {schedule.startTime}
@@ -201,7 +219,7 @@ const Paciente = () => {
                                 <h3>Horario seleccionado: {selectedTime}</h3>
 
                                 <div>
-                                            <form onSubmit={handleSubmit}>
+                                            <form action='POST' onSubmit={handleSubmit}>
                                             <p>Quiere reservar el turno para el dia {dateSelectedDoctor.substring(0, 10)} en el horario indicado {selectedTime}?</p>
                                                 <button  className="btn-form text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-5 mb-3 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" type="submit" >Si,Enviar</button>
                                             </form>
@@ -209,6 +227,16 @@ const Paciente = () => {
                             </div>
                         )
                     }
+                    
+                    {enviandoCorreo ? (
+        <p>Enviando correo...</p>
+      ) : enviado ? (
+        <div className="bg-green-100 text-blue-600 px-2 py-1 rounded-lg mt-5">
+          <p align="center">La información de la cita ha sido enviada a su correo.</p>
+          <p align="center">Gracias por su atención!</p>
+        </div>
+      ) : null}
+                    
                 </div>
 
                 <Doctors/>

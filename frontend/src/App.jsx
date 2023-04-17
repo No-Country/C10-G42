@@ -11,7 +11,8 @@ import Doctors from './components/contact-form/doctors/Doctors';
 import DoctorDashboard from './pages/dashboard/Doctor';
 import Register from './pages/Register';
  import ServicesSection from './pages/services/ServicesSection';
-
+ import About from './pages/about-us/About';
+//  import Contact from './pages/contact/Contact';
 
 
 function App() {
@@ -43,6 +44,15 @@ function App() {
                 path='/services'
                 element={<ServicesSection/>}
               />
+              <Route
+                path='/nosotros'
+                element={<About/>}
+              />
+{/*       
+              <Route
+                path='/contact'
+                element={<Contact/>}
+              /> */}
       
             </Route>
             <Route
