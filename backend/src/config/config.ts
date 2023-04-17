@@ -2,9 +2,13 @@ import * as dotenv from 'dotenv'
 
 dotenv.config()
 
-const missing = ['PORT', 'DB_URL', 'SECRET', 'URL_FRONTEND', 'URL_FRONT_DEPLOYMENT'].filter(
-  env => process.env[env] == null
-)
+const missing = [
+  'PORT',
+  'DB_URL',
+  'SECRET',
+  'URL_FRONTEND',
+  'URL_FRONT_DEPLOYMENT'
+].filter(env => process.env[env] == null)
 
 if (missing.length > 0) {
   throw new Error(`Missing environment variables: ${missing.join(', ')}.`)
@@ -16,7 +20,6 @@ if (missing.length > 0) {
 //   'https://consultoriomern.vercel.app',
 //   'https://consultoriomern-git-dev-mernconsultorio.vercel.app'
 // ]
-
 
 // export const corsOptions = {
 //   origin: function (origin: any, callback: any) {
