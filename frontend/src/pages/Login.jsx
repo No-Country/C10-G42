@@ -4,23 +4,42 @@ import Alerta from '../components/Alerta';
 import clienteAxios from '../config/clienteAxios';
 import useAuth from '../hooks/useAuth';
 import SubmitComponent from '../components/form/SubmitComponent';
+import useForm from '../hooks/useForm';
+import InputComponent from '../components/form/InputComponent';
+
+const validationRules = {
+  password: {
+    required: true,
+    pattern:
+      /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[A-Z])(?=.*[-\#\$\.\%\&\*])(?=.*[a-zA-Z]).{8,16}$/,
+    message:
+      'Debe contener al menos 8 caracteres, 1 letra minúscula, 1 letra mayúscula y 1 carácter especial',
+  },
+  email: {
+    required: true,
+    pattern: /\S+@\S+.\S+/,
+    message: 'El formato es inválido',
+  },
+};
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [alerta, setAlerta] = useState('');
+  const { setCargando, cargando } = useAuth();
+  const { values, handleChange, handleSubmit, errors } = useForm(
+    {
+      email: '',
+      password: '',
+    },
+    validationRules,
+  );
 
   const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if ([email, password].includes('')) {
-      setAlerta({
-        msg: 'Los campos son obligatorios.',
-        error: true,
-      });
-    }
+  const onSubmit = async ({ email, password }) => {
+    setCargando(true);
     try {
       const { data } = await clienteAxios.post('auth/login', {
         email,
@@ -28,9 +47,11 @@ const Login = () => {
       });
 
       sessionStorage.setItem('token-user', data.token);
+      setCargando(false);
       window.location.reload();
     } catch (error) {
       console.log(error);
+      setCargando(false);
       setAlerta({
         msg: error.response.data,
         error: true,
@@ -58,40 +79,35 @@ const Login = () => {
         )}
         <div className='flex items-center justify-center'>
           <form
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(onSubmit)}
             className='p-5 bg-white shadow md:w-2/3 w-full'>
             <div className='my-5'>
-              <label
-                htmlFor='email'
-                className='uppercase text-gray-600 block text-xl font-bold'>
-                Email:
-              </label>
-              <input
-                id='email'
-                type='email'
+              <InputComponent
+                type='text'
+                name='email'
+                label='CORREO'
                 placeholder='Ej: user@email.com'
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className='w-full mt-3 p-3 border rounded-xl gb-gray-50'
+                handleChange={handleChange}
+                value={values.email}
+                errorField={errors.email}
               />
             </div>
             <div className='my-5'>
-              <label
-                htmlFor='password'
-                className='uppercase text-gray-600 block text-xl font-bold'>
-                Contraseña:
-              </label>
-              <input
-                id='password'
+              <InputComponent
                 type='password'
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className='w-full mt-3 p-3 border rounded-xl gb-gray-50'
-                autoComplete='on'
+                name='password'
+                label='CONTRASEÑA'
+                placeholder='contraseña'
+                handleChange={handleChange}
+                value={values.password}
+                errorField={errors.password}
               />
             </div>
 
-            <SubmitComponent value={'Iniciar Sesion'} />
+            <SubmitComponent
+              value={'Iniciar Sesion'}
+              loading={cargando}
+            />
           </form>
         </div>
 
