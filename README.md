@@ -13,6 +13,7 @@ Breve descripción del proyecto.
 
 
 ## ✔ Developers||
+||
 |:-:|
 | **Lucas Clemente** |
 | Frontend |
