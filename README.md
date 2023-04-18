@@ -1,15 +1,14 @@
-# Consultorio MERN
+## 🔗 <a href="consultoriomern.vercel.app/">Consultorio MERN</a>
 [![Estado](https://img.shields.io/badge/estado-en%20progreso-blue)](https://github.com/user/proyecto)[![Lenguaje](https://img.shields.io/badge/lenguaje-javascript-yellow)](https://github.com/user/proyecto)
 
-ConsultorioMERN es una aplicación web que permite a los pacientes registrarse en el sistema, ver la lista de médicos disponibles y solicitar un turno con los mismos cuando se encuentren disponibles. La aplicación está construida utilizando tecnologías del stack MERN (MongoDB, Express, React, Node.js) y cuenta con una interfaz de usuario moderna y fácil de usar. Además, los médicos pueden ingresar al sistema y gestionar sus horarios de atención para que los pacientes puedan ver cuándo están disponibles para atenderlos. ConsultorioMERN es el resultado del trabajo en equipo de un grupo de desarrolladores comprometidos con crear una solución innovadora y accesible para la gestión de turnos médicos.
 ![Logo](https://media.discordapp.net/attachments/1088113388846071859/1090626722514345985/Logo_mern.png)
 
 
+## ✔ Proyecto
+ConsultorioMERN es una aplicación web que permite a los pacientes registrarse en el sistema, ver la lista de médicos disponibles y solicitar un turno con los mismos cuando se encuentren disponibles. La aplicación está construida utilizando tecnologías del stack MERN (MongoDB, Express, React, Node.js) y cuenta con una interfaz de usuario moderna y fácil de usar. Además, los médicos pueden ingresar al sistema y gestionar sus horarios de atención para que los pacientes puedan ver cuándo están disponibles para atenderlos. ConsultorioMERN es el resultado del trabajo en equipo de un grupo de desarrolladores comprometidos con crear una solución innovadora y accesible para la gestión de turnos médicos.
 
-### 🔗 <a href="consultoriomern.vercel.app/">Consultorio MERN</a>
 
 
-## ✔ Estructura de la aplicación
 
 
 ## ✔ Developers
