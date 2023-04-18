@@ -1,0 +1,7 @@
+[role=presentation] {
+	cursor: pointer;
+}
+ #datePicker>div {
+	margin-top: 10px;
+	border: 1 solid black;
+}

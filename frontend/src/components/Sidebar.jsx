@@ -2,6 +2,7 @@ import { useState } from 'react';
 import useAuth from '../hooks/useAuth';
 import Avatar from 'react-avatar';
 import { Link, NavLink, useLocation } from 'react-router-dom';
+import Logout from './Logout';
 
 const Sidebar = ({ menuItems, setOpacity }) => {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -76,27 +77,10 @@ const Sidebar = ({ menuItems, setOpacity }) => {
               </ul>
             </nav>
           </div>
-          <button
-            className='bg-red-500 hover:bg-red-400 text-white text-center p-4 rounded-lg w-full
-				 mt-auto'
-            onClick={cerrarSesionAuth}>
-            <span className='flex justify-center items-center'>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                fill='none'
-                viewBox='0 0 24 24'
-                strokeWidth={1.5}
-                stroke='currentColor'
-                className='w-6 h-6'>
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  d='M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75'
-                />
-              </svg>{' '}
-              Salir
-            </span>
-          </button>
+          <Logout
+            cerrarSesionAuth={cerrarSesionAuth}
+            padding={5}
+          />
         </div>
       </header>
     </>
