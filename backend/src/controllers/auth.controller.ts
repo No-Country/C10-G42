@@ -3,8 +3,8 @@ import { type Request, type Response } from 'express'
 import {
   forgot,
   login,
-  profile,
   newPassword,
+  profile,
   register,
   registerDoctor,
   verify,
@@ -22,13 +22,7 @@ const loginCtrl = ({ body }: Request, res: Response): void => {
 }
 
 const registerCtrl = ({ body }: Request, res: Response): void => {
-  const {
-    email,
-    password,
-    firstname,
-    lastname,
-    dni
-  } = body
+  const { email, password, firstname, lastname, dni } = body
 
   const user = {
     email,
@@ -77,7 +71,7 @@ const registerDoctorCtrl = ({ body }: Request, res: Response): void => {
 const getProfile = (req: Request, res: Response): void => {
   const { user, userId } = req
   profile(user, userId as string)
-    .then(user => res.status(200).json({user}))
+    .then(user => res.status(200).json({ user }))
     .catch(error => {
       httpErrorHandler(res, error, 500)
     })
