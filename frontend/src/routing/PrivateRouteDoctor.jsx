@@ -6,14 +6,14 @@ import Sidebar from '../components/Sidebar';
 const PrivateRouteDoctor = () => {
   const { auth, cerrarSesionAuth } = useAuth();
   const [sidebarOpacity, setSidebarOpacity] = useState(false);
-  //const [dash, setDash] = useState(null); // agregamos setDashboard
+  const [dash, setDash] = useState(null); // agregamos setDashboard
   let dashboard;
   const handleSidbarOp = (val) => {
     setSidebarOpacity(val);
   };
   //useEffect(() => {
   if (auth.user === undefined && !auth.user?.userId) {
-    // setDash();
+    setDash();
     dashboard = <Navigate to='/login' />;
     cerrarSesionAuth();
   } else if (auth.user.role !== 'doctor') {
