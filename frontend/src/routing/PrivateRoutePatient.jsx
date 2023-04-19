@@ -32,10 +32,9 @@ const PrivateRoutePatient = () => {
       <>
         <Sidebar
           menuItems={[
-            { name: 'Inicio', link: '/dashboard/doctor' },
-            { name: 'Mi perfil', link: '/dashboard/doctor/perfil' },
-            { name: 'Mis turnos', link: '/dashboard/doctor/turnos' },
-            { name: 'Mis horarios', link: '/dashboard/doctor/horarios' },
+            { name: 'Inicio', link: '/dashboard/paciente' },
+            { name: 'Mi perfil', link: '/dashboard/paciente/perfil' },
+            { name: 'Mis turnos', link: '/dashboard/paciente/turnos' },
           ]}
           setOpacity={handleSidbarOp}
         />
