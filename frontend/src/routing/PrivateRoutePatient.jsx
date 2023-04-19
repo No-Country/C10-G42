@@ -1,20 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useAuth from '../hooks/useAuth';
 import { Navigate, Outlet } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 
 const PrivateRoutePatient = () => {
-  const { auth, cargando } = useAuth();
-  if (cargando) return 'Cargando...';
-  const [opacity, setOpacity] = useState(false);
+  const { auth, cerrarSesionAuth } = useAuth();
   const [sidebarOpacity, setSidebarOpacity] = useState(false);
+  
   const handleSidbarOp = (val) => {
     setSidebarOpacity(val);
   };
+  useEffect(() => { 
+
+  }, [])
 
   let dashboard;
-  if (auth.user === undefined && !auth.user._id) {
+  if (auth.user === undefined && !auth.user?.userId) {
     dashboard = <Navigate to='/login' />;
+    cerrarSesionAuth();
   } else if (auth.user.role !== 'patient') {
     dashboard = <Navigate to='/' />;
   } else {
