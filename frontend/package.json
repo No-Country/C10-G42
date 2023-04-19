@@ -19,7 +19,9 @@
     "react-avatar": "^5.0.3",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.10.0",
-    "react-tailwindcss-datepicker": "^1.6.0"
+    "react-tailwindcss-datepicker": "^1.6.0",
+    "sweetalert2": "^11.7.3",
+    "sweetalert2-react-content": "^5.0.7"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

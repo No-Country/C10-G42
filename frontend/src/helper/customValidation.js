@@ -14,6 +14,11 @@ export const validateForm = (formFields, validationRules) => {
         errors[field] = rules.message || 'El campo es inválido';
       } else if (rules.match && formFields[field] !== formFields[rules.match]) {
         errors[field] = rules.message || 'Los campos deben coincidir';
+      } else if (
+        rules.todayAndAfter &&
+        new Date(formFields[field]).getDate() + 1 < new Date().getDate()
+      ) {
+        errors[field] = 'La fecha no puede ser menor a la actual';
       }
     }
   }
