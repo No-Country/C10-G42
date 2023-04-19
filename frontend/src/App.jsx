@@ -19,7 +19,7 @@ import ProfileDoctor from './pages/dashboard/Doctor/ProfileDoctor';
 import HomeDoctor from './pages/dashboard/Doctor/HomeDoctor';
  import ServicesSection from './pages/services/ServicesSection';
  import About from './pages/about-us/About';
-//  import Contact from './pages/contact/Contact';
+ import Contact from './pages/contact/Contact';
 
 
 function App() {
@@ -71,12 +71,11 @@ function App() {
               <Route
                 path='/nosotros'
                 element={<About/>}
-              />
-{/*       
+              />    
               <Route
                 path='/contact'
                 element={<Contact/>}
-              /> */}
+              /> 
       
             </Route>
             <Route

@@ -14,7 +14,7 @@ const DrawerComp = () => {
         },
         {
           title: "Contacto",
-          url: "/contacto"
+          url: "/contact"
         },
         {
           title: "Servicios",
