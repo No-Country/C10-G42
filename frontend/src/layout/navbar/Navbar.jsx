@@ -53,10 +53,10 @@ const Navbar = () => {
       title: 'Home',
       url: '/',
     },
-    {
-      title: 'Contacto',
-      url: '/contact',
-    },
+    // {
+    //   title: 'Contacto',
+    //   url: '/contact',
+    // },
     {
       title: 'Servicios',
       url: '/services',
