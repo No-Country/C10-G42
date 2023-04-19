@@ -17,12 +17,12 @@ import ProfilePatient from './pages/dashboard/Patient/ProfilePatient';
 import AppointmentPatient from './pages/dashboard/Patient/AppointmentPatient';
 import ProfileDoctor from './pages/dashboard/Doctor/ProfileDoctor';
 import HomeDoctor from './pages/dashboard/Doctor/HomeDoctor';
-import ServicesSection from './pages/services/ServicesSection';
-import About from './pages/about-us/About';
 import SchedulesDoctor from './pages/dashboard/Doctor/SchedulesDoctor';
 import CreateSchedule from './pages/dashboard/Doctor/CreateSchedule';
 import { DoctorProvider } from './context/DoctorProvider';
-//  import Contact from './pages/contact/Contact';
+import ServicesSection from './pages/services/ServicesSection';
+import About from './pages/about-us/About';
+import Contact from './pages/contact/Contact';
 
 function App() {
   return (

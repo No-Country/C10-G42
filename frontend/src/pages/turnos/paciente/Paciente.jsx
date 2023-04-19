@@ -4,6 +4,7 @@ import {Typography, duration} from '@mui/material'
 import Doctors from '../../../components/contact-form/doctors/Doctors'
 import useAuth from '../../../hooks/useAuth';
 import axios from 'axios';
+import { Link } from 'react-router-dom'
 const Paciente = () => {
 
     const [doctors, setDoctors] = useState([]);
@@ -83,7 +84,7 @@ const Paciente = () => {
         )
             .then((res) => res.json())
             .then((data) => {
-              console.log(data)
+
                 setSchedule(data)
             
             })
@@ -97,7 +98,7 @@ const Paciente = () => {
         event.preventDefault();
         cambiarFormularioValido(true);
         const token=  sessionStorage.getItem('token-user')
-        console.log(`token: ${token}`);
+
 
         const data = { 
             date: dateSelectedDoctor,
@@ -116,7 +117,7 @@ const Paciente = () => {
           
           axios.post('https://consultoriomern.onrender.com/api/appointment', data, config)
             .then(response => {
-              console.log('La cita ha sido creada exitosamente');
+           
               cambiarEnviandoCorreo(false);
               cambiarEnviado(true); //
              
@@ -234,6 +235,7 @@ const Paciente = () => {
         <div className="bg-green-100 text-blue-600 px-2 py-1 rounded-lg mt-5">
           <p align="center">La información de la cita ha sido enviada a su correo.</p>
           <p align="center">Gracias por su atención!</p>
+            <Link align='center' to='/dashboard/paciente/turnos'>Mis turnos</Link>
         </div>
       ) : null}
                     
