@@ -1,27 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import useAuth from '../hooks/useAuth';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate, Outlet, Route, useNavigate } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
+import NotFound from '../pages/NotFound';
 
 const PrivateRouteDoctor = () => {
-  const { auth, cerrarSesionAuth } = useAuth();
+  const { auth, cerrarSesionAuth, cargando } = useAuth();
   const [sidebarOpacity, setSidebarOpacity] = useState(false);
-  const [dash, setDash] = useState(null); // agregamos setDashboard
-  let dashboard;
+  const navigate = useNavigate();
+
+  if (cargando) return 'Cargando...';
+
+  const isAuthenticated = auth.user;
+  const userRole = auth.user?.role;
+
+  if (!isAuthenticated) {
+    cerrarSesionAuth();
+    navigate('/login');
+  }
+
+  if (userRole !== 'doctor') {
+    return <NotFound />;
+  }
+
   const handleSidbarOp = (val) => {
     setSidebarOpacity(val);
   };
-  //useEffect(() => {
-  if (auth.user === undefined && !auth.user?.userId) {
-    setDash();
-    dashboard = <Navigate to='/login' />;
-    cerrarSesionAuth();
-  } else if (auth.user.role !== 'doctor') {
-    // setDash();
-    dashboard = <Navigate to='/' />;
-  } else {
-    // setDash();
-    dashboard = (
+
+  if (isAuthenticated && userRole === 'doctor') {
+    return (
       <>
         <Sidebar
           menuItems={[
@@ -41,9 +48,6 @@ const PrivateRouteDoctor = () => {
       </>
     );
   }
-  // }, []);
-
-  return <>{dashboard}</>;
 };
 
 export default PrivateRouteDoctor;
