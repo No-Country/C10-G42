@@ -128,7 +128,7 @@ const getAppxPatOrDoc = async (
   page: number = 1
 ): Promise<any> => {
   const query = {
-    ...(typeId === 'doctor' ? { doctor: id } : { paciente: id }),
+    ...(typeId === 'doctor' ? { doctor: id } : { patient: id }),
     ...(fechaInicio != null &&
       fechaFin != null && {
         fecha: {
