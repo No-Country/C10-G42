@@ -45,7 +45,6 @@ ConsultorioMERN es una aplicación web que permite a los pacientes registrarse e
 | <a href="https://www.linkedin.com/in/manuel-firman/"><img src="https://img.shields.io/badge/linkedin%20-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white"/></a> |
 
 
-
 ## ✔ Backend
 ### Built with 🏗️
 ![NodeJS](https://img.shields.io/badge/Node.js-6DA55F?style=for-the-badge&logo=Node.js&logoColor=white) ![Express.js](https://img.shields.io/badge/Express.js-%23404d59.svg?style=for-the-badge&logo=Express&logoColor=%2361DAFB) ![TypeScript](https://img.shields.io/badge/TypeScript-blue.svg?style=for-the-badge&logo=TypeScript&logoColor=white) ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=MongoDB&logoColor=white) ![Mongoose](https://img.shields.io/badge/Mongoose-%2320232a.svg?style=for-the-badge&logo=Mongoose&logoColor=%%2361DAFB) ![Nodemailer](https://img.shields.io/badge/Nodemailer-0F9DCE?style=for-the-badge&logo=Nodemailer&logoColor=fff)
