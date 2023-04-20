@@ -10,10 +10,50 @@ header{
  font-family:'Roboto' ; 
  font-size:bold;
 }
+/* .link-container {
+  margin-left:1rem;
+} */
 
-.links-container a {
+.links {
   margin: 1rem;
   font-family: 'Roboto';
   font-weight:400;
   padding: 1rem;
 }
+
+.btn-container {
+  display: flex;
+  margin-left: 25rem;
+}
+
+@media screen and (min-width:1300px){
+  .user-btn{
+    margin-left: 45rem;
+  }
+  .btn-container{
+    margin-left:40rem;
+  }
+
+        }
+       
+          
+ @media screen and (max-width:1300px){
+  .user-btn{
+    margin-left: 20rem;
+  }
+  .btn-container{
+    margin-left: 20rem;
+  }
+        }
+       
+       
+        @media screen and (max-width:1000px){
+          .user-btn{
+            margin-left: 10rem;
+          }
+          .btn-container{
+            margin-left: 5rem;
+          }
+          
+                }
+                

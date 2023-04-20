@@ -53,10 +53,10 @@ const Navbar = () => {
       title: 'Home',
       url: '/',
     },
-    {
-      title: 'Contacto',
-      url: '/contact',
-    },
+    // {
+    //   title: 'Contacto',
+    //   url: '/contact',
+    // },
     {
       title: 'Servicios',
       url: '/services',
@@ -70,6 +70,7 @@ const Navbar = () => {
   return (
     <>
       <AppBar
+
         position='stat'
         sx={{ background: '#3232ac' }}>
         <Toolbar>
@@ -97,15 +98,16 @@ const Navbar = () => {
                   <Link
                     key={index}
                     to={page.url}
-                    className='text-white '>
+                    className='text-white links'>
                     {page.title}
                   </Link>
                 ))}
               </div>
               {!user ? (
                 <>
+                <div className='btn-container'>
                   <Button
-                    sx={{ marginLeft: 'auto', background: '#47c1b5' }}
+                    sx={{ background: '#47c1b5' }}
                     variant='contained'>
                     <Link to='/login'>Pedir turno</Link>{' '}
                   </Button>
@@ -114,9 +116,10 @@ const Navbar = () => {
                     variant='contained'>
                     <Link to='/login'>Soy Medico</Link>
                   </Button>
+                  </div>
                 </>
               ) : (
-                <div className='text-white ml-96'>
+                <div className='text-white user-btn '>
                   <div>
                     <Button
                       id='basic-button'
@@ -132,7 +135,7 @@ const Navbar = () => {
                         color='#47c1b5'
                       />
                     </Button>
-
+                    </div>
                     <Menu
                       id='basic-menu'
                       anchorEl={anchorEl}
@@ -170,7 +173,7 @@ const Navbar = () => {
                       </span>
                     </Menu>
                   </div>
-                </div>
+          
               )}
             </>
           )}

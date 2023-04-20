@@ -52,7 +52,7 @@ const DrawerComp = ({ user, cerrarSesionAuth }) => {
         open={openDrawer}
         onClose={() => setOpenDrawer(false)}
         PaperProps={{
-          sx: { width: '70%' },
+          sx: { width: '900px' },
         }}>
         <List style={{ width: window.innerWidth * 0.25 }}>
           {PAGES.map((page, index) => {
