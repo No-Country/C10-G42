@@ -25,12 +25,12 @@ header{
   display: flex;
   margin-left: 25rem;
 }
-@media screen and (min-width:1900px){
+@media screen and (min-width:1827px){
   .user-btn{
   margin-left: 80rem;
   }
   .btn-container{
-  margin-left: 85rem;
+  margin-left: 70rem;
   }
   }
   
