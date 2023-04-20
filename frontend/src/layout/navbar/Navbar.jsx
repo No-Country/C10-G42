@@ -116,7 +116,7 @@ const Navbar = () => {
                   </Button>
                 </>
               ) : (
-                <div className='text-white ml-96'>
+                <div className='text-white  user-btn'>
                   <div>
                     <Button
                       id='basic-button'
