@@ -1,24 +1,40 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './index.css';
 import { Link } from 'react-router-dom';
-import AppointmentLIst from '../../../components/dashboard/AppointmentLIst';
+import AppointmentList from '../../../components/dashboard/AppointmentList';
 import useAuth from '../../../hooks/useAuth';
+import usePatient from '../../../hooks/usePatient';
 
 const AppointmentPatient = () => {
   const {
     auth: { user },
   } = useAuth();
-  const turnos = ['Turno 1', 'Turno 2', 'Turno 3', 'Turno 4'];
+  const { appointmentList, getAppointment, pages, page, setPage, itemsCount } =
+    usePatient();
 
-  return (
+  useEffect(() => {
+    console.log('call', page, user.patientID);
+    const get = async () => {
+      await getAppointment(user.patientID, page);
+    };
+    get();
+  }, [page]);
+
+  return appointmentList && appointmentList?.items?.length > 0 ? (
     <div className='m-auto w-full'>
       <div className='flex justify-center'>
-        <AppointmentLIst
-          turnos={turnos}
+        <AppointmentList
+          turnos={appointmentList?.items}
           user={user}
+          pages={pages}
+          page={page}
+          setPage={setPage}
+          itemsCount={itemsCount}
         />
       </div>
     </div>
+  ) : (
+    <div>No se encontraron turnos registrados</div>
   );
 };
 export default AppointmentPatient;
