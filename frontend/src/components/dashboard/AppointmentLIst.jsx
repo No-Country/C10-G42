@@ -22,7 +22,6 @@ const AppointmentList = ({
   };
 
   //paginations
-
   const [pageCount, setPageCount] = useState(pages);
   console.log('page:', page, 'pagesC', pages, pageCount);
 
