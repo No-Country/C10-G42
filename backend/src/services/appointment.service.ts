@@ -129,15 +129,15 @@ const getAppxPatOrDoc = async (
 ): Promise<any> => {
   const query = {
     ...(typeId === 'doctor' ? { doctor: id } : { patient: id }),
-    ...(fechaInicio &&
-      fechaFin && {
+    ...(fechaInicio != null &&
+      fechaFin != null && {
         date: {
           $gte: new Date(fechaInicio),
           $lte: new Date(fechaFin)
         }
       })
   }
-  
+
   const ITEMS_PER_PAGE = 2
   const skip = (page - 1) * ITEMS_PER_PAGE // 1 * 20 = 20
   try {
