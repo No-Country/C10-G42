@@ -54,8 +54,8 @@ const AppointmentList = ({
       {loading ? (
         <div className='flex justify-center h-full p-10 text-main'>
           <Loading
-            w={10}
-            h={10}
+            w={8}
+            h={8}
           />
         </div>
       ) : (
