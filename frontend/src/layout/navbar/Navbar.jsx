@@ -53,10 +53,10 @@ const Navbar = () => {
       title: 'Home',
       url: '/',
     },
-    {
-      title: 'Contacto',
-      url: '/contact',
-    },
+    // {
+    //   title: 'Contacto',
+    //   url: '/contact',
+    // },
     {
       title: 'Servicios',
       url: '/services',
@@ -116,7 +116,7 @@ const Navbar = () => {
                   </Button>
                 </>
               ) : (
-                <div className='text-white ml-96'>
+                <div className='text-white  user-btn'>
                   <div>
                     <Button
                       id='basic-button'

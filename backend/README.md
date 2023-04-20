@@ -11,11 +11,16 @@
 
 ## Auth
 
-| TYPE    | DETAIL            | ROUTE                                      | SEND                                                           |
-| ------- | ----------------- | ------------------------------------------ | -------------------------------------------------------------- |
-| POST    | login user        | http://localhost:PORT/api/auth/login       | headers: {token}                                               |
-| POST    | register patient  | http://localhost:PORT/api/auth/register    | headers: {token}, params: {id}, body: User & Patient Schema    |
-| POST    | register doctor   | http://localhost:PORT/api//register/doctor | headers: {token}, params: {id}, body: User & Doctor Schema     |
+| TYPE    | DETAIL               | ROUTE                                          | SEND                                                           |
+| ------- | -------------------- | ---------------------------------------------- | -------------------------------------------------------------- |
+| POST    | login user           | http://URL:PORT/api/auth/login                 | headers: {token}                                               |
+| POST    | register patient     | http://URL:PORT/api/auth/register              | headers: {token}, params: {id}, body: User & Patient Schema    |
+| POST    | register doctor      | http://URL:PORT/api/auth/register/doctor       | headers: {token}, params: {id}, body: User & Doctor Schema     |
+| GET     | get profile          | http://URL:PORT/api/auth/profile               | headers: {token}                                               |
+| GET     | confirm user         | http://URL:PORT/api/auth/confirm/:code         | headers: {token}, params: {code}                               |
+| POST    | forgot password      | http://URL:PORT/api/auth/forgot-password/      | headers: {token}, params: {code}, body: {email}                |
+| GET     | verify code password | http://URL:PORT/api/auth/forgot-password/:code | headers: {token}, params: {code}                               |
+| POST    | reset password       | http://URL:PORT/api/auth/reset-password/:code  | headers: {token}, params: {code}, body: {password}             |
 
 ### User Schema
 
@@ -31,12 +36,12 @@
 
 ## Patient
 
-| TYPE   | DETAIL            | ROUTE                                   | SEND                                                                  |
-| ------ | ----------------- | --------------------------------------- | --------------------------------------------------------------------- |
-| GET    | get all patients  | http://localhost:PORT/api/patient       | headers: {token}                                                      |
-| GET    | get patient by Id | http://localhost:PORT/api/patient/:id   | headers: {token}, params: {id}                                        |
-| PUT    | update patient    | http://localhost:PORT/api/patient/:id   | headers: {token}, params: {id}, body: {birthdate, phone, gender, dni} |
-| DELETE | delete patient    | http://localhost:PORT/api/patient/:id   | headers: {token}, params: {id}                                        |
+| TYPE   | DETAIL            | ROUTE                             | SEND                                                                  |
+| ------ | ----------------- | --------------------------------- | --------------------------------------------------------------------- |
+| GET    | get all patients  | http://URL:PORT/api/patient       | headers: {token}                                                      |
+| GET    | get patient by Id | http://URL:PORT/api/patient/:id   | headers: {token}, params: {id}                                        |
+| PUT    | update patient    | http://URL:PORT/api/patient/:id   | headers: {token}, params: {id}, body: {birthdate, phone, gender, dni} |
+| DELETE | delete patient    | http://URL:PORT/api/patient/:id   | headers: {token}, params: {id}                                        |
 
 ### Patient Schema
 
@@ -52,12 +57,16 @@
 
 ## Doctor
 
-| TYPE   | DETAIL           | ROUTE                                  | SEND                                                                |
-| ------ | ---------------- | -------------------------------------- | ------------------------------------------------------------------- |
-| GET    | get all doctor   | http://localhost:PORT/api/doctor       |                                                                     |
-| GET    | get doctor by Id | http://localhost:PORT/api/doctor/:id   | params: {id}                                                        |
-| PUT    | update doctor    | http://localhost:PORT/api/doctor/:id   | headers: {token}, params: {id}, body: {specialty, phone, photoUrl} |
-| DELETE | delete doctor    | http://localhost:PORT/api/doctor/:id   | headers: {token}, params: {id}                                      |
+| TYPE   | DETAIL              | ROUTE                                                | SEND                                                               |
+| ------ | ------------------- | ---------------------------------------------------- |------------------------------------------------------------------- |
+| GET    | get all doctor      | http://URL:PORT/api/doctor                           |                                                                    |
+| GET    | get all doctor pag. | http://URL:PORT/api/doctor/paginated                 | params: {specialty, page}                                          |
+| GET    | get doctor by Id    | http://URL:PORT/api/doctor/:id                       | params: {id}                                                       |
+| GET    | get specialties     | http://URL:PORT/api/doctor/specialty                 |                                                                    |
+| GET    | get doctor by spec. | http://URL:PORT/api/doctor/specialty/list/:specialty | params: {specialty}                                                |
+| GET    | get doctor by spec. | http://URL:PORT/api/doctor/random/:limit             | params: {limit}                                                    |
+| PUT    | update doctor       | http://URL:PORT/api/doctor/:id                       | headers: {token}, params: {id}, body: {specialty, phone, photoUrl} |
+| DELETE | delete doctor       | http://URL:PORT/api/doctor/:id                       | headers: {token}, params: {id}                                     |
 
 ### Doctor Schema
 
@@ -72,13 +81,13 @@
 
 ## Doctor Schedules
 
-| TYPE   | DETAIL             | ROUTE                                        | SEND                                                            |
-| ------ | ------------------ | -------------------------------------------- | --------------------------------------------------------------- |
-| GET    | get all schedules  | http://localhost:PORT/api/doctorschedule     |                                                                 |
-| GET    | get schedule by Id | http://localhost:PORT/api/doctorschedule/:id | params: {id}                                                    |
-| POST   | create schedule    | http://localhost:PORT/api/doctorschedule     | headers: {token}, body: DoctorSchedule Schema                   |
-| PUT    | update schedule    | http://localhost:PORT/api/doctorschedule/:id | headers: {token}, params: {id}, body: {day, starttime, endtime} |
-| DELETE | delete schedule    | http://localhost:PORT/api/doctorschedule/:id | headers: {token}, params: {id}                                  |
+| TYPE   | DETAIL             | ROUTE                                  | SEND                                                            |
+| ------ | ------------------ | -------------------------------------- | --------------------------------------------------------------- |
+| GET    | get all schedules  | http://URL:PORT/api/doctorschedule     |                                                                 |
+| GET    | get schedule by Id | http://URL:PORT/api/doctorschedule/:id | params: {id}                                                    |
+| POST   | create schedule    | http://URL:PORT/api/doctorschedule     | headers: {token}, body: DoctorSchedule Schema                   |
+| PUT    | update schedule    | http://URL:PORT/api/doctorschedule/:id | headers: {token}, params: {id}, body: {day, starttime, endtime} |
+| DELETE | delete schedule    | http://URL:PORT/api/doctorschedule/:id | headers: {token}, params: {id}                                  |
 
 ### DoctorSchedule Schema
 
@@ -93,16 +102,16 @@
 
 ## Appointments
 
-| TYPE   | DETAIL              | ROUTE                                             | SEND                                                      |
-| ------ | ------------------- | ------------------------------------------------- | --------------------------------------------------------- |
-| GET    | get all appointment | http://localhost:PORT/api/appointment             | headers: {token}                                          |
-| GET    | get appoint. by Id  | http://localhost:PORT/api/appointment/:id         | headers: {token}, params: {id}                            |
-| GET    | get doctor appoint. | http://localhost:PORT/api/appointment/doctor/:id  | headers: {token}                                          |
-| GET    | get patient appoint.| http://localhost:PORT/api/appointment/patient/:id | headers: {token}                                          |
-| POST   | get array of avail. | http://localhost:PORT/api/appointment/:id         | params: {idDoctor}                                        |
-| POST   | create appointment  | http://localhost:PORT/api/appointment             | headers: {token}, body: Appointment Schema                |
-| PUT    | update appointment  | http://localhost:PORT/api/appointment/:id         | headers: {token}, params: {id}, body: Appointment Schema  |
-| DELETE | delete appointment  | http://localhost:PORT/api/appointment/:id         | headers: {token}, params: {id}                            |
+| TYPE   | DETAIL              | ROUTE                                       | SEND                                                      |
+| ------ | ------------------- | ------------------------------------------- | --------------------------------------------------------- |
+| GET    | get all appointment | http://URL:PORT/api/appointment             | headers: {token}                                          |
+| GET    | get appoint. by Id  | http://URL:PORT/api/appointment/:id         | headers: {token}, params: {id}                            |
+| GET    | get doctor appoint. | http://URL:PORT/api/appointment/doctor/:id  | headers: {token}                                          |
+| GET    | get patient appoint.| http://URL:PORT/api/appointment/patient/:id | headers: {token}                                          |
+| GET    | get array of avail. | http://URL:PORT/api/appointment/:id         | params: {idDoctor, date}                                  |
+| POST   | create appointment  | http://URL:PORT/api/appointment             | headers: {token}, body: Appointment Schema                |
+| PUT    | update appointment  | http://URL:PORT/api/appointment/:id         | headers: {token}, params: {id}, body: Appointment Schema  |
+| DELETE | delete appointment  | http://URL:PORT/api/appointment/:id         | headers: {token}, params: {id}                            |
 
 ### Appointment Schema
 

@@ -1,5 +1,5 @@
 import { useState, useEffect, createContext } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import clienteAxios from '../config/clienteAxios';
 
 const AuthContext = createContext();
@@ -8,8 +8,8 @@ const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({});
   const [cargando, setCargando] = useState(true);
 
-  const navigate = useNavigate();
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const autenticarUsuario = async () => {
@@ -45,6 +45,7 @@ const AuthProvider = ({ children }) => {
           }
         }
       } catch (error) {
+        console.error('authProv', error);
         setAuth({});
       }
       setCargando(false);
@@ -55,7 +56,7 @@ const AuthProvider = ({ children }) => {
   const cerrarSesionAuth = () => {
     setAuth({});
     sessionStorage.removeItem('token-user');
-    navigate('/login');
+    return <Navigate to='/login' />;
   };
 
   return (

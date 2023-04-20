@@ -1,5 +1,5 @@
 import React from 'react'
-
+import hospital from '../../assets/hospital.jpg'
 const About = () => {
   return (
     <>
@@ -16,7 +16,7 @@ Contamos con un equipo de profesionales altamente capacitados y con años de exp
         </div>
         <div>
           
-<img class="h-auto max-w-full" src="http://www.rocagallery.com/wp-content/uploads/2019/04/MAIN_Jardi%CC%81n-interior-Hospital-de-Mollet-%C2%A9Pepo-Segura.jpg" alt="image description"/>
+<img class="h-auto max-w-full" src={hospital} alt="image description"/>
         </div>
         </div>
         </div>
