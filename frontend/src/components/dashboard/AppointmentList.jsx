@@ -1,24 +1,23 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Datepicker from 'react-tailwindcss-datepicker';
+import Loading from '../Loading';
 
 const AppointmentList = ({
   turnos,
-  user,
   pages,
   page,
   setPage,
   itemsCount,
+  loading,
+  startDate,
+  setStartDate,
 }) => {
-  const [startDate, setStartDate] = useState({
-    startDate: new Date(),
-    endDate: new Date().setMonth(11),
-  });
-
   //date range
   const handleValueChange = (newValue) => {
     console.log('newValue:', newValue);
     setStartDate(newValue);
+    setPage(1);
   };
 
   //paginations
@@ -50,58 +49,61 @@ const AppointmentList = ({
   }
 
   return (
-    <div className='w-full bg-white rounded-lg shadow-lg lg:w-3/4 p-5'>
-      <span className='flex justify-between my-2'>
-        <h3 className='text-2xl font-bold'>Mis turnos</h3>
-        {user.role === 'patient' && (
-          <Link
-            to='/turnos'
-            className='flex justify-center bg-main hover:bg-secondary text-white p-2 ml-auto rounded-md'>
-            Crear turnos
-          </Link>
-        )}
-      </span>
+    <>
       <hr />
-      {/* Fecha */}
-      <span
-        className='mt-10'
-        id='datePicker'>
-        <Datepicker
-          i18n={'es'}
-          displayFormat={'DD/MM/YYYY'}
-          value={startDate}
-          onChange={handleValueChange}
-        />
-      </span>
-      {/* Turnos */}
-      <ul className='divide-y-2 divide-gray-100'>
-        {turnos.map((turno) => (
-          <li
-            className='p-3 hover:bg-main hover:text-blue-200 cursor-pointer'
-            key={turno._id}>
-            <div className='md:flex md:justify-between'>
-              <p>
-                <b>Fecha: </b>
-                {new Date(turno.date).toLocaleDateString('es-AR', {
-                  timeZone: 'UTC',
-                })}
-              </p>
-              <p>
-                <b>Hora inicio: </b> {turno.startTime}
-              </p>
+      {loading ? (
+        <div className='flex justify-center h-full p-10 text-main'>
+          <Loading
+            w={10}
+            h={10}
+          />
+        </div>
+      ) : (
+        <div>
+          {/* Fecha */}
+          <span
+            className='mt-10'
+            id='datePicker'>
+            <Datepicker
+              i18n={'es'}
+              displayFormat={'DD/MM/YYYY'}
+              popoverDirection='down'
+              startWeekOn='mon'
+              value={startDate}
+              onChange={handleValueChange}
+            />
+          </span>
+          {/* Turnos */}
+          <ul className='divide-y-2 divide-gray-100'>
+            {turnos.map((turno) => (
+              <li
+                className='p-3 hover:bg-main hover:text-blue-200 cursor-pointer'
+                key={turno._id}>
+                <div className='md:flex md:justify-between'>
+                  <p>
+                    <b>Fecha: </b>
+                    {new Date(turno.date).toLocaleDateString('es-AR', {
+                      timeZone: 'UTC',
+                    })}
+                  </p>
+                  <p>
+                    <b>Hora inicio: </b> {turno.startTime}
+                  </p>
 
-              <div>
-                <p>
-                  <b>Doctor: </b> {turno.doctor.name}
-                </p>
-                <p>
-                  <b>Especialidad: </b> {turno.doctor.specialty}
-                </p>
-              </div>
-            </div>
-          </li>
-        ))}
-      </ul>
+                  <div>
+                    <p>
+                      <b>Doctor: </b> {turno.doctor.name}
+                    </p>
+                    <p>
+                      <b>Especialidad: </b> {turno.doctor.specialty}
+                    </p>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       <hr className='border border-blue-pastel-100 w-full' />
       {/*** Paginacion ***/}
@@ -132,7 +134,7 @@ const AppointmentList = ({
           </button>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 export default AppointmentList;
