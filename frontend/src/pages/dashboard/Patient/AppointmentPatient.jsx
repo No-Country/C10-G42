@@ -6,10 +6,12 @@ import usePatient from '../../../hooks/usePatient';
 import { AppointmentList } from '../../../components';
 import Loading from '../../../components/Loading';
 
+
 const AppointmentPatient = () => {
   const {
     auth: { user },
   } = useAuth();
+
   const {
     appointmentList,
     getAppointment,
@@ -31,7 +33,8 @@ const AppointmentPatient = () => {
     get();
   }, [page, startDate]);
 
-  return (
+
+  return appointmentList && appointmentList?.items?.length > 0 ? (
     <div className='m-auto w-full'>
       <div className='flex justify-center'>
         <div className='w-full h-3/4 bg-white rounded-lg shadow-lg lg:w-3/4 p-5'>
@@ -62,6 +65,8 @@ const AppointmentPatient = () => {
         </div>
       </div>
     </div>
+  ) : (
+    <div>No se encontraron turnos registrados</div>
   );
 };
 export default AppointmentPatient;

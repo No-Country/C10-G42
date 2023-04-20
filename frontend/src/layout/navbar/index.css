@@ -17,3 +17,42 @@ header{
   font-weight:400;
   padding: 1rem;
 }
+
+
+
+@media screen and (min-width:1827px){
+  .user-btn{
+  margin-left: 80rem;
+  }
+
+  }
+
+  @media screen and (min-width:1651px) and (max-width:1900px){
+  .user-btn{
+  margin-left: 50rem;
+  }
+  .btn-container{
+  margin-left: 65rem;
+  }
+  }
+
+  @media screen and (min-width:1300px) and (max-width:1650px){
+  .user-btn{
+  margin-left: 45rem;
+  }
+
+  }
+
+  @media screen and (max-width:1300px){
+  .user-btn{
+  margin-left: 25rem;
+  }
+
+  }
+
+  @media screen and (max-width:1000px){
+  .user-btn{
+  margin-left: 10rem;
+  }
+
+  }

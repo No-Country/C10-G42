@@ -5,6 +5,7 @@ import Loading from '../Loading';
 
 const AppointmentList = ({
   turnos,
+
   pages,
   page,
   setPage,
@@ -18,6 +19,7 @@ const AppointmentList = ({
     console.log('newValue:', newValue);
     setStartDate(newValue);
     setPage(1);
+
   };
 
   //paginations
@@ -105,6 +107,7 @@ const AppointmentList = ({
         </div>
       )}
 
+
       <hr className='border border-blue-pastel-100 w-full' />
       {/*** Paginacion ***/}
       <div className='flex flex-col items-center justify-center m-auto'>
@@ -135,6 +138,7 @@ const AppointmentList = ({
         </div>
       </div>
     </>
+
   );
 };
 export default AppointmentList;

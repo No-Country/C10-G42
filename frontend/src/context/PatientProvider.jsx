@@ -24,6 +24,7 @@ const PatientProvider = ({ children }) => {
   const [pages, setPages] = useState(0);
   const [itemsCount, setItemsCount] = useState(0);
   const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
 
   /**
@@ -116,6 +117,7 @@ const PatientProvider = ({ children }) => {
         setPage,
         itemsCount,
         loading,
+
       }}>
       {children}
     </PatientContext.Provider>
