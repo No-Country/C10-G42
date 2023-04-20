@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import './index.css';
 import { Link } from 'react-router-dom';
-import AppointmentList from '../../../components/dashboard/AppointmentList';
+
 import useAuth from '../../../hooks/useAuth';
 import usePatient from '../../../hooks/usePatient';
+import AppointmentList from '../../../components/dashboard/AppointmentList';
 
 const AppointmentPatient = () => {
   const {
