@@ -153,6 +153,8 @@ const getAppxPatOrDoc = async (
 
     const countAP = AppointmentModel.countDocuments(query)
     const appointments = AppointmentModel.find(query)
+      .populate('patient')
+      .populate('doctor')
       .limit(ITEMS_PER_PAGE)
       .skip(skip)
     const [itemsCount, items] = await Promise.all([countAP, appointments])
