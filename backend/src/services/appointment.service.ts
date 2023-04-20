@@ -131,7 +131,7 @@ const getAppxPatOrDoc = async (
     ...(typeId === 'doctor' ? { doctor: id } : { patient: id }),
     ...(fechaInicio != null &&
       fechaFin != null && {
-        fecha: {
+        date: {
           $gte: new Date(fechaInicio),
           $lte: new Date(fechaFin)
         }
