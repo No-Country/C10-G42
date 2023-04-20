@@ -23,40 +23,53 @@ const PatientProvider = ({ children }) => {
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(0);
   const [itemsCount, setItemsCount] = useState(0);
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
 
   /**
    * @param {*} id - User patient
    * @returns
    */
-
-  //   useEffect(() => {
-  // 	getAppointment()
-  //   }, [page])
-
-  const getAppointment = async (id, _page = page) => {
+  const getAppointment = async (
+    id,
+    _page = page,
+    dateRange = {
+      startDate: '',
+      endDate: '',
+    },
+  ) => {
     if (!token) {
       return;
     }
 
+    const dateRangeStr = dateRange.startDate
+      ? `&fechaInicio=${dateRange.startDate}&fechaFin=${dateRange.endDate}`
+      : '';
+
+    setLoading(true);
+
     try {
       const { data } = await clienteAxios.get(
-        `appointment/patient/${id}?page=${_page}`,
+        `appointment/patient/${id}?page=${_page}${dateRangeStr ?? ''}`,
         config,
-        // {
-        //   params: {
-        //     page: 2,
-        //     fechaInicio: '',
-        //     fechaFin: '',
-        //   },
-        // },
       );
+      console.log('data', data);
+      data?.msg &&
+        MySwal.fire({
+          title: 'Error!',
+          text: `${data.msg}`,
+          icon: 'error',
+          confirmButtonText: 'Ok',
+        });
       setAppointmentList(data);
+      setLoading(false);
       setItemsCount(data?.pagination.itemsCount);
       setPages(data?.pagination.pagesCount);
-      _page && setPage(_page);
+      //_page && setPage(_page);
     } catch (error) {
-      console.error(error.response);
+      setLoading(false);
+      console.log('this', error);
       MySwal.fire({
         title: 'Error!',
         text: `${error.response.data}`,
@@ -103,6 +116,8 @@ const PatientProvider = ({ children }) => {
         page,
         setPage,
         itemsCount,
+        loading,
+
       }}>
       {children}
     </PatientContext.Provider>
