@@ -1,16 +1,20 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useAuth from '../hooks/useAuth';
 import Avatar from 'react-avatar';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import Logout from './Logout';
 
-const Sidebar = ({ menuItems, setOpacity }) => {
+const Sidebar = ({ menuItems, setOpacity = () => {} }) => {
   const [showSidebar, setShowSidebar] = useState(false);
   const location = useLocation();
   const {
     auth: { user },
     cerrarSesionAuth,
   } = useAuth();
+
+  useEffect(() => {
+    menuItems;
+  }, []);
 
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);

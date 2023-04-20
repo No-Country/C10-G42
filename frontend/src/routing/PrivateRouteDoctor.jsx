@@ -1,34 +1,46 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useAuth from '../hooks/useAuth';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate, Outlet, Route, useNavigate } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
+import NotFound from '../pages/NotFound';
 
 const PrivateRouteDoctor = () => {
-  const { auth, cargando } = useAuth();
-  if (cargando) return 'Cargando...';
+  const { auth, cerrarSesionAuth, cargando } = useAuth();
   const [sidebarOpacity, setSidebarOpacity] = useState(false);
+  const navigate = useNavigate();
+
+  if (cargando) return 'Cargando...';
+
+  const isAuthenticated = auth.user;
+  const userRole = auth.user?.role;
+
+  if (!isAuthenticated) {
+    cerrarSesionAuth();
+    navigate('/login');
+  }
+
+  if (userRole !== 'doctor') {
+    return <NotFound />;
+  }
+
   const handleSidbarOp = (val) => {
     setSidebarOpacity(val);
   };
 
-  let dashboard;
-  if (auth.user === undefined && !auth.user._id) {
-    dashboard = <Navigate to='/login' />;
-  } else if (auth.user.role !== 'doctor') {
-    dashboard = <Navigate to='/' />;
-  } else {
-    dashboard = (
+  if (isAuthenticated && userRole === 'doctor') {
+    return (
       <>
         <Sidebar
           menuItems={[
             { name: 'Inicio', link: '/dashboard/doctor' },
             { name: 'Mi perfil', link: '/dashboard/doctor/perfil' },
             { name: 'Mis turnos', link: '/dashboard/doctor/turnos' },
+            { name: 'Mis horarios', link: '/dashboard/doctor/horarios' },
           ]}
           setOpacity={handleSidbarOp}
         />
         <main
-          className={`flex h-screen p-10 ${
+          className={`flex justify-center h-screen p-6 ${
             sidebarOpacity ? 'pointer-events-none opacity-20' : ''
           }`}>
           <Outlet />
@@ -36,8 +48,6 @@ const PrivateRouteDoctor = () => {
       </>
     );
   }
-
-  return <>{dashboard}</>;
 };
 
 export default PrivateRouteDoctor;

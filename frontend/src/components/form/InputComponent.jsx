@@ -19,7 +19,9 @@ const InputComponent = ({
         name={name}
         type={type}
         placeholder={placeholder}
-        className='w-full mt-3 p-3 border rounded-xl gb-gray-50'
+        className={`${
+          type !== 'time' ? 'w-full' : ''
+        } mt-3 p-3 border rounded-xl gb-gray-50`}
         onChange={handleChange}
         value={value}
         autoComplete={type === 'password' ? 'on' : ''}

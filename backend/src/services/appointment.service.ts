@@ -128,10 +128,10 @@ const getAppxPatOrDoc = async (
   page: number = 1
 ): Promise<any> => {
   const query = {
-    ...(typeId === 'doctor' ? { doctor: id } : { paciente: id }),
+    ...(typeId === 'doctor' ? { doctor: id } : { patient: id }),
     ...(fechaInicio != null &&
       fechaFin != null && {
-        fecha: {
+        date: {
           $gte: new Date(fechaInicio),
           $lte: new Date(fechaFin)
         }
@@ -153,6 +153,8 @@ const getAppxPatOrDoc = async (
 
     const countAP = AppointmentModel.countDocuments(query)
     const appointments = AppointmentModel.find(query)
+      .populate('patient')
+      .populate('doctor')
       .limit(ITEMS_PER_PAGE)
       .skip(skip)
     const [itemsCount, items] = await Promise.all([countAP, appointments])
