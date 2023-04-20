@@ -17,7 +17,7 @@ ConsultorioMERN es una aplicación web que permite a los pacientes registrarse e
 
 ## ✔ Developers
 | <img src="https://avatars.githubusercontent.com/u/84654392?v=4" width=80> |	| <img src="https://ca.slack-edge.com/T02KS88FB0E-U04U8M2EVFW-42dbd7f76529-512" width=80> |	| <img src="https://ca.slack-edge.com/T02KS88FB0E-U04MEGXSAAJ-f87dd59680fa-512" width=80> |	| <img src="https://avatars.githubusercontent.com/u/92244840?v=4" width=80> |
-|:-:|
+|:-:|:-:|:-:|:-:|
 | **Lucas Clemente** |	| **America Viana** |	| **Fabian Sanchez** |	| **Manuel Firman** |
 | Frontend |	| Frontend |	| Fullstack |	| Backend |
 | <a href="https://github.com/lucasclemente08"><img src="https://img.shields.io/badge/github-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white"/></a> |	| <a href="https://github.com/amerikv220"><img src="https://img.shields.io/badge/github-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white"/></a> |	| <a href="https://github.com/fabisanz-dev"><img src="https://img.shields.io/badge/github-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white"/></a> |	| <a href="https://github.com/manuelfirman"><img src="https://img.shields.io/badge/github-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white"/></a> |
