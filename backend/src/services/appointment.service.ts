@@ -44,7 +44,7 @@ const create = async (appointmentData: Appointment): Promise<object> => {
       patientID: patient._id,
       doctorID: doctor._id
     }
-
+    
     await sendAppointmentEmail(user.email, user.firstname, dataAppoint)
 
     return dataAppoint
@@ -138,7 +138,7 @@ const getAppxPatOrDoc = async (
       })
   }
 
-  const ITEMS_PER_PAGE = 2
+  const ITEMS_PER_PAGE = 4
   const skip = (page - 1) * ITEMS_PER_PAGE // 1 * 20 = 20
   try {
     // check user :  doctor | patient
@@ -153,8 +153,14 @@ const getAppxPatOrDoc = async (
 
     const countAP = AppointmentModel.countDocuments(query)
     const appointments = AppointmentModel.find(query)
-      .populate('patient')
-      .populate('doctor')
+      .populate({
+        path: 'patient',
+        select: 'username dni',
+      })
+      .populate({
+        path: 'doctor',
+        select: 'specialty name photoUrl phone'
+      })
       .limit(ITEMS_PER_PAGE)
       .skip(skip)
     const [itemsCount, items] = await Promise.all([countAP, appointments])

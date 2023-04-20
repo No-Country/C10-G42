@@ -1,6 +1,7 @@
 import * as nodemailer from 'nodemailer'
 
 import { URL_FRONTEND, transportOptions } from '../config/config'
+import { formatDate } from './handleDates'
 
 export const sendVerifyMail = async (
   email: string,
@@ -62,7 +63,7 @@ export const sendAppointmentEmail = async (
 		<p>Has solicitado un turno con el Doctor ${
       data.doctor as string
     } de la especialidad ${data.specialty as string}.</p>
-    <p>El turno es para el dia ${data.date as string} a las ${
+    <p>El turno es para el dia ${formatDate(data.date)} a las ${
       data.startTime as string
     } y tiene una duracion de ${data.duration as string} minutos.</p>
     <p>Para cancelar el turno, ingresa a tu cuenta y selecciona la opcion "Mis turnos".</p>

@@ -24,6 +24,7 @@ import ServicesSection from './pages/services/ServicesSection';
 import About from './pages/about-us/About';
 import Contact from './pages/contact/Contact';
 import ProtectedRoute from './routing/ProtectedRoute';
+import { PatientProvider } from './context/PatientProvider';
 
 function App() {
   return (
@@ -31,10 +32,8 @@ function App() {
       <BrowserRouter>
         <AuthProvider>
           <DoctorProvider>
-            <Routes>
-              <Route
-                path='/'
-                element={<MainLayout />}>
+            <PatientProvider>
+              <Routes>
                 <Route
                   index
                   element={<Home />}
@@ -68,72 +67,74 @@ function App() {
                   element={<NuevoPassword />}
                 />
 
-                <Route
-                  path='*'
-                  element={<NotFound />}
-                />
-                <Route
-                  path='/services'
-                  element={<ServicesSection />}
-                />
-                <Route
-                  path='/nosotros'
-                  element={<About />}
-                />
-                {/*       
+                  <Route
+                    path='*'
+                    element={<NotFound />}
+                  />
+                  <Route
+                    path='/services'
+                    element={<ServicesSection />}
+                  />
+                  <Route
+                    path='/nosotros'
+                    element={<About />}
+                  />
+                  {/*       
               <Route
                 path='/contact'
                 element={<Contact/>}
               /> */}
-              </Route>
-              <Route
-                path='/dashboard/paciente'
-                element={<PrivateRoutePatient />}>
+                </Route>
+                {/* DASHBOARD PACIENTE */}
                 <Route
-                  index
-                  element={<HomePatient />}
-                />
-                <Route
-                  path='perfil'
-                  element={<ProfilePatient />}
-                />
-                <Route
-                  path='turnos'
-                  element={<AppointmentPatient />}
-                />
-              </Route>
-              {/* DASHBOARD DOCTOR */}
-              <Route
-                path='/dashboard/doctor'
-                element={<PrivateRouteDoctor />}>
-                <Route
-                  index
-                  element={<HomeDoctor />}
-                />
-                <Route
-                  path='perfil'
-                  element={<ProfileDoctor />}
-                />
-                <Route
-                  path='turnos'
-                  element={<div>Turnos asociados al doctor</div>}
-                />
-                <Route
-                  path='horarios'
-                  element={<SchedulesDoctor />}
-                />
-                <Route path='horarios'>
+                  path='/dashboard/paciente'
+                  element={<PrivateRoutePatient />}>
                   <Route
                     index
-                    element={<SchedulesDoctor />}
+                    element={<HomePatient />}
                   />
                   <Route
-                    path='crear'
-                    element={<CreateSchedule />}
+                    path='perfil'
+                    element={<ProfilePatient />}
+                  />
+                  <Route
+                    path='turnos'
+                    element={<AppointmentPatient />}
                   />
                 </Route>
-              </Route>
-            </Routes>
+                {/* DASHBOARD DOCTOR */}
+                <Route
+                  path='/dashboard/doctor'
+                  element={<PrivateRouteDoctor />}>
+                  <Route
+                    index
+                    element={<HomeDoctor />}
+                  />
+                  <Route
+                    path='perfil'
+                    element={<ProfileDoctor />}
+                  />
+                  <Route
+                    path='turnos'
+                    element={<div>Turnos asociados al doctor</div>}
+                  />
+                  <Route
+                    path='horarios'
+                    element={<SchedulesDoctor />}
+                  />
+                  <Route path='horarios'>
+                    <Route
+                      index
+                      element={<SchedulesDoctor />}
+                    />
+                    <Route
+                      path='crear'
+                      element={<CreateSchedule />}
+                    />
+                  </Route>
+                </Route>
+              </Routes>
+            </PatientProvider>
           </DoctorProvider>
         </AuthProvider>
       </BrowserRouter>
