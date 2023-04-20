@@ -25,35 +25,47 @@ header{
   display: flex;
   margin-left: 25rem;
 }
-
-@media screen and (min-width:1300px){
+@media screen and (min-width:1900px){
   .user-btn{
-    margin-left: 45rem;
+  margin-left: 80rem;
   }
   .btn-container{
-    margin-left:40rem;
+  margin-left: 85rem;
   }
-
-        }
-       
-          
- @media screen and (max-width:1300px){
+  }
+  
+  @media screen and (min-width:1651px) and (max-width:1900px){
   .user-btn{
-    margin-left: 25rem;
+  margin-left: 50rem;
   }
   .btn-container{
-    margin-left: 20rem;
+  margin-left: 65rem;
   }
-        }
-       
-       
-        @media screen and (max-width:1000px){
-          .user-btn{
-            margin-left: 10rem;
-          }
-          .btn-container{
-            margin-left: 5rem;
-          }
-          
-                }
-                
+  }
+  
+  @media screen and (min-width:1300px) and (max-width:1650px){
+  .user-btn{
+  margin-left: 45rem;
+  }
+  .btn-container{
+  margin-left: 40rem;
+  }
+  }
+  
+  @media screen and (max-width:1300px){
+  .user-btn{
+  margin-left: 25rem;
+  }
+  .btn-container{
+  margin-left: 20rem;
+  }
+  }
+  
+  @media screen and (max-width:1000px){
+  .user-btn{
+  margin-left: 10rem;
+  }
+  .btn-container{
+  margin-left: 5rem;
+  }
+  }
