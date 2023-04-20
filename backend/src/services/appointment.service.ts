@@ -44,7 +44,7 @@ const create = async (appointmentData: Appointment): Promise<object> => {
       patientID: patient._id,
       doctorID: doctor._id
     }
-
+    
     await sendAppointmentEmail(user.email, user.firstname, dataAppoint)
 
     return dataAppoint

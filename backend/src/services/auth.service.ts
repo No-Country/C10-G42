@@ -50,7 +50,7 @@ const register = async (user: any, data: any): Promise<object> => {
     const newPatient = await PatientModel.create({ ...data, user: newUser._id })
     if (newPatient == null) throw new Error('Error al registrar el paciente')
 
-    // await sendVerifyMail(newUser.email, newUser.firstname, newUser.code)
+    await sendVerifyMail(newUser.email, newUser.firstname, newUser.code)
 
     return {
       msg: 'Usuario registrado correctamente. Por favor, verifique su correo electrónico para activar su cuenta.'
@@ -78,7 +78,7 @@ const registerDoctor = async (user: any, data: any): Promise<object> => {
     const newDoctor = await DoctorModel.create({ ...data, user: newUser._id })
     if (newDoctor == null) throw new Error('Error al registrar doctor')
 
-    // await sendVerifyMail(newUser.email, newUser.firstname, newUser.code)
+    await sendVerifyMail(newUser.email, newUser.firstname, newUser.code)
 
     return {
       msg: 'Doctor registrado correctamente. Por favor, verifique su correo electrónico para activar su cuenta.'
