@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import './index.css';
 import { Link } from 'react-router-dom';
-
 import useAuth from '../../../hooks/useAuth';
 import usePatient from '../../../hooks/usePatient';
 import { AppointmentList } from '../../../components';
