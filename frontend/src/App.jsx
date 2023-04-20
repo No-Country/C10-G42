@@ -23,6 +23,7 @@ import { DoctorProvider } from './context/DoctorProvider';
 import ServicesSection from './pages/services/ServicesSection';
 import About from './pages/about-us/About';
 import Contact from './pages/contact/Contact';
+import ProtectedRoute from './routing/ProtectedRoute';
 
 function App() {
   return (
@@ -40,7 +41,11 @@ function App() {
                 />
                 <Route
                   path='/turnos'
-                  element={<Paciente />}
+                  element={
+                    <ProtectedRoute>
+                      <Paciente />
+                    </ProtectedRoute>
+                  }
                 />
                 <Route
                   path='/login'

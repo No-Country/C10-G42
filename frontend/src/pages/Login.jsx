@@ -38,6 +38,10 @@ const Login = () => {
   const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
 
+  // useEffect(() => {
+  //   if (auth.user) navigate('/');
+  // }, []);
+
   const onSubmit = async ({ email, password }) => {
     setCargando(true);
     try {

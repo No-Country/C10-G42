@@ -16,7 +16,7 @@ export const validateForm = (formFields, validationRules) => {
         errors[field] = rules.message || 'Los campos deben coincidir';
       } else if (
         rules.todayAndAfter &&
-        new Date(formFields[field]).getDate() + 1 < new Date().getDate()
+        formFields[field] < new Date().toISOString().split('T')[0]
       ) {
         errors[field] = 'La fecha no puede ser menor a la actual';
       }
