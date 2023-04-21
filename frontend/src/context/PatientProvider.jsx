@@ -28,7 +28,8 @@ const PatientProvider = ({ children }) => {
   const navigate = useNavigate();
 
   /**
-   * @param {*} id - User patient
+   * @param {id} patient
+   * @param {dateRange}
    * @returns
    */
   const getAppointment = async (
@@ -54,7 +55,6 @@ const PatientProvider = ({ children }) => {
         `appointment/patient/${id}?page=${_page}${dateRangeStr ?? ''}`,
         config,
       );
-      console.log('data', data);
       data?.msg &&
         MySwal.fire({
           title: 'Error!',
@@ -66,7 +66,6 @@ const PatientProvider = ({ children }) => {
       setLoading(false);
       setItemsCount(data?.pagination.itemsCount);
       setPages(data?.pagination.pagesCount);
-      //_page && setPage(_page);
     } catch (error) {
       setLoading(false);
       console.log('this', error);
@@ -79,45 +78,18 @@ const PatientProvider = ({ children }) => {
     }
   };
 
-  //     if (!token) {
-  //       return;
-  //     }
-
-  //     try {
-  //       const { data } = await clienteAxios.post(`/doctorschedule`, body, config);
-  //       console.log('post horarios del doctor----', data);
-  //       MySwal.fire({
-  //         title: 'Horario creado!',
-  //         text: `${data.msg}`,
-  //         icon: 'success',
-  //         confirmButtonText: 'OK',
-  //       }).then((res) => {
-  //         if (res) return navigate(routes.LIST);
-  //       });
-  //     } catch (error) {
-  //       console.error(error.response);
-  //       MySwal.fire({
-  //         title: 'Error!',
-  //         text: `${error.response.data}`,
-  //         icon: 'error',
-  //         confirmButtonText: 'Ok',
-  //       });
-  //     }
-  //   };
-
   return (
     <PatientContext.Provider
       value={{
-        appointmentList,
         routes,
         getAppointment,
+        appointmentList,
         setAppointmentList,
         pages,
         page,
         setPage,
         itemsCount,
         loading,
-
       }}>
       {children}
     </PatientContext.Provider>

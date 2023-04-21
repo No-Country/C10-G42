@@ -36,7 +36,6 @@ import Doctors from '../../components/contact-form/doctors/Doctors';
 import Maps from '../../components/maps/Maps';
 const Home = () => {
   const matches = useMediaQuery('(max-width:600px)');
-  console.log(`(min-width:600px) matches: ${matches}`);
   return (
     <>
       {' '}

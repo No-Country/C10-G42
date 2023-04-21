@@ -29,10 +29,12 @@ const AuthProvider = ({ children }) => {
       try {
         const { data } = await clienteAxios.get('/auth/profile', config);
         setCargando(true);
-        console.log('--data', data);
         setAuth(data);
 
-        if (location.pathname === '/login') {
+        if (
+          location.pathname === '/login' ||
+          location.pathname === '/registro'
+        ) {
           switch (data.user?.role) {
             case 'patient':
               navigate('/dashboard/paciente');
@@ -51,7 +53,7 @@ const AuthProvider = ({ children }) => {
       setCargando(false);
     };
     autenticarUsuario();
-  }, []);
+  }, [location.pathname]);
 
   const cerrarSesionAuth = () => {
     setAuth({});
