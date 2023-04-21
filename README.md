@@ -8,8 +8,7 @@
 ## ✔ Proyecto
 ConsultorioMERN es una aplicación web que permite a los pacientes registrarse en el sistema, ver la lista de médicos disponibles y solicitar un turno con los mismos cuando se encuentren disponibles. La aplicación está construida utilizando tecnologías del stack MERN (MongoDB, Express, React, Node.js) y cuenta con una interfaz de usuario moderna y fácil de usar. Además, los médicos pueden ingresar al sistema y gestionar sus horarios de atención para que los pacientes puedan ver cuándo están disponibles para atenderlos. ConsultorioMERN es el resultado del trabajo en equipo de un grupo de desarrolladores comprometidos con crear una solución innovadora y accesible para la gestión de turnos médicos.
 
-<h3 align="center"  ><b>Video preview:</b></h3>
-<p  align="center" ><a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer"> <img src="https://img.shields.io/badge/Video Preview%20-%23FF0000.svg?&style=for-the-badge&logo=YouTube&logoColor=white"/></a></p>
+<p  align="center" ><a href="https://www.youtube.com/watch?v=-Ngdzem81a0" target="_blank" rel="noopener noreferrer"> <img src="https://img.shields.io/badge/Video Preview%20-%23FF0000.svg?&style=for-the-badge&logo=YouTube&logoColor=white"/></a></p>
 
 <hr/>
 
