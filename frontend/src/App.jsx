@@ -23,8 +23,9 @@ import { DoctorProvider } from './context/DoctorProvider';
 import ServicesSection from './pages/services/ServicesSection';
 import About from './pages/about-us/About';
 import Contact from './pages/contact/Contact';
-import ProtectedRoute from './routing/ProtectedRoute';
 import { PatientProvider } from './context/PatientProvider';
+import ProtectedRoute from './routing/ProtectedRoute';
+import AppointmentDoctor from './pages/dashboard/Doctor/AppointmentDoctor';
 
 function App() {
   return (
@@ -35,37 +36,40 @@ function App() {
             <PatientProvider>
               <Routes>
                 <Route
-                  index
-                  element={<Home />}
-                />
-                <Route
-                  path='/turnos'
-                  element={
-                    <ProtectedRoute>
-                      <Paciente />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path='/login'
-                  element={<Login />}
-                />
-                <Route
-                  path='/registro'
-                  element={<Register />}
-                />
-                <Route
-                  path='/confirmar/:code'
-                  element={<ConfirmarCuenta />}
-                />
-                <Route
-                  path='olvide-password'
-                  element={<OlvidePassword />}
-                />
-                <Route
-                  path='olvide-password/:code'
-                  element={<NuevoPassword />}
-                />
+                  path='/'
+                  element={<MainLayout />}>
+                  <Route
+                    index
+                    element={<Home />}
+                  />
+                  <Route
+                    path='/turnos'
+                    element={
+                      <ProtectedRoute>
+                        <Paciente />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path='/login'
+                    element={<Login />}
+                  />
+                  <Route
+                    path='/registro'
+                    element={<Register />}
+                  />
+                  <Route
+                    path='/confirmar/:code'
+                    element={<ConfirmarCuenta />}
+                  />
+                  <Route
+                    path='olvide-password'
+                    element={<OlvidePassword />}
+                  />
+                  <Route
+                    path='olvide-password/:code'
+                    element={<NuevoPassword />}
+                  />
 
                   <Route
                     path='*'
@@ -116,7 +120,7 @@ function App() {
                   />
                   <Route
                     path='turnos'
-                    element={<div>Turnos asociados al doctor</div>}
+                    element={<AppointmentDoctor />}
                   />
                   <Route
                     path='horarios'

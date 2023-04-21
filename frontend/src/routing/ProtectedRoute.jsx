@@ -5,7 +5,6 @@ const ProtectedRoute = ({ children }) => {
   const { auth } = useAuth();
   const isAuthenticated = auth.user;
   const userRole = auth.user?.role;
-  console.log(isAuthenticated, userRole);
   if (!(isAuthenticated && userRole === 'patient')) {
     return <Navigate to='/login' />;
   }
