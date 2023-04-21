@@ -1,29 +1,28 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Datepicker from 'react-tailwindcss-datepicker';
+import Loading from '../Loading';
+import AppointmentItem from './AppointmentItem';
 
 const AppointmentList = ({
   turnos,
-  user,
   pages,
   page,
   setPage,
   itemsCount,
+  loading,
+  startDate,
+  setStartDate,
+  user,
 }) => {
-  const [startDate, setStartDate] = useState({
-    startDate: new Date(),
-    endDate: new Date().setMonth(11),
-  });
-
   //date range
   const handleValueChange = (newValue) => {
-    console.log('newValue:', newValue);
     setStartDate(newValue);
+    setPage(1);
   };
 
   //paginations
   const [pageCount, setPageCount] = useState(pages);
-  console.log('page:', page, 'pagesC', pages, pageCount);
 
   useEffect(() => {
     const changePage = () => {
@@ -50,58 +49,42 @@ const AppointmentList = ({
   }
 
   return (
-    <div className='w-full bg-white rounded-lg shadow-lg lg:w-3/4 p-5'>
-      <span className='flex justify-between my-2'>
-        <h3 className='text-2xl font-bold'>Mis turnos</h3>
-        {user.role === 'patient' && (
-          <Link
-            to='/turnos'
-            className='flex justify-center bg-main hover:bg-secondary text-white p-2 ml-auto rounded-md'>
-            Crear turnos
-          </Link>
-        )}
-      </span>
+    <>
       <hr />
-      {/* Fecha */}
-      <span
-        className='mt-10'
-        id='datePicker'>
-        <Datepicker
-          i18n={'es'}
-          displayFormat={'DD/MM/YYYY'}
-          value={startDate}
-          onChange={handleValueChange}
-        />
-      </span>
-      {/* Turnos */}
-      <ul className='divide-y-2 divide-gray-100'>
-        {turnos.map((turno) => (
-          <li
-            className='p-3 hover:bg-main hover:text-blue-200 cursor-pointer'
-            key={turno._id}>
-            <div className='md:flex md:justify-between'>
-              <p>
-                <b>Fecha: </b>
-                {new Date(turno.date).toLocaleDateString('es-AR', {
-                  timeZone: 'UTC',
-                })}
-              </p>
-              <p>
-                <b>Hora inicio: </b> {turno.startTime}
-              </p>
-
-              <div>
-                <p>
-                  <b>Doctor: </b> {turno.doctor.name}
-                </p>
-                <p>
-                  <b>Especialidad: </b> {turno.doctor.specialty}
-                </p>
-              </div>
-            </div>
-          </li>
-        ))}
-      </ul>
+      {loading ? (
+        <div className='flex justify-center h-full p-10 text-main'>
+          <Loading
+            w={8}
+            h={8}
+          />
+        </div>
+      ) : (
+        <div>
+          {/* Fecha */}
+          <Datepicker
+            i18n={'es'}
+            displayFormat={'DD/MM/YYYY'}
+            placeholder={'DIA/MES/AÑO'}
+            containerClassName='relative md:w-1/3 w-full text-gray-700 my-2'
+            inputClassName='relative transition-all duration-300 py-2.5 pl-4 pr-14 w-full border-gray-300 rounded-lg tracking-wide font-light text-sm placeholder-gray-400 bg-slate-300 focus:ring disabled:opacity-40 disabled:cursor-not-allowed focus:border-blue-500 focus:ring-blue-500/20'
+            popoverDirection='down'
+            startWeekOn='mon'
+            value={startDate}
+            onChange={handleValueChange}
+          />
+          <hr className='my-1 w-1/' />
+          {/* Turnos */}
+          <ul className='divide-y-2 divide-gray-100 [&>*:nth-child(odd)]:bg-slate-50 [&>*:nth-child(even)]:bg-slate-300'>
+            {turnos.map((turno) => (
+              <AppointmentItem
+                turno={turno}
+                user={user}
+                key={turno._id}
+              />
+            ))}
+          </ul>
+        </div>
+      )}
 
       <hr className='border border-blue-pastel-100 w-full' />
       {/*** Paginacion ***/}
@@ -132,7 +115,7 @@ const AppointmentList = ({
           </button>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 export default AppointmentList;

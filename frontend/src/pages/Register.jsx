@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import clienteAxios from '../config/clienteAxios';
 
 import InputComponent from '../components/form/InputComponent';
@@ -7,6 +7,7 @@ import SelectComponent from '../components/form/SelectComponent';
 import SubmitComponent from '../components/form/SubmitComponent';
 import Alerta from '../components/Alerta';
 import useForm from '../hooks/useForm';
+import useAuth from '../hooks/useAuth';
 
 const validationRules = {
   firstname: {

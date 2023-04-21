@@ -22,6 +22,11 @@ const DoctorProvider = ({ children }) => {
   };
   const [schedules, setSchedules] = useState([]);
   const navigate = useNavigate();
+  const [appointmentList, setAppointmentList] = useState([]);
+  const [page, setPage] = useState(1);
+  const [pages, setPages] = useState(0);
+  const [itemsCount, setItemsCount] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const getSchedule = async (id) => {
     if (!token) {
@@ -53,7 +58,6 @@ const DoctorProvider = ({ children }) => {
 
     try {
       const { data } = await clienteAxios.post(`/doctorschedule`, body, config);
-      console.log('post horarios del doctor----', data);
       MySwal.fire({
         title: 'Horario creado!',
         text: `${data.msg}`,
@@ -73,6 +77,57 @@ const DoctorProvider = ({ children }) => {
     }
   };
 
+  /**
+   * @param {id} doctor
+   * @param {dateRange}
+   * @returns
+   */
+  const getAppointment = async (
+    id,
+    _page = page,
+    dateRange = {
+      startDate: '',
+      endDate: '',
+    },
+  ) => {
+    if (!token) {
+      return;
+    }
+
+    const dateRangeStr = dateRange.startDate
+      ? `&fechaInicio=${dateRange.startDate}&fechaFin=${dateRange.endDate}`
+      : '';
+
+    setLoading(true);
+
+    try {
+      const { data } = await clienteAxios.get(
+        `appointment/doctor/${id}?page=${_page}${dateRangeStr ?? ''}`,
+        config,
+      );
+      data?.msg &&
+        MySwal.fire({
+          title: 'Error!',
+          text: `${data.msg}`,
+          icon: 'error',
+          confirmButtonText: 'Ok',
+        });
+      setAppointmentList(data);
+      setLoading(false);
+      setItemsCount(data?.pagination.itemsCount);
+      setPages(data?.pagination.pagesCount);
+    } catch (error) {
+      setLoading(false);
+      console.log('this', error);
+      MySwal.fire({
+        title: 'Error!',
+        text: `${error.response.data}`,
+        icon: 'error',
+        confirmButtonText: 'Ok',
+      });
+    }
+  };
+
   return (
     <DoctorContext.Provider
       value={{
@@ -80,6 +135,14 @@ const DoctorProvider = ({ children }) => {
         schedules,
         createSchedule,
         routes,
+        getAppointment,
+        appointmentList,
+        setAppointmentList,
+        pages,
+        page,
+        setPage,
+        itemsCount,
+        loading,
       }}>
       {children}
     </DoctorContext.Provider>

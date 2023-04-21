@@ -24,6 +24,8 @@ import ServicesSection from './pages/services/ServicesSection';
 import About from './pages/about-us/About';
 import Contact from './pages/contact/Contact';
 import { PatientProvider } from './context/PatientProvider';
+import ProtectedRoute from './routing/ProtectedRoute';
+import AppointmentDoctor from './pages/dashboard/Doctor/AppointmentDoctor';
 
 function App() {
   return (
@@ -42,7 +44,11 @@ function App() {
                   />
                   <Route
                     path='/turnos'
-                    element={<Paciente />}
+                    element={
+                      <ProtectedRoute>
+                        <Paciente />
+                      </ProtectedRoute>
+                    }
                   />
                   <Route
                     path='/login'
@@ -114,7 +120,7 @@ function App() {
                   />
                   <Route
                     path='turnos'
-                    element={<div>Turnos asociados al doctor</div>}
+                    element={<AppointmentDoctor />}
                   />
                   <Route
                     path='horarios'
