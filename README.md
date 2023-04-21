@@ -29,11 +29,11 @@ ConsultorioMERN es una aplicación web que permite a los pacientes registrarse e
 <hr/>
 
 ## ✔ Backend
-### Construido con 🏗️
+### Construido con 🧰
 ![NodeJS](https://img.shields.io/badge/Node.js-6DA55F?style=for-the-badge&logo=Node.js&logoColor=white) ![Express.js](https://img.shields.io/badge/Express.js-%23404d59.svg?style=for-the-badge&logo=Express&logoColor=%2361DAFB) ![TypeScript](https://img.shields.io/badge/TypeScript-blue.svg?style=for-the-badge&logo=TypeScript&logoColor=white) ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=MongoDB&logoColor=white) ![Mongoose](https://img.shields.io/badge/Mongoose-%2320232a.svg?style=for-the-badge&logo=Mongoose&logoColor=%%2361DAFB) ![Nodemailer](https://img.shields.io/badge/Nodemailer-0F9DCE?style=for-the-badge&logo=Nodemailer&logoColor=fff)
 
 ### Estructura 🦴
-- `config` -> Archivos de configuración de la aplicación, como la configuración de la base de datos y variables de entorno.
+- `config` -> Archivos de configuración, como la configuración de la base de datos y variables de entorno.
 - `controllers` -> Controladores de la aplicación, manejan las solicitudes HTTP y las respuestas.
 - `middlewares` -> Middlewares utilizados en la aplicación, como el middleware de autenticación.
 - `models` -> Modelos de datos de la aplicación, definen la estructura de la base de datos.
@@ -43,18 +43,17 @@ ConsultorioMERN es una aplicación web que permite a los pacientes registrarse e
 
 ### 🔗 <a href="https://github.com/No-Country/C10-G42/blob/main/backend/README.md">Documentacion Backend</a>
 
+### 🔗 <a href="https://consultoriomern.onrender.com/api">Backend deploy on Render</a>
+
 ## ✔ Frontend
 ### Construido con 🧰
 ![JavaScript](https://img.shields.io/badge/JavaScript-%23323330.svg?style=for-the-badge&logo=Javascript&logoColor=%23F7DF1E) ![React](https://img.shields.io/badge/React-149eca?style=for-the-badge&logo=react&logoColor=fff) ![MUI](https://img.shields.io/badge/MUI-007FFF?style=for-the-badge&logo=MUI&logoColor=fff) ![React Router](https://img.shields.io/badge/React_Router-000?style=for-the-badge&logo=reactrouter&logoColor=fff) ![Google Maps Api](https://img.shields.io/badge/Google_Maps_Api-DE4032?style=for-the-badge&logo=GoogleMaps&logoColor=fff) ![Vercel](https://img.shields.io/badge/vercel%20-%23000000.svg?&style=for-the-badge&logo=vercel&logoColor=white)
 
 ### Estructura 🦴
-- `public` -> Archivos públicos, como el archivo HTML base y el archivo de icono de la aplicación.
 
-- `src` -> Código fuente de la aplicación. Se divide en varias subcarpetas para diferentes aspectos de la aplicación:
-
-  - `components` -> Componentes React utilizados en la aplicación.
-  - `contexts` -> Contextos de React utilizados en la aplicación, como el contexto de autenticación.
-  - `pages` -> Páginas de la aplicación, que representan las diferentes vistas de la aplicación.
-  - `services` -> Servicios utilizados en la aplicación, como los servicios de autenticación y de la API.
-  - `styles` -> Archivos de estilo de la aplicación, escritos en CSS o SCSS.
-  - `App.tsx` -> Punto de entrada de la aplicación.
+- `components` -> Componentes React utilizados en la aplicación.
+- `contexts` -> Contextos de React utilizados en la aplicación, como el contexto de autenticación.
+- `pages` -> Páginas de la aplicación, que representan las diferentes vistas de la aplicación.
+- `services` -> Servicios utilizados en la aplicación, como los servicios de autenticación y de la API.
+- `styles` -> Archivos de estilo de la aplicación, escritos en CSS o SCSS.
+- `App.tsx` -> Punto de entrada de la aplicación.
